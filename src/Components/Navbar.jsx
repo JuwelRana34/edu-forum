@@ -141,7 +141,10 @@ function Navbar() {
                   <h1 className="font-semibold text-metal-600">Hey! {user.displayName}</h1>
                   <DropdownDivider />
                   <DropdownGroup>
+                    <Link to={'/Dashboard'}>
                     <DropdownItem><MdOutlineAccountCircle className="text-xl font-semibold" />Dashboard</DropdownItem>
+                    </Link>
+                    
                     <DropdownItem className="text-rose-500" onClick={handleLogout}> <CiLogout className="text-xl font-semibold"/> Logout</DropdownItem>
                   </DropdownGroup>
                 </DropdownContent>
