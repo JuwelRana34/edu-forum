@@ -11,8 +11,8 @@ function Registration() {
     useContext(UserContext);
   const navigate = useNavigate();
   const [isvisible, setIsVisible] = useState(false);
-  const [loading , setLoading] = useState(false)
-  const [image, setImage] = useState(null)
+  const [loading, setLoading] = useState(false);
+  const [image, setImage] = useState(null);
 
   const handleRegistration = async (e) => {
     e.preventDefault();
@@ -40,23 +40,42 @@ function Registration() {
       const formData = new FormData();
       formData.append("image", image); // Append the selected image to the form data
 
-      const response = await axios.post("https://api.imgbb.com/1/upload", formData, {
-        params: {
-          key: "5e43c78c1966794e70a2bd32d9366ea6", // Replace with your ImgBB API key
-        },
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      });
+      const response = await axios.post(
+        "https://api.imgbb.com/1/upload",
+        formData,
+        {
+          params: {
+            key: "5e43c78c1966794e70a2bd32d9366ea6", // Replace with your ImgBB API key
+          },
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      );
 
       if (response.data.success) {
         const imageUrl = response.data.data.url;
         console.log("Image uploaded successfully:", imageUrl);
         // Update the user's profile with the uploaded image
         await UpdateProfile(name.value, imageUrl);
-        toast.success("Registered successfully");
-        e.target.reset();
-        navigate("/");
+
+        const userinfo = {
+          name: name.value,
+          photo: imageUrl,
+          email: email.value,
+        };
+
+        await AxiosPublic.post("/user", userinfo)
+          .then((data) => {
+            console.log(data);
+            toast.success("Registered successfully");
+            e.target.reset();
+            navigate("/");
+          })
+          .catch((err) => {
+            toast.error("An error occurred while creating user.");
+            console.error(err);
+          });
       } else {
         toast.error("Image upload failed.");
       }
@@ -74,17 +93,30 @@ function Registration() {
 
   const googleRegistration = () => {
     GoogleLogin()
-      .then(() => {
-        toast.success("login successful");
-        setIsloading(false);
-        navigate("/");
+      .then(({ user }) => {
+        const userinfo = {
+          name: user.displayName,
+          photo: user.photoURL,
+          email: user.email,
+        };
+
+        AxiosPublic.post("/user", userinfo)
+          .then((data) => {
+            console.log(data);
+            toast.success("login successful");
+            setIsloading(false);
+            navigate("/");
+          })
+          .catch((err) => {
+            toast.error("An error occurred while creating user.");
+            console.error(err);
+          });
       })
       .catch((err) => {
         toast.error(`${err}`);
         setIsloading(false);
       });
   };
-
 
   const handleImageChange = (e) => {
     const file = e.target.files[0];
@@ -123,7 +155,7 @@ function Registration() {
               required
               name="PhotoUrl"
               className="grow"
-             onChange={handleImageChange}
+              onChange={handleImageChange}
             />
           </label>
 
@@ -178,12 +210,13 @@ function Registration() {
           </p>
 
           <button className="btn  bg-blue-500 hover:bg-blue-600 dark:hover:bg-metal-700 dark:bg-metal-800 text-white w-full">
-            {loading? (
-              <span className="text-white animate-spin"><FaArrowsSpin className="text-xl" /></span>
+            {loading ? (
+              <span className="text-white animate-spin">
+                <FaArrowsSpin className="text-xl" />
+              </span>
             ) : (
               "Register"
             )}
-           
           </button>
         </form>
         <div className="divider">OR</div>
