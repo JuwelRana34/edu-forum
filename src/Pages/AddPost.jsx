@@ -106,7 +106,7 @@ function AddPost() {
 
           <br />
           <input
-            className=" cursor-pointer col-span-2 rounded py-3 bg-blue-500 text-white"
+            className=" w-full  cursor-pointer md:col-span-2 rounded py-3 bg-blue-500 text-white"
             type="submit"
           />
         </form>

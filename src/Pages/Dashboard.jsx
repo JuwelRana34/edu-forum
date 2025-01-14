@@ -38,8 +38,8 @@ function Dashboard() {
     document.title = DynamicTitle[pathname] || "Edu forum";
   }, [pathname]);
   return (
-    <div className="md:flex  bg-slate-100  gap-3">
-      <div className="md:w-[20%]">
+    <div className="md:flex w-full bg-slate-100  gap-3">
+      <div className="md:grow">
         <Sidebar className="  hidden md:block shadow-none h-screen bg-gradient-to-tr from-blue-50 to-white   rounded">
           <SidebarBody>
             {/* fornormar users routes  */}
@@ -135,7 +135,7 @@ function Dashboard() {
         <DashboardMenu />
       </div>
 
-      <div className="grow">
+      <div className="md:w-[70%] ">
         <Outlet />
       </div>
     </div>
