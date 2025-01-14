@@ -11,12 +11,20 @@ import { Bars3Icon, BellIcon, XMarkIcon } from "@heroicons/react/24/outline";
 import { useContext } from "react";
 import { Link } from "react-router";
 import UserContext from "../Context/AuthContext";
+import useCheckAdmin from "../Routers/useCheckAdmin";
 
-const navigation = [
+const userNavigation = [
   { name: "Home", href: "/", current: false },
   { name: "Add post", href: "AddPost", current: false },
   { name: "My Posts", href: "MyPosts", current: false },
   { name: "My Profile", href: "MyProfile", current: false },
+];
+const adminNavigation = [
+  { name: "Home", href: "/", current: false },
+  { name: "Manage Users", href: "ManageUsers", current: false },
+  { name: "Admin Profile", href: "AdminProfile", current: false },
+  { name: "Make Announcement", href: "MakeAnnouncement", current: false },
+  { name: "Reported Activities", href: "ReportedActivities", current: false },
 ];
 
 function classNames(...classes) {
@@ -25,6 +33,7 @@ function classNames(...classes) {
 
 export default function DashboardMenu() {
   const { user } = useContext(UserContext);
+  const role = useCheckAdmin()
   return (
     <Disclosure as="nav" className="md:hidden backdrop-blur bg-white/40">
       <div className="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8">
@@ -51,25 +60,6 @@ export default function DashboardMenu() {
                 src={"https://cdn-icons-png.flaticon.com/128/9482/9482897.png"}
                 className="h-8 w-auto"
               />
-            </div>
-            <div className="hidden sm:ml-6 sm:block">
-              <div className="flex space-x-4">
-                {navigation.map((item) => (
-                  <Link
-                    key={item.name}
-                    to={`${item.href}`}
-                    aria-current={item.current ? "page" : undefined}
-                    className={classNames(
-                      item.current
-                        ? "bg-gray-900 text-white"
-                        : "text-gray-300 hover:bg-gray-700 hover:text-white",
-                      "rounded-md px-3 py-2 text-sm font-medium"
-                    )}
-                  >
-                    {item.name}
-                  </Link>
-                ))}
-              </div>
             </div>
           </div>
           <div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
@@ -101,7 +91,8 @@ export default function DashboardMenu() {
 
       <DisclosurePanel className="sm:hidden">
         <div className="space-y-1 px-2 pb-3 pt-2">
-          {navigation.map((item) => (
+        {role === "user"? <> 
+        {userNavigation.map((item) => (
             <Link
               to={`${item.href}`}
               aria-current={item.current ? "page" : undefined}
@@ -115,6 +106,24 @@ export default function DashboardMenu() {
               {item.name}
             </Link>
           ))}
+
+        </>: <>
+        {adminNavigation.map((item) => (
+          <Link
+            to={`${item.href}`}
+            aria-current={item.current ? "page" : undefined}
+            className={classNames(
+              item.current
+                ? "bg-gray-900 text-white"
+                : "text-gray-500 hover:bg-gray-700 hover:text-white",
+              "block rounded-md px-3 py-2 text-base font-medium"
+            )}
+          >
+            {item.name}
+          </Link>
+        ))}
+        </>
+        }   
         </div>
       </DisclosurePanel>
     </Disclosure>

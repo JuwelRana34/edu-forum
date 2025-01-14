@@ -19,9 +19,10 @@ import {
 } from "react-icons/md";
 import { TfiAnnouncement } from "react-icons/tfi";
 import DashboardMenu from "../Components/DashboardMenu";
+import useCheckAdmin from "../Routers/useCheckAdmin";
 function Dashboard() {
   const { user } = useContext(UserContext);
-  console.log(user);
+  const role = useCheckAdmin()
   const {pathname}=useLocation()
    useEffect(() => {
       const DynamicTitle = {
@@ -41,11 +42,13 @@ function Dashboard() {
     <div className="md:flex bg-slate-100  gap-5">
 
       <div>
-        <Sidebar className="  hidden md:block shadow-none h-screen bg-gradient-to-tr from-blue-50 to-white   rounded">
+     
+      
+  <Sidebar className="  hidden md:block shadow-none h-screen bg-gradient-to-tr from-blue-50 to-white   rounded">
         <SidebarBody>
           {/* fornormar users routes  */}
 
-          <SidebarList>
+         {role === "user" &&  <SidebarList>
             <Link to={"/"}>
               <SidebarItem className="flex items-center gap-2 text-lg">
                 <FaHome />
@@ -74,9 +77,10 @@ function Dashboard() {
               </SidebarItem>
             </Link>
           </SidebarList>
+          } 
 
           {/* for admin  routs  */}
-          <SidebarList>
+         {role === "admin" &&   <SidebarList>
             <Link to={"/"}>
               <SidebarItem className="flex items-center gap-2 text-lg">
                 <FaHome />
@@ -113,6 +117,7 @@ function Dashboard() {
             </Link>
             
           </SidebarList>
+          }
         </SidebarBody>
         <SidebarFooter>
           <Avatar>
