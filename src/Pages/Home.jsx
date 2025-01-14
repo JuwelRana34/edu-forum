@@ -1,4 +1,4 @@
-import { useState } from "react";
+
 import SecureAxios from "../Hook/SecureAxios";
 import { useQuery } from '@tanstack/react-query'
 import Banner from "../Components/Banner";
@@ -7,7 +7,7 @@ function Home() {
     const result = await  SecureAxios.get('/users')
     return result.data;
   } });
-console.log(users)
+
 //  if (isLoading) return  <h1>loadingg...</h1>
   return (
     <div className=" container mx-auto">

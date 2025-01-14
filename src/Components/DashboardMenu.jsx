@@ -92,8 +92,8 @@ export default function DashboardMenu() {
       <DisclosurePanel className="sm:hidden">
         <div className="space-y-1 px-2 pb-3 pt-2">
         {role === "user"? <> 
-        {userNavigation.map((item) => (
-            <Link
+        {userNavigation.map((item,index) => (
+            <Link key={index}
               to={`${item.href}`}
               aria-current={item.current ? "page" : undefined}
               className={classNames(
@@ -108,8 +108,8 @@ export default function DashboardMenu() {
           ))}
 
         </>: <>
-        {adminNavigation.map((item) => (
-          <Link
+        {adminNavigation.map((item, index) => (
+          <Link key={index}
             to={`${item.href}`}
             aria-current={item.current ? "page" : undefined}
             className={classNames(
