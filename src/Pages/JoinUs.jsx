@@ -3,10 +3,13 @@ import UserContext from "../Context/AuthContext";
 import { Button, InputIcon, Input, Label, Divider, toast } from "keep-react";
 import { FaEnvelope, FaLock } from "react-icons/fa6";
 import { Link, useNavigate } from "react-router";
+import axios from "axios";
+import useAxiosPublic from "../Hook/useAxiosPublic";
 
-function Login() {
+function JoinUs() {
   const { GoogleLogin, login } = useContext(UserContext);
   const navigate = useNavigate();
+  const  AxiosPublic = useAxiosPublic()
 
   const Login = (e) => {
     e.preventDefault();
@@ -23,9 +26,25 @@ function Login() {
 
   const handleGoogleLogin = () => {
     GoogleLogin()
-      .then(() => {
+      .then(({user}) => {
         toast.success("Logged in successfully");
-        navigate("/");
+      const userinfo={
+          name: user.displayName,
+          photo: user.photoURL,
+          email: user.email
+        }
+
+        AxiosPublic.post('/user', userinfo)
+        .then((data) =>{
+          console.log(data)
+            navigate("/")
+        }).catch((err) => {
+            toast.error("An error occurred while creating user.")
+            console.error(err)
+          })
+      
+        
+        
       })
       .catch((err) => toast.error(`${err.message}`));
   };
@@ -93,4 +112,4 @@ function Login() {
   );
 }
 
-export default Login;
+export default JoinUs;

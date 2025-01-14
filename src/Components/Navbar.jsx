@@ -52,11 +52,14 @@ function Navbar() {
           <a>Home</a>
         </li>
       </NavLink>
-      <NavLink to={"/JoinUs"}>
+      {
+        !user && <NavLink to={"/JoinUs"}>
         <li>
           <a>Join us</a>
         </li>
       </NavLink>
+      }
+      
       <NavLink to={"/MemberShip"}>
         <li>
           <a>Member Ship</a>
@@ -64,9 +67,9 @@ function Navbar() {
       </NavLink>
 
       <li>
-        <a className="relative "><FaBell className="text-xl">
+        <a className="relative w-fit "><FaBell className="text-xl">
           </FaBell> 
-          <p className=" absolute -top-[5px] right-2 h-5 w-5 text-center text-white rounded-full bg-green-500">0</p>
+          <p className=" absolute -top-2 right-1 lg:-top-[5px] lg:right-2  h-5 w-5  text-center text-white rounded-full bg-green-500">0</p>
          
         </a>
       </li>
@@ -128,7 +131,7 @@ function Navbar() {
       <div className="navbar-end ">
         {user && 
           <>
-            <div className="flex items-center space-x-2">
+            <div className="flex cursor-pointer items-center space-x-2">
               <Dropdown>
                 <DropdownAction asChild>
                   <img

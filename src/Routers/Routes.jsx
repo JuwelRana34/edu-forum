@@ -22,7 +22,11 @@ const AppRoute = () => {
         <Route index element={<Home />} />
         <Route path="JoinUs" element={<JoinUs />} />
         <Route path="MemberShip" element={<MemberShip />} />
-        <Route path="Dashboard" element={<Dashboard />}>
+        
+        <Route path="registration" element={<Registration />} />
+      </Route>
+      
+      <Route path="Dashboard" element={<Dashboard />}>
           {/* normar user routs  */}
           <Route path="MyPosts" element={<MyPosts />} />
           <Route path="MyProfile" element={<MyProfile />} />
@@ -33,8 +37,6 @@ const AppRoute = () => {
           <Route path="MakeAnnouncement" element={<MakeAnnouncement />} />
           <Route path="ReportedActivities" element={<ReportedActivities />} />
         </Route>
-        <Route path="registration" element={<Registration />} />
-      </Route>
       <Route path="*" element={<Not_found />} />
     </Routes>
   );

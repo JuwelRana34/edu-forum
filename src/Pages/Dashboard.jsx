@@ -18,102 +18,83 @@ import {
   MdReport,
 } from "react-icons/md";
 import { TfiAnnouncement } from "react-icons/tfi";
+import DashboardMenu from "../Components/DashboardMenu";
 function Dashboard() {
   const { user } = useContext(UserContext);
   console.log(user);
   return (
-    <div className="md:flex gap-5">
-      <Sidebar className=" shadow-none overflow-y-scroll rounded">
+    <div className="md:flex  gap-5">
+      <Sidebar className=" hidden md:block shadow-none h-screen bg-gradient-to-tr from-blue-50 to-white   rounded">
         <SidebarBody>
           {/* fornormar users routes  */}
 
           <SidebarList>
-            <SidebarItem>
-              <Link className="flex items-center gap-2 text-lg" to={"/"}>
+            <Link to={"/"}>
+              <SidebarItem className="flex items-center gap-2 text-lg">
                 <FaHome />
                 Home
-              </Link>
-            </SidebarItem>
+              </SidebarItem>
+            </Link>
 
-            <SidebarItem>
-              <Link
-                className="flex items-center gap-2 text-lg"
-                to={"/Dashboard/AddPost"}
-              >
+            <Link to={"/Dashboard/AddPost"}>
+              <SidebarItem className="flex items-center gap-2 text-lg">
                 <MdOutlinePostAdd />
                 AddPost
-              </Link>
-            </SidebarItem>
+              </SidebarItem>
+            </Link>
 
-            <SidebarItem>
-              <Link
-                className="flex items-center gap-2 text-lg"
-                to={"/Dashboard/MyProfile"}
-              >
+            <Link to={"/Dashboard/MyProfile"}>
+              <SidebarItem className="flex items-center gap-2 text-lg">
                 <FaUser />
                 MyProfile
-              </Link>
-            </SidebarItem>
+              </SidebarItem>
+            </Link>
 
-            <SidebarItem>
-              <Link
-                className="flex items-center gap-2 text-lg"
-                to={"/Dashboard/MyPosts"}
-              >
+            <Link to={"/Dashboard/MyPosts"}>
+              <SidebarItem className="flex items-center gap-2 text-lg">
                 <FaEnvelopeOpenText />
                 MyPosts
-              </Link>
-            </SidebarItem>
+              </SidebarItem>
+            </Link>
           </SidebarList>
 
           {/* for admin  routs  */}
           <SidebarList>
-            <SidebarItem>
-              <Link className="flex items-center gap-2 text-lg" to={"/"}>
+            <Link to={"/"}>
+              <SidebarItem className="flex items-center gap-2 text-lg">
                 <FaHome />
                 Home
-              </Link>
-            </SidebarItem>
+              </SidebarItem>
+            </Link>
 
-            <SidebarItem>
-              <Link
-                className="flex items-center gap-2 text-lg"
-                to={"/Dashboard/ManageUsers"}
-              >
+            <Link to={"/Dashboard/ManageUsers"}>
+              <SidebarItem className="flex items-center gap-2 text-lg">
                 <FaUsers />
                 Manage Users
-              </Link>
-            </SidebarItem>
+              </SidebarItem>
+            </Link>
 
-            <SidebarItem>
-              <Link
-                className="flex items-center gap-2 text-lg"
-                to={"/Dashboard/AdminProfile"}
-              >
+            <Link to={"/Dashboard/AdminProfile"}>
+              <SidebarItem className="flex items-center gap-2 text-lg">
                 <MdAdminPanelSettings />
                 Admin Profile
-              </Link>
-            </SidebarItem>
+              </SidebarItem>
+            </Link>
 
-            <SidebarItem>
-              <Link
-                className="flex items-center gap-2 text-lg"
-                to={"/Dashboard/MakeAnnouncement"}
-              >
+            <Link to={"/Dashboard/MakeAnnouncement"}>
+              <SidebarItem className="flex items-center gap-2 text-lg">
                 <TfiAnnouncement />
                 MakeAnnouncement
-              </Link>
-            </SidebarItem>
+              </SidebarItem>
+            </Link>
 
-            <SidebarItem>
-              <Link
-                className="flex items-center gap-2 text-lg"
-                to={"/Dashboard/ReportedActivities"}
-              >
+            <Link to={"/Dashboard/ReportedActivities"}>
+              <SidebarItem className="flex items-center gap-2 text-lg">
                 <MdReport />
                 Reported Activities
-              </Link>
-            </SidebarItem>
+              </SidebarItem>
+            </Link>
+            
           </SidebarList>
         </SidebarBody>
         <SidebarFooter>
@@ -131,6 +112,7 @@ function Dashboard() {
           </div>
         </SidebarFooter>
       </Sidebar>
+      <DashboardMenu/>
       <Outlet />
     </div>
   );
