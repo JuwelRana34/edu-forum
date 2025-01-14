@@ -38,6 +38,8 @@ function Navbar() {
   useEffect(() => {
     const DynamicTitle = {
       "/": "Home | Edu forum",
+      "/Dashboard": "Dashboard | Edu forum",
+      "/MemberShip": "MemberShip | Edu forum",
     };
     document.title = DynamicTitle[pathname] || "Edu forum";
   }, [pathname]);

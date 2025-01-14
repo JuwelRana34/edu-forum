@@ -6,10 +6,12 @@ import { toast } from "sonner";
 import { FaRegEye, FaRegEyeSlash } from "react-icons/fa";
 import { FaArrowsSpin } from "react-icons/fa6";
 import axios from "axios";
+import useAxiosPublic from "../Hook/useAxiosPublic";
 function Registration() {
   const { Registration, GoogleLogin, UpdateProfile, setIsloading } =
     useContext(UserContext);
   const navigate = useNavigate();
+  const AxiosPublic = useAxiosPublic()
   const [isvisible, setIsVisible] = useState(false);
   const [loading, setLoading] = useState(false);
   const [image, setImage] = useState(null);
@@ -65,8 +67,8 @@ function Registration() {
           email: email.value,
         };
 
-        await AxiosPublic.post("/user", userinfo)
-          .then((data) => {
+        AxiosPublic.post("/user", userinfo)
+          .then(({data}) => {
             console.log(data);
             toast.success("Registered successfully");
             e.target.reset();

@@ -1,5 +1,5 @@
-import React, { useContext } from "react";
-import { Link, Outlet } from "react-router";
+import React, { useContext, useEffect } from "react";
+import { Link, Outlet, useLocation } from "react-router";
 import {
   Avatar,
   AvatarImage,
@@ -22,9 +22,26 @@ import DashboardMenu from "../Components/DashboardMenu";
 function Dashboard() {
   const { user } = useContext(UserContext);
   console.log(user);
+  const {pathname}=useLocation()
+   useEffect(() => {
+      const DynamicTitle = {
+        "/Dashboard": "Dashboard | Edu forum",
+        "/Dashboard/AddPost": "AddPost | Edu forum",
+        "/Dashboard/MyProfile": "MyProfile | Edu forum",
+        "/Dashboard/MyPosts": "MyPosts | Edu forum",
+        "/Dashboard/ManageUsers": "ManageUsers | Edu forum",
+        "/Dashboard/AdminProfile": "AdminProfile | Edu forum",
+        "/Dashboard/MakeAnnouncement": "MakeAnnouncement | Edu forum",
+        "/Dashboard/ReportedActivities": "ReportedActivities | Edu forum",
+        
+      };
+      document.title = DynamicTitle[pathname] || "Edu forum";
+    }, [pathname]);
   return (
-    <div className="md:flex  gap-5">
-      <Sidebar className=" hidden md:block shadow-none h-screen bg-gradient-to-tr from-blue-50 to-white   rounded">
+    <div className="md:flex bg-slate-100  gap-5">
+
+      <div>
+        <Sidebar className="  hidden md:block shadow-none h-screen bg-gradient-to-tr from-blue-50 to-white   rounded">
         <SidebarBody>
           {/* fornormar users routes  */}
 
@@ -112,8 +129,15 @@ function Dashboard() {
           </div>
         </SidebarFooter>
       </Sidebar>
-      <DashboardMenu/>
-      <Outlet />
+
+      <DashboardMenu />
+
+      </div>
+
+     <div>
+       <Outlet/>
+     </div>
+     
     </div>
   );
 }
