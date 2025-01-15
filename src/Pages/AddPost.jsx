@@ -3,13 +3,33 @@ import { Input, Label, Textarea, toast } from "keep-react";
 import Select from "react-select";
 import { useQuery } from "@tanstack/react-query";
 import SecureAxios from "../Hook/SecureAxios";
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import UserContext from "../Context/AuthContext";
+import {Link} from 'react-router'
 function AddPost() {
   const { register, handleSubmit, reset } = useForm();
   const [tagOptions, setTagOptions] = useState([]);
   const [selectOption, setSelectionOption] = useState(null);
-  const { user } = useContext(UserContext);
+  const { user,isLoading:loading } = useContext(UserContext);
+  const [totalpost, setTotalPost]= useState(0)
+  const [membership, setMemberShip]= useState(null)
+  const [isLoading , setIsLoading] = useState(true)
+
+  console.log(totalpost, membership)
+  // check post count
+ useEffect(() => {
+   const result = async () =>
+     await SecureAxios.get(`/checkPostCount?email=${user?.email}
+      `).then(({data}) =>{
+        console.log(data)
+        setTotalPost(data.postCount)
+        setMemberShip(data.membership)
+        setIsLoading(false)
+      })
+   result();
+ }, [user?.email]);
+     
+    
   // tags fetch
   const { data } = useQuery({
     queryKey: ["tags"],
@@ -23,10 +43,9 @@ function AddPost() {
       return result.data;
     },
   });
-
+  
   // form submit func
   const onSubmit = (data) => {
-    
     if (!data.Title) {
       toast.error("Please enter Title");
       return;
@@ -49,30 +68,38 @@ function AddPost() {
       UpVote: 0,
       DownVote: 0,
     };
-      SecureAxios.post(`/post`, postData)
-       .then((res) => {
-          console.log(res);
-          toast.success("Post added successfully");
-          setSelectionOption(null)
-          reset();
-        })
-       .catch((err) => {
-          console.error(err);
-          toast.error("Failed to add post");
-        });
+    SecureAxios.post(`/post`, postData)
+      .then((res) => {
+        toast.success("Post added successfully");
+        setSelectionOption(null);
+        reset();
+      })
+      .catch(({ response }) => {
+        toast.error(response.data.message);
+      });
   };
+
+   if(loading) return <p>loading</p>
+
   return (
     <div>
       <h1 className=" my-10 text-metal-800 text-center text-3xl font-bold capitalize">
         {" "}
         add post{" "}
       </h1>
+      {isLoading ?  <p>isLoading... </p> :
       <div className=" flex justify-center  w-full">
-        <form
+        {totalpost >= 5 && membership !== "gold" ? (
+          <p className="text-red-500">
+            You have already added 5 posts. Please delete some old posts to add
+            more.
+            <Link to={'/MemberShip'} className="btn btn-primary">become a gold member</Link>
+          </p>
+        ) : (
+           <form
           className=" w-10/12 gap-4 md:grid grid-cols-2   "
           onSubmit={handleSubmit(onSubmit)}
         >
-
           <fieldset className="max-w-md space-y-1">
             <Label htmlFor="name">Enter Title</Label>
             <Input
@@ -91,18 +118,16 @@ function AddPost() {
             options={tagOptions}
           />
 
-
           <fieldset className="max-w-md  space-y-1">
             <Label htmlFor="name">Post Description</Label>
             <Textarea
-            className="col-span-2 "
+              className="col-span-2 "
               id="name"
               {...register("Description")}
               placeholder="Enter description"
               type="text"
             />
           </fieldset>
-          
 
           <br />
           <input
@@ -110,7 +135,12 @@ function AddPost() {
             type="submit"
           />
         </form>
+        )}
+       
       </div>
+      
+      }
+      
     </div>
   );
 }

@@ -13,7 +13,7 @@ function AdminProfile() {
 
     await SecureAxios.post(`/tag`, { tag: tag })
       .then(() => {
-        console.log(tag);
+       
         setTag("");
         toast.success("Tags saved successfully");
       })

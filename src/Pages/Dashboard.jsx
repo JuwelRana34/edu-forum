@@ -1,5 +1,5 @@
 import React, { useContext, useEffect } from "react";
-import { Link, Outlet, useLocation } from "react-router";
+import { NavLink, Outlet, useLocation } from "react-router";
 import {
   Avatar,
   AvatarImage,
@@ -46,73 +46,74 @@ function Dashboard() {
 
             {role === "user" && (
               <SidebarList>
-                <Link to={"/"}>
+                <NavLink to={"/"} >
                   <SidebarItem className="flex items-center gap-2 text-lg">
                     <FaHome />
                     Home
                   </SidebarItem>
-                </Link>
+                </NavLink>
 
-                <Link to={"/Dashboard/AddPost"}>
+                <NavLink
+   to={"/Dashboard/AddPost"}>
                   <SidebarItem className="flex items-center gap-2 text-lg">
                     <MdOutlinePostAdd />
                     AddPost
                   </SidebarItem>
-                </Link>
+                </NavLink>
 
-                <Link to={"/Dashboard/MyProfile"}>
+                <NavLink to={"/Dashboard/MyProfile"}>
                   <SidebarItem className="flex items-center gap-2 text-lg">
                     <FaUser />
                     MyProfile
                   </SidebarItem>
-                </Link>
+                </NavLink>
 
-                <Link to={"/Dashboard/MyPosts"}>
+                <NavLink to={"/Dashboard/MyPosts"}>
                   <SidebarItem className="flex items-center gap-2 text-lg">
                     <FaEnvelopeOpenText />
                     MyPosts
                   </SidebarItem>
-                </Link>
+                </NavLink>
               </SidebarList>
             )}
 
             {/* for admin  routs  */}
             {role === "admin" && (
               <SidebarList>
-                <Link to={"/"}>
+                <NavLink to={"/"}>
                   <SidebarItem className="flex items-center gap-2 text-lg">
                     <FaHome />
                     Home
                   </SidebarItem>
-                </Link>
+                </NavLink>
 
-                <Link to={"/Dashboard/ManageUsers"}>
+                <NavLink to={"/Dashboard/ManageUsers"}>
                   <SidebarItem className="flex items-center gap-2 text-lg">
                     <FaUsers />
                     Manage Users
                   </SidebarItem>
-                </Link>
+                </NavLink>
 
-                <Link to={"/Dashboard/AdminProfile"}>
+                <NavLink to={"/Dashboard/AdminProfile"}>
                   <SidebarItem className="flex items-center gap-2 text-lg">
                     <MdAdminPanelSettings />
                     Admin Profile
                   </SidebarItem>
-                </Link>
+                </NavLink>
 
-                <Link to={"/Dashboard/MakeAnnouncement"}>
+                <NavLink to={"/Dashboard/MakeAnnouncement"}>
                   <SidebarItem className="flex items-center gap-2 text-lg">
                     <TfiAnnouncement />
                     MakeAnnouncement
                   </SidebarItem>
-                </Link>
+                </NavLink>
 
-                <Link to={"/Dashboard/ReportedActivities"}>
+                <NavLink to={"/Dashboard/ReportedActivities"}>
                   <SidebarItem className="flex items-center gap-2 text-lg">
                     <MdReport />
                     Reported Activities
                   </SidebarItem>
-                </Link>
+                </NavLink>
               </SidebarList>
             )}
           </SidebarBody>

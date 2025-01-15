@@ -35,8 +35,8 @@ function JoinUs() {
         }
 
         AxiosPublic.post('/user', userinfo)
-        .then((data) =>{
-          console.log(data)
+        .then(() =>{
+         
             navigate("/")
         }).catch((err) => {
             toast.error("An error occurred while creating user.")

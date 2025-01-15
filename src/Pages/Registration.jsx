@@ -68,8 +68,7 @@ function Registration() {
         };
 
         AxiosPublic.post("/user", userinfo)
-          .then(({data}) => {
-            console.log(data);
+          .then(() => {
             toast.success("Registered successfully");
             e.target.reset();
             navigate("/");
@@ -103,8 +102,7 @@ function Registration() {
         };
 
         AxiosPublic.post("/user", userinfo)
-          .then((data) => {
-            console.log(data);
+          .then(() => {          
             toast.success("login successful");
             setIsloading(false);
             navigate("/");
