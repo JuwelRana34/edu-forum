@@ -4,18 +4,19 @@ import UserContext from "../Context/AuthContext";
 import SecureAxios from "../Hook/SecureAxios";
 import useCheckAdmin from "../Routers/useCheckAdmin";
 import Loading from "../Components/Loading";
+import Profile from "../Components/Profile";
 
 function MyProfile() {
   const { user } = useContext(UserContext);
-  const role = useCheckAdmin()
-  const { data: userInfo = {} , isLoading } = useQuery({
+  const role = useCheckAdmin();
+  const { data: userInfo = {}, isLoading } = useQuery({
     queryKey: ["userinfo"],
     queryFn: async () => {
       const res = await SecureAxios.get(`/user?email=${user.email}`);
       return res.data;
     },
   });
-  const { data:recentPost = [] } = useQuery({
+  const { data: recentPost = [] } = useQuery({
     queryKey: ["userRecentPost", user?.email],
     queryFn: async () => {
       const res = await SecureAxios.get(`/user/recentPost?email=${user.email}`);
@@ -23,44 +24,22 @@ function MyProfile() {
     },
   });
 
- if(isLoading) return <Loading/>
+  if (isLoading) return <Loading />;
 
   return (
     <div>
-      <div>
-        <h2 className="text-4xl font-bold text-center my-5">welcome back! <span className="text-green-500">{userInfo.name}</span></h2>
-        <h1> you member since - { new Date(userInfo.createdAt).toDateString() }</h1>
-        {/* Your profile information goes here */}
-        <div>
-          <img className="w-24 h-24 rounded-md" src={userInfo.photo} alt="" />
-          <div className="flex gap-4 items-center">
-            <span>badges: </span>
-           {userInfo.badge !== "gold"? <img
-            className="h-10 w-10"
-            src="https://cdn-icons-png.flaticon.com/128/12927/12927172.png"
-            alt=""
-          />: 
-          <img
-            className="h-10 w-10"
-            src="https://cdn-icons-png.flaticon.com/128/6369/6369589.png"
-            alt=""
-          />
-           }
-          </div>
-          
-        </div>
-
-        {recentPost.map(post => {
-          return (
-            <div key={post._id} className="my-5">
-              <h3>{post.Title}</h3>
-              <p>{post.description}</p>
-              <p>Posted on: {new Date(post.createdAt).toLocaleString()}</p>
-            </div>
-          );
-        })}
-        
-      </div>
+      {" "}
+      <h2 className=" text-2xl md:text-4xl font-bold text-center my-5">
+        welcome back! <span className="text-green-500">{userInfo.name}</span>
+      </h2>
+      <Profile
+        photo={userInfo.photo}
+        name={userInfo.name}
+        badge={userInfo.badge}
+        role={role}
+        createdAt={userInfo.createdAt}
+        recentPost={recentPost}
+      />
     </div>
   );
 }

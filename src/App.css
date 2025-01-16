@@ -13,3 +13,10 @@
    
     color: #fff;
 }
+
+hr {
+    background-color: #afbaca;
+    border: none;
+    height: 2px;
+    margin: 5px 0;
+}

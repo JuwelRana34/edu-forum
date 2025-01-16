@@ -1,11 +1,24 @@
 import { Description, Field, Input, Label, Button } from "@headlessui/react";
 import clsx from "clsx";
-import { useEffect, useState } from "react";
+import { useContext, useState } from "react";
 import { toast } from "keep-react";
 import SecureAxios from "../Hook/SecureAxios";
+import UserContext from "../Context/AuthContext";
+import useCheckAdmin from "../Routers/useCheckAdmin";
+import { useQuery } from "@tanstack/react-query";
+import Profile from "../Components/Profile";
 
 function AdminProfile() {
   const [tag, setTag] = useState("");
+  const { user } = useContext(UserContext);
+  const role = useCheckAdmin()
+  const { data: userInfo = {} , isLoading } = useQuery({
+    queryKey: ["userinfo"],
+    queryFn: async () => {
+      const res = await SecureAxios.get(`/user?email=${user.email}`);
+      return res.data;
+    },
+  });
 
   const handelTagPost = async () => {
     if (tag === "" || undefined || null)
@@ -24,6 +37,8 @@ function AdminProfile() {
   };
   return (
     <div>
+       <Profile photo={userInfo.photo} name={userInfo.name} badge={userInfo.badge} role={role} createdAt={userInfo.createdAt} 
+      />
       {/* post tags */}
       <div className="w-full max-w-md px-4 ">
         <Field>

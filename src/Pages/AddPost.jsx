@@ -82,7 +82,7 @@ function AddPost() {
    if(loading) return <p>loading</p>
 
   return (
-    <div>
+    <div className="min-h-screen">
       <h1 className=" my-10 text-metal-800 text-center text-3xl font-bold capitalize">
         {" "}
         add post{" "}
