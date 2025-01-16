@@ -4,10 +4,13 @@ import { useContext, useEffect, useState } from "react";
 import SecureAxios from "../../Hook/SecureAxios";
 import UserContext from "../../Context/AuthContext";
 import {toast} from "keep-react"
+import { ModalComponent } from "../ModalComponent";
 const CheckoutForm = () => {
   const { user } = useContext(UserContext);
   const amount = 5;
   const [clientSecret, setClientSecret] = useState("");
+  const [isOpen, setIsOpen] = useState(false);
+  const [loadingbtn, isloadingbtn] = useState(false)
 
   useEffect(() => {
     const getPaymentIntent = async () => {
@@ -20,13 +23,14 @@ const CheckoutForm = () => {
     };
     getPaymentIntent();
   }, []);
-  console.log(clientSecret)
+
   const stripe = useStripe();
   const elements = useElements();
 
   const handleSubmit = async (event) => {
     // Block native form submission.
     event.preventDefault();
+    isloadingbtn(true)
 
     if (!stripe || !elements) {
       // Stripe.js has not loaded yet. Make sure to disable
@@ -71,17 +75,22 @@ const CheckoutForm = () => {
                 email: user?.email,
             })
             
-            toast.success(res.data)
+            // toast.success(res.data)
+            isloadingbtn(false);
+            setIsOpen(true)
+          
             
         } catch (error) {
             console.log(error)
+            isloadingbtn(false);
           toast.error("Payment failed. Please try again.")
         }
     }
   };
 
   return (
-    <form className=" mx-auto px-5  md:w-1/2" onSubmit={handleSubmit}>
+    <>
+    <form className=" mx-auto px-5 border  lg:w-4/6 rounded-md py-5 shadow " onSubmit={handleSubmit}>
       <CardElement
         options={{
           style: {
@@ -98,10 +107,16 @@ const CheckoutForm = () => {
           },
         }}
       />
-      <button id="paybtn" type="submit" disabled={!stripe}>
+      <button className={` ${loadingbtn &&"disabled:cursor-not-allowed disabled" } `} id="paybtn" type="submit" disabled={!stripe || loadingbtn}>
         $5 Pay
       </button>
     </form>
+    <ModalComponent
+       isOpen={isOpen}
+       onClose={() => setIsOpen(false)}
+      />
+    </>
+    
   );
 };
 

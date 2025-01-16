@@ -3,11 +3,12 @@ import { useContext } from "react";
 import UserContext from "../Context/AuthContext";
 import SecureAxios from "../Hook/SecureAxios";
 import useCheckAdmin from "../Routers/useCheckAdmin";
+import Loading from "../Components/Loading";
 
 function MyProfile() {
   const { user } = useContext(UserContext);
   const role = useCheckAdmin()
-  const { data: userInfo = {} } = useQuery({
+  const { data: userInfo = {} , isLoading } = useQuery({
     queryKey: ["userinfo"],
     queryFn: async () => {
       const res = await SecureAxios.get(`/user?email=${user.email}`);
@@ -22,7 +23,7 @@ function MyProfile() {
     },
   });
 
-
+ if(isLoading) return <Loading/>
 
   return (
     <div>
