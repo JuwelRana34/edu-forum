@@ -15,6 +15,7 @@ import ReportedActivities from "../Pages/ReportedActivities";
 import ManageUsers from "../Pages/ManageUsers";
 import MakeAnnouncement from "../Pages/MakeAnnouncement";
 import useCheckAdmin from "./useCheckAdmin";
+import Adminprivet from "./Adminprivet";
 
 const AppRoute = () => {
   const role = useCheckAdmin();
@@ -23,14 +24,35 @@ const AppRoute = () => {
       <Route path="/" element={<App />}>
         <Route index element={<Home />} />
         <Route path="JoinUs" element={<JoinUs />} />
-        <Route path="MemberShip" element={<MemberShip />} />
+        <Route
+          path="MemberShip"
+          element={
+            <PrivetRoute>
+              <MemberShip />
+            </PrivetRoute>
+          }
+        />
 
         <Route path="registration" element={<Registration />} />
       </Route>
 
-      <Route path="Dashboard" element={<Dashboard />}>
+      <Route
+        path="Dashboard"
+        element={
+          <PrivetRoute>
+            <Dashboard />
+          </PrivetRoute>
+        }
+      >
         {role === "admin" ? (
-          <Route index element={<AdminProfile />} />
+          <Route
+            index
+            element={
+              <Adminprivet>
+                <AdminProfile />
+              </Adminprivet>
+            }
+          />
         ) : (
           <Route index element={<MyProfile />} />
         )}
@@ -42,10 +64,39 @@ const AppRoute = () => {
 
         {/* admin routs  */}
 
-        <Route path="AdminProfile" element={<AdminProfile />} />
-        <Route path="ManageUsers" element={<ManageUsers />} />
-        <Route path="MakeAnnouncement" element={<MakeAnnouncement />} />
-        <Route path="ReportedActivities" element={<ReportedActivities />} />
+        <Route
+          path="AdminProfile"
+          element={
+            <Adminprivet>
+              <AdminProfile />
+            </Adminprivet>
+          }
+        />
+        <Route
+          path="ManageUsers"
+          element={
+            <Adminprivet>
+              <ManageUsers />
+            </Adminprivet>
+          }
+        />
+
+        <Route
+          path="MakeAnnouncement"
+          element={
+            <Adminprivet>
+              <MakeAnnouncement />
+            </Adminprivet>
+          }
+        />
+        <Route
+          path="ReportedActivities"
+          element={
+            <Adminprivet>
+              <ReportedActivities />
+            </Adminprivet>
+          }
+        />
       </Route>
       <Route path="*" element={<Not_found />} />
     </Routes>

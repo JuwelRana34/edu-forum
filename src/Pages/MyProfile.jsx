@@ -34,7 +34,7 @@ function MyProfile() {
           <img className="w-24 h-24 rounded-md" src={userInfo.photo} alt="" />
           <div className="flex gap-4 items-center">
             <span>badges: </span>
-           {role === "user"? <img
+           {userInfo.badge !== "gold"? <img
             className="h-10 w-10"
             src="https://cdn-icons-png.flaticon.com/128/12927/12927172.png"
             alt=""

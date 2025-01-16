@@ -18,7 +18,7 @@ function PrivetRoute({ children }) {
   }
 
   if (!user) {
-    return <Navigate state={location.pathname} to="/login"></Navigate>;
+    return <Navigate state={location.pathname} to="/JoinUs"></Navigate>;
   }
   return children;
 }

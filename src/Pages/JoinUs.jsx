@@ -93,7 +93,7 @@ function JoinUs() {
         <div className="text-center">
           <Button
             onClick={handleGoogleLogin}
-            className=" hover:bg-slate-50 dark:hover:bg-metal-700 space-x-2 mb-5 w-[80%] mx-auto border text-gray-800 "
+            className=" hover:bg-slate-50 dark:hover:bg-metal-700 space-x-2 mb-5 w-[80%] mx-auto border  text-gray-800 "
           >
             <img
               className="w-6"

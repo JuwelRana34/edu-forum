@@ -98,7 +98,7 @@ const CheckoutForm = () => {
           },
         }}
       />
-      <button type="submit" disabled={!stripe}>
+      <button id="paybtn" type="submit" disabled={!stripe}>
         $5 Pay
       </button>
     </form>
