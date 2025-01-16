@@ -81,7 +81,7 @@ const CheckoutForm = () => {
   };
 
   return (
-    <form onSubmit={handleSubmit}>
+    <form className=" mx-auto px-5  md:w-1/2" onSubmit={handleSubmit}>
       <CardElement
         options={{
           style: {

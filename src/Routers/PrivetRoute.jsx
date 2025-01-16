@@ -2,6 +2,7 @@ import { useContext } from "react";
 
 import { Navigate, useLocation } from "react-router";
 import UserContext from "../Context/AuthContext";
+import Loading from "../Components/Loading";
 // import Loading from '../Components/Loading'
 
 // eslint-disable-next-line react/prop-types
@@ -11,9 +12,7 @@ function PrivetRoute({ children }) {
 
   if (isLoading) {
     return (
-      <p className="text-center text-xl font-semibold animate-pulse">
-        loading...
-      </p>
+    <Loading/>
     );
   }
 
