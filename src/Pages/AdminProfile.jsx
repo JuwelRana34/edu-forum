@@ -37,7 +37,12 @@ function AdminProfile() {
   };
   return (
     <div>
-       <Profile photo={userInfo.photo} name={userInfo.name} badge={userInfo.badge} role={role} createdAt={userInfo.createdAt} 
+       <Profile photo={userInfo.photo}
+        name={userInfo.name}
+         badge={userInfo.badge}
+          role={role}
+           createdAt={userInfo.createdAt}
+           email={userInfo.email} 
       />
       {/* post tags */}
       <div className="w-full max-w-md px-4 ">

@@ -1,6 +1,7 @@
 import React from "react";
+import PostCard from "./PostCard";
 
-function Profile({ photo, name, badge, role, createdAt, recentPost }) {
+function Profile({ photo, name, badge, role, createdAt, recentPost,email }) {
   return (
     <div className=" m-2 md:my-5">
       <h2 className=" text-xl md:text-3xl font-bold capitalize my-5">user Profile</h2>
@@ -16,7 +17,7 @@ function Profile({ photo, name, badge, role, createdAt, recentPost }) {
             alt=""
             srcset=""
           />
-          <div className=" space-y-2">
+          <div className=" space-y-1">
             <h2 className="flex gap-2 items-center text-2xl font-semibold">
               {name}
               {badge !== "gold" ? (
@@ -40,6 +41,7 @@ function Profile({ photo, name, badge, role, createdAt, recentPost }) {
             >
               {badge === "gold" ? "Gold" : "General"} Member
             </p>
+            <p className=" font-semibold">{email}</p>
           </div>
         </div>
         <h2 className="font-semibold text-lg">
@@ -49,6 +51,11 @@ function Profile({ photo, name, badge, role, createdAt, recentPost }) {
           <div>
             <h2 className="h2">recent posts: </h2>
             <hr />
+            {/* recent posts  */}
+            
+
+
+    
             {recentPost.map((post) => {
               return (
                 <div key={post._id} className="my-5">
@@ -58,6 +65,8 @@ function Profile({ photo, name, badge, role, createdAt, recentPost }) {
                 </div>
               );
             })}
+
+            <PostCard/>
           </div>
         )}
       </div>

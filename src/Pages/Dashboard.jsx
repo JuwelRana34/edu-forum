@@ -136,7 +136,7 @@ function Dashboard() {
         <DashboardMenu />
       </div>
 
-      <div className="md:w-[80%]  ">
+      <div className="md:w-[80%] h-screen overflow-hidden overflow-y-scroll ">
         <Outlet />
       </div>
     </div>

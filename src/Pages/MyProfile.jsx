@@ -28,7 +28,7 @@ function MyProfile() {
 
   return (
     <div>
-      {" "}
+      
       <h2 className=" text-2xl md:text-4xl font-bold text-center my-5">
         welcome back! <span className="text-green-500">{userInfo.name}</span>
       </h2>
@@ -39,6 +39,7 @@ function MyProfile() {
         role={role}
         createdAt={userInfo.createdAt}
         recentPost={recentPost}
+        email={userInfo.email}
       />
     </div>
   );
