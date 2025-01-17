@@ -6,11 +6,13 @@ import SecureAxios from "../Hook/SecureAxios";
 import { useContext, useEffect, useState } from "react";
 import UserContext from "../Context/AuthContext";
 import {Link} from 'react-router'
+import Loading from "../Components/Loading";
+import { IoWarningOutline } from "react-icons/io5";
 function AddPost() {
   const { register, handleSubmit, reset } = useForm();
   const [tagOptions, setTagOptions] = useState([]);
   const [selectOption, setSelectionOption] = useState(null);
-  const { user,isLoading:loading } = useContext(UserContext);
+  const { user} = useContext(UserContext);
   const [totalpost, setTotalPost]= useState(0)
   const [membership, setMemberShip]= useState(null)
   const [isLoading , setIsLoading] = useState(true)
@@ -73,13 +75,14 @@ function AddPost() {
         toast.success("Post added successfully");
         setSelectionOption(null);
         reset();
+        
       })
       .catch(({ response }) => {
         toast.error(response.data.message);
       });
   };
 
-   if(loading) return <p>loading</p>
+
 
   return (
     <div className="min-h-screen">
@@ -87,14 +90,18 @@ function AddPost() {
         {" "}
         add post{" "}
       </h1>
-      {isLoading ?  <p>isLoading... </p> :
+      {isLoading ? <Loading/> :
       <div className=" flex justify-center  w-full">
         {totalpost >= 5 && membership !== "gold" ? (
-          <p className="text-red-500">
-            You have already added 5 posts. Please delete some old posts to add
-            more.
-            <Link to={'/MemberShip'} className="btn btn-primary">become a gold member</Link>
-          </p>
+          <div className=" text-center">
+             <h2 className="text-red-500 h2 mb-2 ">
+             <IoWarningOutline className=" inline text-3xl" /> You have already added 5 posts. Please delete some old posts to add
+            more or become a gold member to add more posts.
+          </h2>
+
+          <Link to={'/MemberShip'} className="button ">become a gold member</Link>
+          </div>
+         
         ) : (
            <form
           className=" w-10/12 gap-4 md:grid grid-cols-2   "

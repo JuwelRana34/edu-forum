@@ -16,6 +16,7 @@ import ManageUsers from "../Pages/ManageUsers";
 import MakeAnnouncement from "../Pages/MakeAnnouncement";
 import useCheckAdmin from "./useCheckAdmin";
 import Adminprivet from "./Adminprivet";
+import Comments from "../Pages/Comments";
 
 const AppRoute = () => {
   const role = useCheckAdmin();
@@ -34,6 +35,7 @@ const AppRoute = () => {
         />
 
         <Route path="registration" element={<Registration />} />
+        <Route path="comments/:postId" element={<PrivetRoute><Comments /></PrivetRoute>} />
       </Route>
 
       <Route
@@ -61,6 +63,7 @@ const AppRoute = () => {
 
         <Route path="MyProfile" element={<MyProfile />} />
         <Route path="AddPost" element={<AddPost />} />
+        
 
         {/* admin routs  */}
 

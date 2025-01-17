@@ -1,22 +1,26 @@
 import { useQuery } from '@tanstack/react-query'
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow, toast } from 'keep-react'
 import SecureAxios from '../Hook/SecureAxios'
-import { useContext } from 'react'
+import { useContext, useState } from 'react'
 import UserContext from '../Context/AuthContext'
 import {Link} from "react-router"
 function MyPosts() {
   const {user} = useContext(UserContext)
-  const {data:myPost = [], refetch}= useQuery({
-    queryKey: ['myPosts'],
+  const [page, setPage] = useState(1);
+  const {data:myPost = {}, refetch}= useQuery({
+    queryKey: ['myPosts', page],
     queryFn: async () => {
-      const response = await SecureAxios.get(`/mypost?email=${user.email}`)
+      const response = await SecureAxios.get(`/mypost?email=${user.email}&page=${page}`)
       return response.data
     }
   })
 
+  const {items=[],totalPages } = myPost
+
   const handeldelete = async (id)=>{
-   await SecureAxios.delete(`/deleteMyPost/${id}`)
-      .then(() => {
+   await SecureAxios.delete(`/deleteMyPost/${id}?email=${user.email}`)
+      .then((data) => {
+        console.log(data)
         refetch()
         toast.success("Successfully deleted")
       }).catch(err=>{
@@ -46,14 +50,14 @@ function MyPosts() {
         </TableRow>
       </TableHeader>
       <TableBody>
-        {myPost.map((item) => (
-          <TableRow key={item.id}>
+        {items.map((item) => (
+          <TableRow key={item._id}>
             <TableCell>
               <div className="max-w-[250px] truncate">{item.Title}</div>
             </TableCell>
             <TableCell>{item.UpVote + item.DownVote}</TableCell>
             <TableCell>
-              <Link className='button' to={''}>Comment</Link>
+              <Link className='button' to={`/comments/${item._id }`}>Comment</Link>
               </TableCell>
             <TableCell>
             <button onClick={()=>handeldelete(item._id)} className='button bg-rose-500' >Delete</button>
@@ -63,6 +67,27 @@ function MyPosts() {
         ))}
       </TableBody>
     </Table>
+
+    {/* Pagination Controls */}
+    <div className="flex justify-center gap-4 py-4">
+        <button
+          className="button"
+          onClick={() => setPage((prev) => Math.max(prev - 1, 1))}
+          disabled={page === 1}
+        >
+          Previous
+        </button>
+        <span>
+          Page {page} of {totalPages}
+        </span>
+        <button
+          className="button"
+          onClick={() => setPage((prev) => Math.min(prev + 1, totalPages))}
+          disabled={page === totalPages}
+        >
+          Next
+        </button>
+      </div>
     </div>
   )
 }

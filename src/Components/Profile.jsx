@@ -1,7 +1,7 @@
 import React from "react";
 import PostCard from "./PostCard";
 
-function Profile({ photo, name, badge, role, createdAt, recentPost,email }) {
+function Profile({ userInfo, photo, name, badge, role, createdAt, recentPost,email }) {
   return (
     <div className=" m-2 md:my-5">
       <h2 className=" text-xl md:text-3xl font-bold capitalize my-5">user Profile</h2>
@@ -55,7 +55,7 @@ function Profile({ photo, name, badge, role, createdAt, recentPost,email }) {
             
 
 
-    
+{/*     
             {recentPost.map((post) => {
               return (
                 <div key={post._id} className="my-5">
@@ -64,9 +64,9 @@ function Profile({ photo, name, badge, role, createdAt, recentPost,email }) {
                   <p>Posted on: {new Date(post.createdAt).toLocaleString()}</p>
                 </div>
               );
-            })}
+            })} */}
 
-            <PostCard/>
+            <PostCard userInfo={userInfo} recentPost={recentPost}/>
           </div>
         )}
       </div>

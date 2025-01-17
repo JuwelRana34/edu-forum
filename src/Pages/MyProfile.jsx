@@ -33,6 +33,8 @@ function MyProfile() {
         welcome back! <span className="text-green-500">{userInfo.name}</span>
       </h2>
       <Profile
+      
+      userInfo = {userInfo}
         photo={userInfo.photo}
         name={userInfo.name}
         badge={userInfo.badge}
