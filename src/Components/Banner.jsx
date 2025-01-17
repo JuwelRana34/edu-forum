@@ -1,6 +1,6 @@
 import React from "react";
 
-function Banner() {
+function Banner({search}) {
   return (
   
       <div

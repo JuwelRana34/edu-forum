@@ -80,7 +80,8 @@ function Navbar() {
   );
 
   return (
-    <div className="navbar z-[9999] container mx-auto py-4 sticky top-0 backdrop-blur bg-white/35">
+    <nav className="backdrop-blur bg-white/35 z-[9999] sticky top-0">
+      <div className="navbar  container mx-auto py-4  ">
       <div className="navbar-start">
         <div className="dropdown">
           <div
@@ -160,6 +161,8 @@ function Navbar() {
        }
       </div>
     </div>
+    </nav>
+    
   );
 }
 

@@ -1,6 +1,6 @@
 import React from "react";
 import { SlDislike, SlLike } from "react-icons/sl";
-import { GoComment } from "react-icons/go";
+
 const PostCard = ({
     userInfo,
     recentPost
