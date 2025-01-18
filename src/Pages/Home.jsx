@@ -5,26 +5,66 @@ import Banner from "../Components/Banner";
 import { useState } from "react";
 import { BiSolidUpvote } from "react-icons/bi";
 import { BiSolidDownvote } from "react-icons/bi";
+import Loading from '../Components/Loading'
+import DataNotFound from '../Components/DataNotFound';
 function Home() {
  const [tag, setTag] = useState('')
  const [search, setSearch] = useState('')
+ const [AllPosts , setAllPosts]= useState([])
+ const [sortByPopularity, setSortByPopularity] = useState(false);
 
+  // get popular posts
+  // const Popularity = ()=>{
+  //   const {  } = useQuery({
+  //   queryKey: ["popularPosts"],
+  //   queryFn: async () => {
+  //     const result = await SecureAxios.get(`/sortByPopularity`);
+  //     console.log(result.data)
+  //     setAllPosts(result.data)
+  //     return result.data;
+  //   },
+  // });
+  // }
+  
   // get all posts
-  const {data:AllPosts =[], isLoading}= useQuery({ queryKey: ["allPosts"], queryFn: async()=>{
-    const result = await  SecureAxios.get(`/AllPost?tag=${tag}&search=${search}`);
+  const {data, isLoading}= useQuery({
+     queryKey: ["allPosts", tag , search,sortByPopularity],
+      queryFn: async()=>{
+        const api = sortByPopularity ? `/sortByPopularity` : `/AllPost?tag=${tag}&search=${search}`;
+        
+    const result = await  SecureAxios.get(api);
+    setAllPosts(result.data)
     return result.data;
   } });
+
+  //get tag 
+  const { data:tags = [] } = useQuery({
+    queryKey: ["tags"],
+    queryFn: async () => {
+      const result = await SecureAxios.get(`/tag`);
+      
+      return result.data;
+    },
+  });
 
 //  if (isLoading) return  <h1>loadingg...</h1>
   return (
     <div className=" container mx-auto">
-      <Banner search={search}/>
+      <Banner setSearch={setSearch}/>
 
       {/* post section  */}
       <section className="md:flex bg-metal-50">
         <div className=" space-y-5 p-5 md:w-[70%]">
-         {AllPosts.map(item =>(
-          <div className=" w-full mx-auto border rounded-lg shadow-lg p-4 bg-white">
+          {isLoading ? <Loading/> :
+          <>
+         {AllPosts.length <= 0 ? <DataNotFound search={search}/>:
+           <> 
+           <div className='text-end'>
+
+           <button onClick={()=>setSortByPopularity(true)}  className=' button shadow bg-white text-metal-700 capitalize '>Sort by Popularity</button>
+           </div>
+           {AllPosts.map(item =>(
+          <div key={item._id} className=" w-full mx-auto border rounded-lg shadow-lg p-4 bg-white">
                   <div className="flex justify-between items-center mb-2">
                     <div className='flex items-center gap-2'>
                       
@@ -61,10 +101,34 @@ function Home() {
                     
                   </div>
                 </div>
-         ))}  
+         ))}
+           </>
+         }
+           
+          </>
+          }
+          
       </div>
-      <div className="bg-blue-200 p-5 md:w-[30%]">
-        categoryu
+      <div className="  p-5 md:w-[30%]">
+        <div className='bg-white h-full rounded  py-5 flex flex-col  gap-5'>
+
+        <button onClick={()=>setTag('')} className='bg-gray-200 w-1/2 mx-auto rounded py-2 font-semibold focus:bg-emerald-100'>All </button>
+        {
+          tags.map(tag => (
+            <button
+              key={tag._id}
+              onClick={() =>{ 
+                setSortByPopularity(false)
+                setTag(tag.tag)
+              }}
+              className={` focus:bg-emerald-100 bg-gray-200 rounded py-2 font-semibold  w-1/2 mx-auto`}
+            >
+              {tag.tag}
+            </button>
+            
+          ))
+          }
+        </div>
       </div>
       </section>
       
