@@ -80,7 +80,7 @@ function Navbar() {
   );
 
   return (
-    <nav className="backdrop-blur bg-white/35 z-[9999] sticky top-0">
+    <nav className="backdrop-blur bg-white/35 z-[999] sticky top-0">
       <div className="navbar  container mx-auto py-4  ">
       <div className="navbar-start">
         <div className="dropdown">
@@ -120,7 +120,8 @@ function Navbar() {
 
           <Link
             to={"/"}
-            className="btn text-black text-xl btn-ghost p-2 dark:text-metal-300 md:text-3xl font-bold font-berkshire"
+           
+            className="btn Logo font-[ Rowdies] text-black text-xl btn-ghost p-2 dark:text-metal-300 md:text-3xl font-bold font-berkshire"
           >
            Edu Forum
           </Link>
@@ -143,7 +144,7 @@ function Navbar() {
                     alt={user.displayName}
                   />
                 </DropdownAction>
-                <DropdownContent>               
+                <DropdownContent className="dropdown">               
                   <h1 className="font-semibold text-metal-600">Hey! {user.displayName}</h1>
                   <DropdownDivider />
                   <DropdownGroup>

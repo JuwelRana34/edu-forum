@@ -30,8 +30,8 @@ const PostCard = ({
             <p className="text-sm text-gray-500">{userInfo.email}</p>
           </div>
         </div>
-        <p className="text-gray-800 mb-6">
-          {itme.Description.toString(0, 150)}...
+        <p className="text-gray-800  mb-6">
+          {itme.Description.substring(0,180) }...
         </p>
         <div className="flex justify-between items-center">
           <div className="flex space-x-3 text-gray-600">
