@@ -1,10 +1,17 @@
+import { useState } from "react";
 import { CiSearch } from "react-icons/ci";
 function Banner({ setSearch }) {
-  // const handleKeyDown = (e) => {
-  //   if (e.key === "Enter") {
-  //     setSearch(e.target.value);
-  //   }
-  // };
+  const [inputValue, setInputValue] = useState("")
+  const handleKeyDown = (e) => {
+    if (e.key === "Enter") {
+      setSearch(inputValue);
+    }
+  };
+
+ ;
+  const handleSearch = () => {
+    setSearch(inputValue); 
+  }
 
   return (
     <div
@@ -21,12 +28,16 @@ function Banner({ setSearch }) {
           <p className="mb-5">
             <label className="input bg-white/65  text-gray-900 input-bordered flex items-center gap-2">
               <input
-              onBlur={(e)=>setSearch(e.target.value)}
+              
+             value={inputValue}
+             onChange={(e) => setInputValue(e.target.value)}
+             onKeyDown={handleKeyDown}
                 type="text"
+                name="search"
                 className="grow placeholder:text-gray-800"
                 placeholder="Search"
               />
-              <button onClick={(e)=>setSearch(e.target.value)} className="bg-white p-2 rounded-md hover:bg-blue-100">
+              <button  onClick={handleSearch}  className="bg-white p-2 rounded-md hover:bg-blue-100">
                 
               <CiSearch className="text-xl" />
               </button>

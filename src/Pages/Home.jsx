@@ -2,40 +2,39 @@ import {Link} from 'react-router'
 import SecureAxios from "../Hook/SecureAxios";
 import { useQuery } from '@tanstack/react-query'
 import Banner from "../Components/Banner";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { BiSolidUpvote } from "react-icons/bi";
 import { BiSolidDownvote } from "react-icons/bi";
 import Loading from '../Components/Loading'
 import DataNotFound from '../Components/DataNotFound';
+import useAxiosPublic from '../Hook/useAxiosPublic';
+import axios from 'axios';
 function Home() {
  const [tag, setTag] = useState('')
  const [search, setSearch] = useState('')
  const [AllPosts , setAllPosts]= useState([])
  const [sortByPopularity, setSortByPopularity] = useState(false);
 
-  // get popular posts
-  // const Popularity = ()=>{
-  //   const {  } = useQuery({
-  //   queryKey: ["popularPosts"],
-  //   queryFn: async () => {
-  //     const result = await SecureAxios.get(`/sortByPopularity`);
-  //     console.log(result.data)
-  //     setAllPosts(result.data)
-  //     return result.data;
-  //   },
-  // });
-  // }
-  
-  // get all posts
-  const {data, isLoading}= useQuery({
-     queryKey: ["allPosts", tag , search,sortByPopularity],
-      queryFn: async()=>{
-        const api = sortByPopularity ? `/sortByPopularity` : `/AllPost?tag=${tag}&search=${search}`;
-        
-    const result = await  SecureAxios.get(api);
-    setAllPosts(result.data)
-    return result.data;
-  } });
+
+  const { data:Posts = [],isLoading } = useQuery({
+    queryKey: ["posts", tag, search],
+    queryFn: async () => {
+      const result = await axios.get(`${import.meta.env.VITE_API}/AllPost?tag=${tag}&search=${search}`);
+       setAllPosts(result.data)
+      return result.data;
+    },
+  });
+
+ const {data }= useQuery({
+   queryKey: ["filterPopulerPost"],
+   enabled: sortByPopularity,
+    queryFn: async () => {
+      const result = await axios.get(`${import.meta.env.VITE_API}/sortByPopularity`);
+       setAllPosts(result.data)
+      return result.data;
+    },
+  });
+ 
 
   //get tag 
   const { data:tags = [] } = useQuery({
@@ -47,7 +46,6 @@ function Home() {
     },
   });
 
-//  if (isLoading) return  <h1>loadingg...</h1>
   return (
     <div className=" container mx-auto">
       <Banner setSearch={setSearch}/>
@@ -80,7 +78,7 @@ function Home() {
                     </div>
                     <div>
                       <p className="font-bold">{item.Author_Name}</p>
-                      {/* <p className="text-sm text-gray-500">{item.Author_Email}</p> */}
+                     
                     </div>
                   
                   </div>
@@ -112,13 +110,18 @@ function Home() {
       <div className="  p-5 md:w-[30%]">
         <div className='bg-white h-full rounded  py-5 flex flex-col  gap-5'>
 
-        <button onClick={()=>setTag('')} className='bg-gray-200 w-1/2 mx-auto rounded py-2 font-semibold focus:bg-emerald-100'>All </button>
+        <button onClick={()=>{
+          setSortByPopularity(false)
+          setSearch('')
+          setTag('')
+        } } className='bg-gray-200 w-1/2 mx-auto rounded py-2 font-semibold focus:bg-emerald-100'>All </button>
         {
           tags.map(tag => (
             <button
               key={tag._id}
               onClick={() =>{ 
                 setSortByPopularity(false)
+                setSearch('')
                 setTag(tag.tag)
               }}
               className={` focus:bg-emerald-100 bg-gray-200 rounded py-2 font-semibold  w-1/2 mx-auto`}

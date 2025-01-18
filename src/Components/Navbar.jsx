@@ -138,7 +138,7 @@ function Navbar() {
               <Dropdown>
                 <DropdownAction asChild>
                   <img
-                    className=" rounded-full h-12 ring-2 ring-blue-500  shadow-lg w-12"
+                    className=" rounded-full h-12 ring-2 ring-blue-500   shadow-lg w-12"
                     src={user.photoURL}
                     alt={user.displayName}
                   />

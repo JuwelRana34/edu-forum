@@ -1,5 +1,5 @@
-import React from "react";
-import { useContext, useState } from "react";
+import React, { useContext, useState } from "react";
+import { useForm } from "react-hook-form";
 import UserContext from "../Context/AuthContext";
 import { Link, useNavigate } from "react-router";
 import { toast } from "sonner";
@@ -7,40 +7,48 @@ import { FaRegEye, FaRegEyeSlash } from "react-icons/fa";
 import { FaArrowsSpin } from "react-icons/fa6";
 import axios from "axios";
 import useAxiosPublic from "../Hook/useAxiosPublic";
+
 function Registration() {
-  const { Registration, GoogleLogin, UpdateProfile, setIsloading } =
-    useContext(UserContext);
+  const { Registration, GoogleLogin, UpdateProfile, setIsloading } = useContext(UserContext);
   const navigate = useNavigate();
-  const AxiosPublic = useAxiosPublic()
+  const AxiosPublic = useAxiosPublic();
   const [isvisible, setIsVisible] = useState(false);
   const [loading, setLoading] = useState(false);
-  const [image, setImage] = useState(null);
 
-  const handleRegistration = async (e) => {
-    e.preventDefault();
+  const {
+    register,
+    handleSubmit,
+    watch,
+    reset,
+    formState: { errors },
+  } = useForm();
+
+  const image = watch("image");
+
+  const handleRegistration = async (data) => {
     setLoading(true);
-    const { name, email, password } = e.target;
-    const passwordRegex = /^(?=.*[A-Z])(?=.*[a-z]).{6,}$/;
+    const { name, email, password, image } = data;
 
-    if (!passwordRegex.test(password.value)) {
+    const passwordRegex = /^(?=.*[A-Z])(?=.*[a-z]).{6,}$/;
+    if (!passwordRegex.test(password)) {
       setLoading(false);
       return toast.error(
         "Password should be at least 6 characters long and contain at least one uppercase letter and one lowercase letter."
       );
     }
 
-    if (!image) {
+    if (!image[0]) {
       setLoading(false);
       return toast.error("Please select an image.");
     }
 
     try {
-      // Register the user first
-      await Registration(email.value, password.value);
+      // Register the user
+      await Registration(email, password);
 
       // Upload the image
       const formData = new FormData();
-      formData.append("image", image); // Append the selected image to the form data
+      formData.append("image", image[0]);
 
       const response = await axios.post(
         "https://api.imgbb.com/1/upload",
@@ -57,26 +65,16 @@ function Registration() {
 
       if (response.data.success) {
         const imageUrl = response.data.data.url;
-        console.log("Image uploaded successfully:", imageUrl);
-        // Update the user's profile with the uploaded image
-        await UpdateProfile(name.value, imageUrl);
 
-        const userinfo = {
-          name: name.value,
-          photo: imageUrl,
-          email: email.value,
-        };
+        // Update the user's profile
+        await UpdateProfile(name, imageUrl);
 
-        AxiosPublic.post("/user", userinfo)
-          .then(() => {
-            toast.success("Registered successfully");
-            e.target.reset();
-            navigate("/");
-          })
-          .catch((err) => {
-            toast.error("An error occurred while creating user.");
-            console.error(err);
-          });
+        const userinfo = { name, photo: imageUrl, email };
+        await AxiosPublic.post("/user", userinfo);
+
+        toast.success("Registered successfully");
+        reset();
+        navigate("/");
       } else {
         toast.error("Image upload failed.");
       }
@@ -89,7 +87,7 @@ function Registration() {
   };
 
   const handelPassIcon = () => {
-    setIsVisible((icon) => !icon);
+    setIsVisible((prev) => !prev);
   };
 
   const googleRegistration = () => {
@@ -102,8 +100,8 @@ function Registration() {
         };
 
         AxiosPublic.post("/user", userinfo)
-          .then(() => {          
-            toast.success("login successful");
+          .then(() => {
+            toast.success("Login successful");
             setIsloading(false);
             navigate("/");
           })
@@ -118,120 +116,93 @@ function Registration() {
       });
   };
 
-  const handleImageChange = (e) => {
-    const file = e.target.files[0];
-    if (file) {
-      setImage(file);
-    }
-  };
-
   return (
     <div>
       <div className="border my-10 rounded-lg md:w-1/2 mx-auto p-4">
-        <h1 className="text-center my-5 capitalize font-bold text-2xl">
-          registration{" "}
-        </h1>
-        <form onSubmit={handleRegistration} className=" space-y-4">
+        <h1 className="text-center my-5 capitalize font-bold text-2xl">Registration</h1>
+        <form onSubmit={handleSubmit(handleRegistration)} className="space-y-4">
           <label className="input input-bordered flex items-center gap-2">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              viewBox="0 0 16 16"
-              fill="currentColor"
-              className="h-4 w-4 opacity-70"
-            >
-              <path d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6ZM12.735 14c.618 0 1.093-.561.872-1.139a6.002 6.002 0 0 0-11.215 0c-.22.578.254 1.139.872 1.139h9.47Z" />
-            </svg>
             <input
               type="text"
-              required
-              name="name"
-              className="grow"
               placeholder="Type your name"
+              {...register("name", { required: "Name is required" })}
+              className="grow"
             />
           </label>
+          {errors.name && <p className="text-red-500">{errors.name.message}</p>}
+
           <label className="input input-bordered flex items-center gap-2">
             <input
               type="file"
-              required
-              name="PhotoUrl"
+              {...register("image", { required: "Please upload an image" })}
               className="grow"
-              onChange={handleImageChange}
             />
           </label>
+          {errors.image && <p className="text-red-500">{errors.image.message}</p>}
 
           <label className="input input-bordered flex items-center gap-2">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              viewBox="0 0 16 16"
-              fill="currentColor"
-              className="h-4 w-4 opacity-70"
-            >
-              <path d="M2.5 3A1.5 1.5 0 0 0 1 4.5v.793c.026.009.051.02.076.032L7.674 8.51c.206.1.446.1.652 0l6.598-3.185A.755.755 0 0 1 15 5.293V4.5A1.5 1.5 0 0 0 13.5 3h-11Z" />
-              <path d="M15 6.954 8.978 9.86a2.25 2.25 0 0 1-1.956 0L1 6.954V11.5A1.5 1.5 0 0 0 2.5 13h11a1.5 1.5 0 0 0 1.5-1.5V6.954Z" />
-            </svg>
             <input
-              type="text"
-              required
-              className="grow"
+              type="email"
               placeholder="Email"
-              name="email"
+              {...register("email", { required: "Email is required" })}
+              className="grow"
             />
           </label>
+          {errors.email && <p className="text-red-500">{errors.email.message}</p>}
 
           <label className="input input-bordered flex items-center gap-2">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              viewBox="0 0 16 16"
-              fill="currentColor"
-              className="h-4 w-4 opacity-70"
-            >
-              <path
-                fillRule="evenodd"
-                d="M14 6a4 4 0 0 1-4.899 3.899l-1.955 1.955a.5.5 0 0 1-.353.146H5v1.5a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1-.5-.5v-2.293a.5.5 0 0 1 .146-.353l3.955-3.955A4 4 0 1 1 14 6Zm-4-2a.75.75 0 0 0 0 1.5.5.5 0 0 1 .5.5.75.75 0 0 0 1.5 0 2 2 0 0 0-2-2Z"
-                clipRule="evenodd"
-              />
-            </svg>
             <input
               type={isvisible ? "text" : "password"}
-              className="grow"
-              name="password"
               placeholder="Password"
+              {...register("password", {
+                required: "Password is required",
+                minLength: {
+                  value: 6,
+                  message: "Password must be at least 6 characters long",
+                },
+              })}
+              className="grow"
             />
             <div onClick={handelPassIcon}>
               {isvisible ? <FaRegEye /> : <FaRegEyeSlash />}
             </div>
           </label>
+          {errors.password && <p className="text-red-500">{errors.password.message}</p>}
 
-          <p className=" capitalize font-semibold">
-            have you account?{" "}
-            <Link to="/login" className="text-blue-500 ">
+          <p className="capitalize font-semibold">
+            Have an account?{" "}
+            <Link to="/JoinUs" className="text-blue-500">
               Login
             </Link>
           </p>
 
-          <button className="btn  bg-blue-500 hover:bg-blue-600 dark:hover:bg-metal-700 dark:bg-metal-800 text-white w-full">
-            {loading ? (
-              <span className="text-white animate-spin">
-                <FaArrowsSpin className="text-xl" />
+          <button
+            type="submit"
+            className="btn bg-blue-500 hover:bg-blue-600 dark:hover:bg-metal-700 dark:bg-metal-800 text-white w-full"
+          >
+            {loading ? ( <>
+             <span className=" animate-pulse">loading..   </span>
+             <span className="text-white animate-spin">
+               <FaArrowsSpin className="text-xl" />
               </span>
+              </>
             ) : (
               "Register"
             )}
           </button>
         </form>
         <div className="divider">OR</div>
-
-        <div className=" w-full  flex justify-center">
+        <div className="w-full flex justify-center">
           <button
-            className="border text-md font-semibold text-gray-600 capitalize flex  items-center gap-3 rounded-lg my-5 py-2 px-3 dark:text-metal-300"
+            className="border text-md font-semibold text-gray-600 capitalize flex items-center gap-3 rounded-lg my-5 py-2 px-3 dark:text-metal-300"
             onClick={googleRegistration}
           >
             <img
-              className="w-7 "
+              className="w-7"
               src="https://cdn-icons-png.flaticon.com/128/300/300221.png"
-              alt=""
+              alt="Google Icon"
             />
-            continue with google
+            Continue with Google
           </button>
         </div>
       </div>
