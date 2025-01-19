@@ -18,7 +18,7 @@ import { Button, toast } from "keep-react";
 import { FaBell } from "react-icons/fa";
 function Navbar() {
   const { pathname } = useLocation();
-  const { user, LogOut, setUser, setIsloading } = useContext(UserContext);
+  const { user, LogOut, setUser, setIsloading,announcement } = useContext(UserContext);
 
   const navigate = useNavigate();
   const handleLogout = () => {
@@ -71,7 +71,7 @@ function Navbar() {
       <li>
         <a className="relative w-fit "><FaBell className="text-xl">
           </FaBell> 
-          <p className=" absolute -top-2 right-1 lg:-top-[5px] lg:right-2  h-5 w-5  text-center text-white rounded-full bg-green-500">0</p>
+          <p className=" absolute -top-2 right-1 lg:-top-[5px] lg:right-2  h-5 w-5  text-center text-white rounded-full bg-green-500">{announcement?.length}</p>
          
         </a>
       </li>

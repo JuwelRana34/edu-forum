@@ -21,7 +21,7 @@ function Home() {
       const result = await axios.get(
         `${import.meta.env.VITE_API}/AllPost?tag=${tag}&search=${search}`
       );
-      setAllPosts(result.data);
+      setAllPosts(result.data)
       return result.data;
     },
   });
@@ -34,9 +34,11 @@ function Home() {
         `${import.meta.env.VITE_API}/sortByPopularity`
       );
       setAllPosts(result.data);
+      
       return result.data;
     },
   });
+
 
   //get tag
   const { data: tags = [] } = useQuery({
@@ -51,7 +53,8 @@ function Home() {
   return (
     <div className=" container mx-auto">
       <Banner setSearch={setSearch} />
-
+      {/* announcement */}
+      
       {/* post section  */}
       <section className="md:flex bg-metal-50">
         <div className=" space-y-5 p-5 md:w-[70%]">
@@ -113,7 +116,7 @@ function Home() {
                           <div className="flex items-center space-x-1 hover:text-blue-600">
                             
                             <BiComment />
-                            <span>{0}</span>
+                            <span>{item?.comments?.length}</span>
                           </div>
                         </div>
                         <span className="text-sm text-gray-500">

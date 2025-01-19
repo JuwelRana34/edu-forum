@@ -16,10 +16,11 @@ import { BiComment } from 'react-icons/bi';
 import { useContext } from 'react';
 import UserContext from '../Context/AuthContext';
 import {toast} from 'keep-react'
+import Loading from '../Components/Loading';
 function PostDetails() {
     const {id} = useParams()
     const {user} = useContext(UserContext)
-    const {data:postinfo = {}}= useQuery({
+    const {data:postinfo = {}, isLoading,refetch}= useQuery({
         queryKey: ['postinfo', id],
         queryFn: async () => {
             const response = await SecureAxios.get(`/postDetails/${id}`)
@@ -39,12 +40,13 @@ function PostDetails() {
       .then(()=>{
         toast.success('comment added successfully')
         e.target.reset()
-        
+        refetch()
       })
       .catch((err)=>toast.error(err.message))
     }
 
     const shareUrl = `${window.location.origin}/post/${id}`;
+    if(isLoading) return <Loading/>
   return (
     <>
       <div className="h-screen">
@@ -94,7 +96,7 @@ function PostDetails() {
               </button>
               <button className="flex items-center space-x-1 hover:text-blue-600">
                 <BiComment />
-                <span>{0}</span>
+                <span>{postinfo.comments.length}</span>
               </button>
 
               <FacebookShareButton

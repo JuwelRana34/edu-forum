@@ -13,9 +13,11 @@ import {
 const UserContext = createContext();
 import axios from "axios";
 
+
 // eslint-disable-next-line react/prop-types
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
+  const [announcement, setAnnouncement] = useState(null);
   const [isLoading, setIsloading] = useState(true);
   const provider = new GoogleAuthProvider();
 
@@ -84,6 +86,8 @@ export const AuthProvider = ({ children }) => {
     };
   }, [user]);
 
+ 
+
   const userinfo = {
     Registration,
     GoogleLogin,
@@ -95,6 +99,8 @@ export const AuthProvider = ({ children }) => {
     isLoading,
     DeleteUser,
     UpdateProfile,
+    setAnnouncement,
+    announcement
   };
 
   return (

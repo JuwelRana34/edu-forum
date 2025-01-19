@@ -32,7 +32,7 @@ function classNames(...classes) {
 }
 
 export default function DashboardMenu() {
-  const { user } = useContext(UserContext);
+  const { user,announcement} = useContext(UserContext);
   const role = useCheckAdmin()
   return (
     <Disclosure as="nav" className="md:hidden backdrop-blur bg-white/40">
@@ -63,17 +63,17 @@ export default function DashboardMenu() {
             </div>
           </div>
           <div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
-            <button
+            <div
               type="button"
-              className="relative rounded-full bg-gray-200 p-1 text-gray-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800"
+              className="relative rounded-full bg-gray-200 p-1 text-gray-400"
             >
               <span className="absolute -inset-1.5" />
               <span className="sr-only">View notifications</span>
               <BellIcon aria-hidden="true" className="size-6" />
               <p className=" absolute flex items-center justify-center -top-2 -right-0 lg:-top-[5px] lg:right-2  h-5 w-5  text-center text-white rounded-full bg-green-500">
-                0
+                {announcement?.length}
               </p>
-            </button>
+            </div>
 
             {/* Profile dropdown */}
             <Menu as="div" className="relative ml-3">
