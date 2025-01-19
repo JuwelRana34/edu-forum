@@ -7,7 +7,7 @@ function ReportedActivities() {
   const {data:reportDatas= [],refetch} = useQuery({
     queryKey: ['reportedActivities'],
     queryFn: async () =>{
-      const res = await SecureAxios.get("/get-all-announcement")
+      const res = await SecureAxios.get("/get-all-reports")
       return res.data
     }
   })

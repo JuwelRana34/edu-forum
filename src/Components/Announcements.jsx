@@ -2,6 +2,7 @@ import useAnnouncementes from "../Hook/useAnnouncementes";
 
 function Announcements() {
   const { announcements } = useAnnouncementes();
+
   return (
     announcements?.length > 0 && (
       <div>
@@ -20,7 +21,7 @@ function Announcements() {
                   <h3 className="text-lg font-semibold text-gray-800">
                     {item.name}
                   </h3>
-                  <span className="text-sm text-gray-500">{"datePosted"}</span>
+                  <span className="text-sm text-gray-500">{new Date(item.createdAt).toLocaleDateString()}</span>
                 </div>
 
                 <h2 className="mt-2 text-xl font-bold text-gray-900">

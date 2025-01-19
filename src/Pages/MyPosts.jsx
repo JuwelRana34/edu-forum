@@ -80,14 +80,14 @@ function MyPosts() {
                     </TableCell>
                     <TableCell>{item.UpVote + item.DownVote}</TableCell>
                     <TableCell>
-                      <Link className="button" to={`/comments/${item._id}`}>
+                      <Link className="button text-green-500 bg-green-100" to={`/comments/${item._id}`}>
                         Comment
                       </Link>
                     </TableCell>
                     <TableCell>
                       <button
                         onClick={() => handeldelete(item._id)}
-                        className="button bg-rose-500"
+                        className="button bg-rose-100 text-rose-500"
                       >
                         Delete
                       </button>
