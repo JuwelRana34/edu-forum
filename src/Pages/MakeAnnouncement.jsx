@@ -3,10 +3,11 @@ import SecureAxios from "../Hook/SecureAxios"
 import { useContext } from "react"
 import UserContext from "../Context/AuthContext"
 import {toast} from "keep-react"
-import { useQuery } from "@tanstack/react-query";
+import useAnnouncementes from "../Hook/useAnnouncementes"
 function MakeAnnouncement() {
-  const {user, announcement ,setAnnouncement} = useContext(UserContext)
- announcement
+  const {user} = useContext(UserContext)
+  const {refetch} = useAnnouncementes()
+
   const { register, handleSubmit, reset } = useForm()
   const onSubmit = ({Title,Description}) =>{
       SecureAxios.post('/make-announcement',{
@@ -24,21 +25,7 @@ function MakeAnnouncement() {
       })
   }
 
-   // announcement get 
 
- const {data:announcements  =[] , refetch} = useQuery({
-  queryKey: ['announcement'],
-  queryFn: async () => {
-    try {
-      const response = await SecureAxios.get(`${import.meta.env.VITE_API}/get-all-announcement`);
-      setAnnouncement(response.data)
-      return response.data;
-    } catch (error) {
-      console.error(error);
-      throw error;
-    }
-  }
- })
 
   return (
     <div className=" w-[95%] md:w-1/2 mx-auto">

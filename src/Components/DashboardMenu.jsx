@@ -12,6 +12,7 @@ import { useContext } from "react";
 import { Link } from "react-router";
 import UserContext from "../Context/AuthContext";
 import useCheckAdmin from "../Routers/useCheckAdmin";
+import useAnnouncementes from "../Hook/useAnnouncementes";
 
 const userNavigation = [
   { name: "Home", href: "/", current: false },
@@ -32,8 +33,9 @@ function classNames(...classes) {
 }
 
 export default function DashboardMenu() {
-  const { user,announcement} = useContext(UserContext);
+  const { user} = useContext(UserContext);
   const role = useCheckAdmin()
+  const {announcements} = useAnnouncementes()
   return (
     <Disclosure as="nav" className="md:hidden backdrop-blur bg-white/40">
       <div className="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8">
@@ -71,7 +73,7 @@ export default function DashboardMenu() {
               <span className="sr-only">View notifications</span>
               <BellIcon aria-hidden="true" className="size-6" />
               <p className=" absolute flex items-center justify-center -top-2 -right-0 lg:-top-[5px] lg:right-2  h-5 w-5  text-center text-white rounded-full bg-green-500">
-                {announcement?.length}
+                {announcements?.length || 0}
               </p>
             </div>
 

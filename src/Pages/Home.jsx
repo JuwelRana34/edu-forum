@@ -2,19 +2,19 @@ import { Link } from "react-router";
 import SecureAxios from "../Hook/SecureAxios";
 import { useQuery } from "@tanstack/react-query";
 import Banner from "../Components/Banner";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { BiComment, BiSolidUpvote } from "react-icons/bi";
 import { BiSolidDownvote } from "react-icons/bi";
 import Loading from "../Components/Loading";
 import DataNotFound from "../Components/DataNotFound";
 import useAxiosPublic from "../Hook/useAxiosPublic";
-import axios from "axios";
+import axios, { all } from "axios";
+import Announcements from "../Components/Announcements";
 function Home() {
   const [tag, setTag] = useState("");
   const [search, setSearch] = useState("");
   const [AllPosts, setAllPosts] = useState([]);
   const [sortByPopularity, setSortByPopularity] = useState(false);
-
   const { data: Posts = [], isLoading } = useQuery({
     queryKey: ["posts", tag, search],
     queryFn: async () => {
@@ -33,6 +33,7 @@ function Home() {
       const result = await axios.get(
         `${import.meta.env.VITE_API}/sortByPopularity`
       );
+      console.log(result.data)
       setAllPosts(result.data);
       
       return result.data;
@@ -50,12 +51,15 @@ function Home() {
     },
   });
 
+
   return (
     <div className=" container mx-auto">
       <Banner setSearch={setSearch} />
       {/* announcement */}
-      
-      {/* post section  */}
+    
+        <Announcements/>
+     
+     
       <section className="md:flex bg-metal-50">
         <div className=" space-y-5 p-5 md:w-[70%]">
           {isLoading ? (

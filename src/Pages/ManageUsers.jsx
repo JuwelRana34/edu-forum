@@ -16,13 +16,14 @@ import {
   DialogPanel,
   DialogTitle,
 } from "@headlessui/react";
+import Loading from "../Components/Loading";
 
 function ManageUsers() {
   let [isOpen, setIsOpen] = useState(false);
   let [name, setName] = useState(" ");
   const { user } = useContext(UserContext);
   const [page, setPage] = useState(1);
-  const { data: users = {}, refetch } = useQuery({
+  const { data: users = {}, refetch, isLoading } = useQuery({
     queryKey: ["users", page],
     queryFn: async () => {
       const response = await SecureAxios.get(
@@ -70,6 +71,8 @@ function ManageUsers() {
           </TableRow>
         </TableHeader>
         <TableBody>
+          {isLoading ? <Loading/>:
+          <>
           {items.map((item) => (
             <TableRow key={item._id}>
               <TableCell>
@@ -91,7 +94,9 @@ function ManageUsers() {
               </TableCell>
               <TableCell>{item.badge}</TableCell>
             </TableRow>
-          ))}
+          ))} 
+          </>
+          }
         </TableBody>
       </Table>
 

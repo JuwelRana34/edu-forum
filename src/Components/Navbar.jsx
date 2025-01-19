@@ -16,9 +16,11 @@ import UserContext from "../Context/AuthContext";
 import { Button, toast } from "keep-react";
 
 import { FaBell } from "react-icons/fa";
+import useAnnouncementes from "../Hook/useAnnouncementes";
 function Navbar() {
   const { pathname } = useLocation();
-  const { user, LogOut, setUser, setIsloading,announcement } = useContext(UserContext);
+  const { user, LogOut, setUser, setIsloading,} = useContext(UserContext);
+  const {announcements} = useAnnouncementes()
 
   const navigate = useNavigate();
   const handleLogout = () => {
@@ -71,7 +73,7 @@ function Navbar() {
       <li>
         <a className="relative w-fit "><FaBell className="text-xl">
           </FaBell> 
-          <p className=" absolute -top-2 right-1 lg:-top-[5px] lg:right-2  h-5 w-5  text-center text-white rounded-full bg-green-500">{announcement?.length}</p>
+          <p className=" absolute -top-2 right-1 lg:-top-[5px] lg:right-2  h-5 w-5  text-center text-white rounded-full bg-green-500">{announcements?.length || 0}</p>
          
         </a>
       </li>
@@ -81,7 +83,7 @@ function Navbar() {
 
   return (
     <nav className="backdrop-blur bg-white/35 z-[999] sticky top-0">
-      <div className="navbar  container mx-auto py-4  ">
+      <div className="navbar  container mx-auto py-2  ">
       <div className="navbar-start">
         <div className="dropdown">
           <div
