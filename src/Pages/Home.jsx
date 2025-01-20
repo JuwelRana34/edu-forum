@@ -6,7 +6,18 @@ import { useState } from "react";
 import { BiComment, BiSolidUpvote } from "react-icons/bi";
 import Loading from "../Components/Loading";
 import DataNotFound from "../Components/DataNotFound";
-import { Avatar, AvatarFallback, AvatarImage, Select, SelectAction, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectValue } from 'keep-react'
+import {
+  Avatar,
+  AvatarFallback,
+  AvatarImage,
+  Select,
+  SelectAction,
+  SelectContent,
+  SelectGroup,
+  SelectItem,
+  SelectLabel,
+  SelectValue,
+} from "keep-react";
 
 import axios, { all } from "axios";
 import Announcements from "../Components/Announcements";
@@ -14,32 +25,54 @@ function Home() {
   const [tag, setTag] = useState("");
   const [search, setSearch] = useState("");
   const [AllPosts, setAllPosts] = useState([]);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(1);
+  const limit = 5;
   const [sortByPopularity, setSortByPopularity] = useState(false);
+
   const { data: Posts = [], isLoading } = useQuery({
-    queryKey: ["posts", tag, search],
+    queryKey: ["posts", tag, search, currentPage,sortByPopularity],
     queryFn: async () => {
       const result = await axios.get(
-        `${import.meta.env.VITE_API}/AllPost?tag=${tag}&search=${search}`
+        `${
+          import.meta.env.VITE_API
+        }/AllPost?tag=${tag}&search=${search}&page=${currentPage}&limit=${limit}`
       );
-      setAllPosts(result.data)
+      setAllPosts(result.data.posts);
+      setTotalPages(result.data.totalPages);
+
       return result.data;
     },
   });
 
-  const { data } = useQuery({
-    queryKey: ["filterPopulerPost"],
+
+  const handleNext = () => {
+    if (currentPage < totalPages) {
+      setCurrentPage(currentPage + 1);
+      
+    }
+  };
+  const handlePrev = () => {
+    if (currentPage > 1) {
+      setCurrentPage(currentPage - 1);
+    
+    }
+  };
+  
+
+  const { data=[] } = useQuery({
+    queryKey: ["filterPopulerPost", currentPage],
     enabled: sortByPopularity,
     queryFn: async () => {
       const result = await axios.get(
-        `${import.meta.env.VITE_API}/sortByPopularity`
+        `${import.meta.env.VITE_API}/sortByPopularity?page=${currentPage}&limit=${limit}`
       );
-   
-      setAllPosts(result.data);
-      
+
+      setAllPosts(result.data.posts);
+      setTotalPages(result.data.totalPages);
       return result.data;
     },
   });
-
 
   //get tag
   const { data: tags = [] } = useQuery({
@@ -90,7 +123,7 @@ function Home() {
         </div>
 
         {/* pots  */}
-        <div className=" space-y-5 px-5 pb-5 md:w-10/12 mx-auto">
+        <div className=" space-y-5 px-5 pt-5 md:pt-0 pb-5 md:w-10/12 mx-auto">
           <div className="text-end flex justify-evenly gap-2 md:justify-end">
             <div className="md:hidden w-full  ">
               <Select>
@@ -140,13 +173,16 @@ function Home() {
           ) : (
             <>
               {AllPosts.length <= 0 ? (
-                <DataNotFound title={"Post Not Found"} description={"No Post available right now"} />
+                <DataNotFound
+                  title={"Post Not Found"}
+                  description={"No Post available right now"}
+                />
               ) : (
                 <>
                   {AllPosts.map((item) => (
                     <div
                       key={item._id}
-                      className=" w-full mx-auto border rounded-lg shadow-lg p-2 bg-white"
+                      className=" w-full mx-auto border rounded-lg shadow-lg p-2 px-4 bg-white"
                     >
                       <div className="flex justify-between items-center mb-2">
                         <div className="flex items-center gap-2"></div>
@@ -197,6 +233,23 @@ function Home() {
                       </div>
                     </div>
                   ))}
+                  {/* pagination */}
+                  <div className="text-center">
+                    {" "}
+                    <button className="button"
+                      id="prev-btn"
+                      disabled={currentPage === 1}
+                      onClick={handlePrev}
+                    >
+                      Previous
+                    </button>{" "}
+                    <span className="px-2">
+                      Page {currentPage} of {totalPages}
+                    </span>{" "}
+                    <button className="button" id="next-btn" onClick={handleNext}>
+                      Next
+                    </button>{" "}
+                  </div>
                 </>
               )}
             </>

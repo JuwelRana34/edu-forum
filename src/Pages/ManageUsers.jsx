@@ -101,7 +101,7 @@ function ManageUsers() {
         </Table>
       )}
 
-      {/* Pagination Controls */}
+      {/* Pagination */}
       <div className="flex justify-center gap-4 py-4">
         <button
           className="button"

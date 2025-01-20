@@ -73,7 +73,7 @@ function PostDetails() {
         <div className=" w-[95%] md:w-10/12 mt-10  flex-col items-center justify-center mx-auto border rounded-lg shadow-lg p-4 bg-white">
           <div className="flex justify-between items-center mb-4">
             <div>
-              <div className="flex items-center mb-4">
+              <div className="flex items-start mb-4">
                 <div className="w-10 h-10 rounded-full bg-green-400 text-white flex justify-center items-center text-lg font-bold mr-3">
                   <img
                     className="rounded-full"
@@ -87,14 +87,15 @@ function PostDetails() {
                   <p className="text-sm text-gray-500">
                     {postinfo.Author_Email}
                   </p>
+                  <span className="text-sm  capitalize text-blue-400 font-semibold">
+                  #{postinfo.tag}
+                </span>
                 </div>
               </div>
 
               <h2 className="text-3xl font-bold mt-1">
                 {postinfo.Title}
-                <span className="text-sm ml-2 capitalize text-blue-600 font-semibold">
-                  #{postinfo.tag}
-                </span>
+                
               </h2>
             </div>
           </div>
