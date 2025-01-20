@@ -12,7 +12,7 @@ import {
 import { BiComment } from 'react-icons/bi';
 import { useContext } from 'react';
 import UserContext from '../Context/AuthContext';
-import {toast} from 'keep-react'
+import {Button, toast} from 'keep-react'
 import Loading from '../Components/Loading';
 function PostDetails() {
     const {id} = useParams()
@@ -24,9 +24,10 @@ function PostDetails() {
             return response.data
         }
     })
-    console.log(postinfo)
+
    const handelComment =(e)=>{
    e.preventDefault()
+   if(!user) return toast.error(" you need to login to comment")
     const {comment} = e.target
       SecureAxios.post('/comment',{
         comment: comment.value,
@@ -44,7 +45,13 @@ function PostDetails() {
 
      // Handle Like/Dislike
   const handleVotes = async (action) => {
-    const response = await SecureAxios.post("/vote-upvote-downvote",{
+
+      if (!user) {
+        toast.error("You need to be logged in to Vote.");
+        return;
+      }
+
+    const response = await SecureAxios.patch("/vote-upvote-downvote",{
       postId: postinfo._id,
       action,
       userEmail: user?.email,
@@ -115,14 +122,22 @@ function PostDetails() {
                 <BiComment />
                 <span>{postinfo.comments.length}</span>
               </button>
-
-              <FacebookShareButton
+              {
+                user ?<FacebookShareButton
                 url={shareUrl}
-                quote={`${postinfo.Title} - Check out this amazing post!`}
+                quote={`${postinfo.Title} `}
                 hashtag={`${postinfo.Title}`}
               >
                 <FacebookIcon size={40} round />
               </FacebookShareButton>
+              :
+              <Button
+               onClick={()=> toast.error("You need to be logged in to share this post.")}
+               >
+                <FacebookIcon className=' opacity-80' size={40} round />
+              </Button>
+              }
+              
             </div>
             <span className="text-sm text-gray-500">
               {new Date(postinfo.createdAt).toLocaleTimeString()}

@@ -92,7 +92,7 @@ function AdminProfile() {
           email={userInfo.email}
         />
         {/* detail about information */}
-        <div className="grid grid-cols-1 w-1/2 justify-items-center md:w-full mx-auto md:grid-cols-3 gap-2 lg:gap-10 px-5">
+        <div className="grid grid-cols-1 w-5/6 justify-items-center md:w-full mx-auto md:grid-cols-3 gap-2 lg:gap-10 px-5">
           <div className="bg-gradient-to-tr bg-[#02AAB0] via-[#00CDAC] to-[#02AAB0 ] flex items-center  w-full p-5 rounded-md text-white mx-auto shadow-md ">
             <h2 className="text-xl lg:text-3xl capitalize font-semibold">
               total posts <br /> {allInfo.totalPosts}
@@ -133,16 +133,17 @@ function AdminProfile() {
         </ChartContainer>
 
         {/* post tags */}
-        <div className=" m-2 mb-10 lg:w-1/2 lg:mx-auto rounded-md border shadow-md px-4  ">
+        <div className=" m-2 mb-10 lg:w-1/2 lg:mx-auto rounded-md border-2 hover:shadow-md p-4  ">
           <Field>
             <Label className=" h2 font-medium capitalize ">tag post.</Label>
             <Description className="text-sm/6 "></Description>
             <Input
+            
               onChange={(e) => setTag(e.target.value)}
               value={tag}
               placeholder="type tags"
               className={clsx(
-                "mt-3 block w-full rounded-lg border-none py-1.5 px-3 text-sm/6 ",
+                "mt-3 block w-full  rounded-lg border border-blue-200 py-1.5 px-3 text-sm/6 ",
                 "focus:outline-none data-[focus]:outline-2 data-[focus]:-outline-offset-2 data-[focus]:outline-white/25"
               )}
             />

@@ -115,7 +115,7 @@ function Navbar() {
         </div>
         <Link to={"/"} className="flex items-center">
           <img
-            src={"https://cdn-icons-png.flaticon.com/128/9482/9482897.png"}
+            src={"https://cdn-icons-png.flaticon.com/128/12112/12112232.png"}
             className=" dark:rounded-lg w-12 md:w-16"
             alt="Edu forum"
           />
@@ -123,7 +123,7 @@ function Navbar() {
           <Link
             to={"/"}
            
-            className="btn Logo font-[ Rowdies] text-black text-xl btn-ghost p-2 dark:text-metal-300 md:text-3xl font-bold font-berkshire"
+            className="btn Logo font-[ Rowdies] text-[#23a4f8]  text-xl btn-ghost p-2 dark:text-metal-300 md:text-3xl font-bold font-berkshire"
           >
            Edu Forum
           </Link>
@@ -141,7 +141,7 @@ function Navbar() {
               <Dropdown>
                 <DropdownAction asChild>
                   <img
-                    className=" rounded-full h-12 ring-2 ring-blue-500   shadow-lg w-12"
+                    className=" rounded-full h-12 ring-2 ring-[#23a8fe]/35   shadow-lg w-12"
                     src={user.photoURL}
                     alt={user.displayName}
                   />

@@ -13,6 +13,7 @@ import { Link } from "react-router";
 import UserContext from "../Context/AuthContext";
 import useCheckAdmin from "../Routers/useCheckAdmin";
 import useAnnouncementes from "../Hook/useAnnouncementes";
+import { Avatar, AvatarFallback, AvatarImage } from "keep-react";
 
 const userNavigation = [
   { name: "Home", href: "/", current: false },
@@ -37,12 +38,12 @@ export default function DashboardMenu() {
   const role = useCheckAdmin()
   const {announcements} = useAnnouncementes()
   return (
-    <Disclosure as="nav" className="md:hidden backdrop-blur bg-white/40">
-      <div className="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8">
-        <div className="relative flex h-16 items-center justify-between">
+    <Disclosure as="nav" className="md:hidden bg-base-100  fixed top-0 w-full   z-50">
+      <div className="mx-auto  max-w-7xl px-2 sm:px-6 lg:px-8">
+        <div className="relative  flex h-16 items-center justify-between">
           <div className="absolute inset-y-0 left-0 flex items-center sm:hidden">
             {/* Mobile menu button*/}
-            <DisclosureButton className="group relative inline-flex items-center justify-center rounded-md p-2 text-gray-400 hover:bg-gray-100 hover:text-black focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white">
+            <DisclosureButton className="group relative inline-flex items-center justify-center rounded-md p-2 border border-metal-300 text-metal-400  hover:text-black focus:outline-1 focus:ring-1 focus:ring-inset focus:ring-metal-300">
               <span className="absolute -inset-0.5" />
               <span className="sr-only">Open main menu</span>
               <Bars3Icon
@@ -56,13 +57,13 @@ export default function DashboardMenu() {
             </DisclosureButton>
           </div>
           <div className="flex flex-1 items-center justify-center sm:items-stretch sm:justify-start">
-            <div className="flex shrink-0 items-center">
+            <Link to={'/'} className="flex shrink-0 items-center">
               <img
-                alt="Your Company"
+                alt="edu forum"
                 src={"https://cdn-icons-png.flaticon.com/128/9482/9482897.png"}
-                className="h-8 w-auto"
+                className="h-12 w-auto"
               />
-            </div>
+            </Link>
           </div>
           <div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
             <div
@@ -80,11 +81,10 @@ export default function DashboardMenu() {
             {/* Profile dropdown */}
             <Menu as="div" className="relative ml-3">
               <div>
-                <img
-                  alt={user?.displayName}
-                  src={user?.photoURL}
-                  className="size-8 rounded-full"
-                />
+              <Avatar>
+        <AvatarImage  src={user.photoURL} />
+        <AvatarFallback className=" uppercase font-semibold text-base">{user.displayName.substring(0,2)}</AvatarFallback>
+      </Avatar>
               </div>
             </Menu>
           </div>
@@ -92,7 +92,7 @@ export default function DashboardMenu() {
       </div>
 
       <DisclosurePanel className="sm:hidden">
-        <div className="space-y-1 px-2 pb-3 pt-2">
+        <div className="  space-y-1 px-2 pb-3 pt-2">
         {role === "user"? <> 
         {userNavigation.map((item,index) => (
             <Link key={index}

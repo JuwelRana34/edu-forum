@@ -2,12 +2,12 @@ import { Link, useNavigate } from "react-router";
 import SecureAxios from "../Hook/SecureAxios";
 import { useQuery } from "@tanstack/react-query";
 import Banner from "../Components/Banner";
-import { useContext, useEffect, useState } from "react";
+import { useState } from "react";
 import { BiComment, BiSolidUpvote } from "react-icons/bi";
-import { BiSolidDownvote } from "react-icons/bi";
 import Loading from "../Components/Loading";
 import DataNotFound from "../Components/DataNotFound";
-import useAxiosPublic from "../Hook/useAxiosPublic";
+import { Select, SelectAction, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectValue } from 'keep-react'
+
 import axios, { all } from "axios";
 import Announcements from "../Components/Announcements";
 function Home() {
@@ -41,7 +41,7 @@ function Home() {
     },
   });
 
-
+console.log(tag)
   //get tag
   const { data: tags = [] } = useQuery({
     queryKey: ["tags"],
@@ -58,15 +58,90 @@ function Home() {
 
   console.log(AllPosts)
   return (
-    <div className=" container mx-auto">
+    <div className=" container min-h-screen mx-auto">
       <Banner setSearch={setSearch} />
       {/* announcement */}
-    
-        <Announcements/>
-     
-     
-      <section className="md:flex bg-metal-50">
-        <div className=" space-y-5 p-5 md:w-[70%]">
+
+      <Announcements />
+
+      <section className="  bg-metal-50">
+        {/* tags  */}
+        <div className=" hidden md:block p-5 ">
+          <div className="bg-white rounded p-5 flex flex-wrap justify-evenly gap-2">
+            <h2 className="h2">tags:</h2>
+            <button
+              onClick={() => {
+                setSortByPopularity(false);
+                setSearch("");
+                setTag("");
+              }}
+              className="bg-gray-200 flex-1 mx-auto rounded py-2 font-semibold focus:bg-emerald-100"
+            >
+              All
+            </button>
+            {tags.map((tag) => (
+              <button
+                key={tag._id}
+                onClick={() => {
+                  setSortByPopularity(false);
+                  setSearch("");
+                  setTag(tag.tag);
+                }}
+                className="bg-gray-200 flex-1 mx-auto rounded p-2 font-semibold hover:bg-emerald-200  focus:bg-emerald-100"
+              >
+                {tag.tag}
+              </button>
+            ))}
+          </div>
+        </div>
+
+        {/* pots  */}
+        <div className=" space-y-5 p-5 md:w-10/12 mx-auto">
+          <div className="text-end flex justify-evenly gap-2 md:justify-end">
+          <div className='md:hidden w-full  '>
+            <Select>
+              <SelectAction className="w-full">
+                <SelectValue placeholder="Select tag" />
+              </SelectAction>
+              <SelectContent className=" overflow-y-scroll">
+                <SelectGroup>
+                  <SelectLabel>Tags</SelectLabel>
+                  <button
+              onClick={() => {
+                setSortByPopularity(false);
+                setSearch("");
+                setTag("");
+              }}
+              className="  button text-sm md:text-neutral bg-white text-metal-700 capitalize "
+            >
+              All
+            </button>
+                  {tags.map((tag) => (
+                    <SelectItem
+                      onClick={() => {
+                        setSortByPopularity(false);
+                        setSearch("");
+                        setTag(tag.tag);
+                      }}
+                      value={tag.tag}
+                    >
+                      {tag.tag}
+                    </SelectItem>
+                  ))}
+                </SelectGroup>
+              </SelectContent>
+            </Select>
+          </div>
+            
+
+            <button 
+              onClick={() => setSortByPopularity(true)}
+              className="  button shadow text-sm md:text-neutral bg-white text-metal-700 capitalize "
+            >
+              Sort by Popularity
+            </button>
+
+          </div>
           {isLoading ? (
             <Loading />
           ) : (
@@ -75,16 +150,9 @@ function Home() {
                 <DataNotFound search={search} />
               ) : (
                 <>
-                  <div className="text-end">
-                    <button
-                      onClick={() => setSortByPopularity(true)}
-                      className=" button shadow bg-white text-metal-700 capitalize "
-                    >
-                      Sort by Popularity
-                    </button>
-                  </div>
                   {AllPosts.map((item) => (
-                    <div onClick={()=>handelDatail(item._id)}
+                    <div
+                      // onClick={() => handelDatail(item._id)}
                       key={item._id}
                       className=" w-full mx-auto border rounded-lg shadow-lg p-2 bg-white"
                     >
@@ -123,7 +191,6 @@ function Home() {
                           </div>
 
                           <div className="flex items-center space-x-1 hover:text-blue-600">
-                            
                             <BiComment />
                             <span>{item?.comments?.length}</span>
                           </div>
@@ -138,33 +205,6 @@ function Home() {
               )}
             </>
           )}
-        </div>
-        <div className="  p-5 md:w-[30%]">
-          <div className="bg-white h-full rounded  py-5 flex flex-col  gap-5">
-            <button
-              onClick={() => {
-                setSortByPopularity(false);
-                setSearch("");
-                setTag("");
-              }}
-              className="bg-gray-200 w-1/2 mx-auto rounded py-2 font-semibold focus:bg-emerald-100"
-            >
-              All{" "}
-            </button>
-            {tags.map((tag) => (
-              <button
-                key={tag._id}
-                onClick={() => {
-                  setSortByPopularity(false);
-                  setSearch("");
-                  setTag(tag.tag);
-                }}
-                className={` focus:bg-emerald-100 bg-gray-200 rounded py-2 font-semibold  w-1/2 mx-auto`}
-              >
-                {tag.tag}
-              </button>
-            ))}
-          </div>
         </div>
       </section>
     </div>

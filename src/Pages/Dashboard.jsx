@@ -20,6 +20,7 @@ import {
 import { TfiAnnouncement } from "react-icons/tfi";
 import DashboardMenu from "../Components/DashboardMenu";
 import useCheckAdmin from "../Routers/useCheckAdmin";
+
 function Dashboard() {
   const { user } = useContext(UserContext);
   const role = useCheckAdmin();
@@ -40,7 +41,7 @@ function Dashboard() {
   return (
     <div className="md:flex w-full bg-slate-100  gap-3">
       <div className="md:grow">
-        <Sidebar className="   hidden md:block shadow-none h-full bg-gradient-to-tr from-blue-50 to-white   rounded">
+        <Sidebar className="  hidden md:block shadow-none h-full bg-gradient-to-tr from-blue-50 to-white   rounded">
           <SidebarBody>
             {/* fornormar users routes  */}
 
@@ -117,7 +118,7 @@ function Dashboard() {
               </SidebarList>
             )}
           </SidebarBody>
-          <SidebarFooter>
+          <SidebarFooter className="grow">
             <Avatar>
               <AvatarImage src={user?.photoURL} alt={user?.displayName} />
               <AvatarFallback>{user?.displayName}</AvatarFallback>
