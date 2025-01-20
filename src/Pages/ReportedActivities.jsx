@@ -1,10 +1,11 @@
 import { useQuery } from '@tanstack/react-query'
 import SecureAxios from '../Hook/SecureAxios'
 import { Button, Table, TableBody, TableCell, TableHead, TableHeader, TableRow , toast } from 'keep-react'
+import LoadingTable from '../Components/LoadingTable'
 
 
 function ReportedActivities() {
-  const {data:reportDatas= [],refetch} = useQuery({
+  const {data:reportDatas= [],refetch, isLoading} = useQuery({
     queryKey: ['reportedActivities'],
     queryFn: async () =>{
       const res = await SecureAxios.get("/get-all-reports")
@@ -25,6 +26,8 @@ function ReportedActivities() {
   console.log(reportDatas)
   return (
     <div>
+      <h2 className='h2 text-center'>Reported Activities</h2>
+      {isLoading ? <LoadingTable />:
       <Table>
       <TableHeader>
         <TableRow>
@@ -43,6 +46,8 @@ function ReportedActivities() {
          
         </TableRow>
       </TableHeader>
+
+     
       <TableBody>
         {reportDatas.map((item) => (
           <TableRow key={item._id}>
@@ -59,7 +64,9 @@ function ReportedActivities() {
           </TableRow>
         ))}
       </TableBody>
+     
     </Table>
+    }
     </div>
   )
 }

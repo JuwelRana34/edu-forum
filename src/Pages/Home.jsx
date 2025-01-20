@@ -1,4 +1,4 @@
-import { Link } from "react-router";
+import { Link, useNavigate } from "react-router";
 import SecureAxios from "../Hook/SecureAxios";
 import { useQuery } from "@tanstack/react-query";
 import Banner from "../Components/Banner";
@@ -11,6 +11,7 @@ import useAxiosPublic from "../Hook/useAxiosPublic";
 import axios, { all } from "axios";
 import Announcements from "../Components/Announcements";
 function Home() {
+  const navigate = useNavigate()
   const [tag, setTag] = useState("");
   const [search, setSearch] = useState("");
   const [AllPosts, setAllPosts] = useState([]);
@@ -51,7 +52,11 @@ function Home() {
     },
   });
 
+  const handelDatail=(id)=>{
+    navigate(`post/${id}`)
+  }
 
+  console.log(AllPosts)
   return (
     <div className=" container mx-auto">
       <Banner setSearch={setSearch} />
@@ -79,7 +84,7 @@ function Home() {
                     </button>
                   </div>
                   {AllPosts.map((item) => (
-                    <div
+                    <div onClick={()=>handelDatail(item._id)}
                       key={item._id}
                       className=" w-full mx-auto border rounded-lg shadow-lg p-2 bg-white"
                     >

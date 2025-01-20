@@ -6,10 +6,7 @@ import {
   
     FacebookIcon,
     FacebookShareButton,
-    FacebookShareCount,
-    LinkedinShareButton,
-    TelegramShareButton,
-    TwitterShareButton,
+
    
   } from "react-share";
 import { BiComment } from 'react-icons/bi';
@@ -44,6 +41,22 @@ function PostDetails() {
       })
       .catch((err)=>toast.error(err.message))
     }
+
+     // Handle Like/Dislike
+  const handleVotes = async (action) => {
+    const response = await SecureAxios.post("/vote-upvote-downvote",{
+      postId: postinfo._id,
+      action,
+      userEmail: user?.email,
+    })
+
+    if (response.status === 200) {
+      refetch()
+    } else {
+      console.error("Failed to update like/dislike");
+    }
+  };
+
 
     const shareUrl = `${window.location.origin}/post/${id}`;
     if(isLoading) return <Loading/>
@@ -84,13 +97,17 @@ function PostDetails() {
           </p>
           <div className="flex justify-between items-center">
             <div className="flex space-x-3 text-gray-600">
-              <button className="flex items-center space-x-1 hover:text-blue-600">
+              <button
+              onClick={() => handleVotes("upvote")}
+               className="flex items-center space-x-1 hover:text-blue-600">
                 <SlLike />
 
                 <span>{postinfo.UpVote}</span>
               </button>
 
-              <button className="flex items-center space-x-1 hover:text-blue-600">
+              <button
+              onClick={() => handleVotes("downvote")}
+              className="flex items-center space-x-1 hover:text-blue-600">
                 <SlDislike />
                 <span>{postinfo.DownVote}</span>
               </button>

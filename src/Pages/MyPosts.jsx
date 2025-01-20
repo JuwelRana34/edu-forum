@@ -12,8 +12,8 @@ import SecureAxios from "../Hook/SecureAxios";
 import { useContext, useState } from "react";
 import UserContext from "../Context/AuthContext";
 import { Link } from "react-router";
-import Loading from "../Components/Loading";
 import DataNotFound from "../Components/DataNotFound";
+import LoadingTable from "../Components/LoadingTable";
 function MyPosts() {
   const { user } = useContext(UserContext);
   const [page, setPage] = useState(1);
@@ -49,7 +49,7 @@ function MyPosts() {
     <div className="min-h-screen">
       <h1 className="text-3xl py-5 text-center font-bold">My Posts</h1>
       {isLoading ? (
-        <Loading />
+        <LoadingTable/>
       ) : (
         <>
           {items.length <= 0 ? (

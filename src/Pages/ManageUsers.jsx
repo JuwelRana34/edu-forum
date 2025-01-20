@@ -17,6 +17,7 @@ import {
   DialogTitle,
 } from "@headlessui/react";
 import Loading from "../Components/Loading";
+import LoadingTable from "../Components/LoadingTable";
 
 function ManageUsers() {
   let [isOpen, setIsOpen] = useState(false);
@@ -53,52 +54,52 @@ function ManageUsers() {
   return (
     <div className="min-h-screen">
       <h1 className="text-3xl py-5 text-center font-bold">My Posts</h1>
-      <Table>
-        <TableHeader>
-          <TableRow>
-            <TableHead>
-              <div className="max-w-[250px]">User Name</div>
-            </TableHead>
-            <TableHead>
-              <div className="w-[80px]">User Email</div>
-            </TableHead>
-            <TableHead>
-              <div className="w-[85px]">Make Admin </div>
-            </TableHead>
-            <TableHead>
-              <div className="w-[90px]">Subscription Status </div>
-            </TableHead>
-          </TableRow>
-        </TableHeader>
-        <TableBody>
-          {isLoading ? <Loading/>:
-          <>
-          {items.map((item) => (
-            <TableRow key={item._id}>
-              <TableCell>
-                <div className="max-w-[250px] truncate">{item.name}</div>
-              </TableCell>
-              <TableCell>{item.email}</TableCell>
-              <TableCell className="">
-                {item.role === "admin" ? (
-                  <h1 className="text-green-500 pl-8 ">Admin</h1>
-                ) : (
-                  <button
-                    className="py-2 px-3 text-xs md:text-sm rounded-full bg-orange-100 text-orange-500"
-                    onClick={() => handelMakeAdmin(item.name)}
-                  >
-                    {" "}
-                    Make Admin
-                  </button>
-                )}
-              </TableCell>
-              <TableCell>{item.badge}</TableCell>
+      {isLoading ? (
+        <LoadingTable />
+      ) : (
+        <Table>
+          <TableHeader>
+            <TableRow>
+              <TableHead>
+                <div className="max-w-[250px]">User Name</div>
+              </TableHead>
+              <TableHead>
+                <div className="w-[80px]">User Email</div>
+              </TableHead>
+              <TableHead>
+                <div className="w-[85px]">Make Admin </div>
+              </TableHead>
+              <TableHead>
+                <div className="w-[90px]">Subscription Status </div>
+              </TableHead>
             </TableRow>
-          ))} 
-          </>
-          }
-        </TableBody>
-      </Table>
+          </TableHeader>
+          <TableBody>
+            {items.map((item) => (
+              <TableRow key={item._id}>
+                <TableCell>
+                  <div className="max-w-[250px] truncate">{item.name}</div>
+                </TableCell>
+                <TableCell>{item.email}</TableCell>
+                <TableCell className="">
+                  {item.role === "admin" ? (
+                    <h1 className="text-green-500 pl-8 ">Admin</h1>
+                  ) : (
+                    <button
+                      className="py-2 px-3 text-xs md:text-sm rounded-full bg-orange-100 text-orange-500"
+                      onClick={() => handelMakeAdmin(item.name)}
+                    >
+                      {" "}
+                      Make Admin
+                    </button>
+                  )}
+                </TableCell>
+                <TableCell>{item.badge}</TableCell>
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
+      )}
 
       {/* Pagination Controls */}
       <div className="flex justify-center gap-4 py-4">

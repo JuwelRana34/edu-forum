@@ -33,7 +33,6 @@ function Comments() {
   });
 
   const handleFeedback = (commentId, feedback) => {
-    console.log(feedback)
     setSelectedFeedback((prev) => ({
       ...prev,
       [commentId]: feedback,
@@ -43,7 +42,7 @@ function Comments() {
    const handleReport = async (commentId, email) => {
     const feedback = selectedFeedback[commentId];
      if(user?.email === email) return toast.warning(" you can't report yourself")
-    // Prepare data to send to the backend
+   
     const reportData = {
       commentId,
       commenter: email,
@@ -54,7 +53,8 @@ function Comments() {
     try {
       // Send report data to the backend API
       const response = await SecureAxios.post(`/comments_report`, reportData)
-      if (response.statusText) {
+      console.log(response)
+      if (response.status === 200) {
         toast.success("Report submitted successfully!");
         setReportedComments((prev) => ({
           ...prev,
