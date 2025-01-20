@@ -2,6 +2,7 @@ import { useQuery } from '@tanstack/react-query'
 import SecureAxios from '../Hook/SecureAxios'
 import { Button, Table, TableBody, TableCell, TableHead, TableHeader, TableRow , toast } from 'keep-react'
 import LoadingTable from '../Components/LoadingTable'
+import DataNotFound from '../Components/DataNotFound'
 
 
 function ReportedActivities() {
@@ -23,11 +24,13 @@ function ReportedActivities() {
       toast.error("Failed to delete comment.");
     }
   }
-  console.log(reportDatas)
+  
   return (
     <div>
-      <h2 className='h2 text-center'>Reported Activities</h2>
-      {isLoading ? <LoadingTable />:
+      <h2 className='h2 md:text-3xl md:font-bold text-center'>Reported Activities</h2>
+      {isLoading ? <LoadingTable />: <>
+     {
+        reportDatas.length > 0 ?
       <Table>
       <TableHeader>
         <TableRow>
@@ -65,8 +68,10 @@ function ReportedActivities() {
         ))}
       </TableBody>
      
-    </Table>
+    </Table> :
+     <DataNotFound title = {'No Report Available'} description={" No one Report yet."} />
     }
+    </>}
     </div>
   )
 }

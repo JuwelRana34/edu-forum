@@ -6,12 +6,11 @@ import { useState } from "react";
 import { BiComment, BiSolidUpvote } from "react-icons/bi";
 import Loading from "../Components/Loading";
 import DataNotFound from "../Components/DataNotFound";
-import { Select, SelectAction, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectValue } from 'keep-react'
+import { Avatar, AvatarFallback, AvatarImage, Select, SelectAction, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectValue } from 'keep-react'
 
 import axios, { all } from "axios";
 import Announcements from "../Components/Announcements";
 function Home() {
-  const navigate = useNavigate()
   const [tag, setTag] = useState("");
   const [search, setSearch] = useState("");
   const [AllPosts, setAllPosts] = useState([]);
@@ -34,14 +33,14 @@ function Home() {
       const result = await axios.get(
         `${import.meta.env.VITE_API}/sortByPopularity`
       );
-      console.log(result.data)
+   
       setAllPosts(result.data);
       
       return result.data;
     },
   });
 
-console.log(tag)
+
   //get tag
   const { data: tags = [] } = useQuery({
     queryKey: ["tags"],
@@ -52,11 +51,6 @@ console.log(tag)
     },
   });
 
-  const handelDatail=(id)=>{
-    navigate(`post/${id}`)
-  }
-
-  console.log(AllPosts)
   return (
     <div className=" container min-h-screen mx-auto">
       <Banner setSearch={setSearch} />
@@ -68,7 +62,7 @@ console.log(tag)
         {/* tags  */}
         <div className=" hidden md:block p-5 ">
           <div className="bg-white rounded p-5 flex flex-wrap justify-evenly gap-2">
-            <h2 className="h2">tags:</h2>
+            <h2 className="h2">Tags:</h2>
             <button
               onClick={() => {
                 setSortByPopularity(false);
@@ -96,77 +90,75 @@ console.log(tag)
         </div>
 
         {/* pots  */}
-        <div className=" space-y-5 p-5 md:w-10/12 mx-auto">
+        <div className=" space-y-5 px-5 pb-5 md:w-10/12 mx-auto">
           <div className="text-end flex justify-evenly gap-2 md:justify-end">
-          <div className='md:hidden w-full  '>
-            <Select>
-              <SelectAction className="w-full">
-                <SelectValue placeholder="Select tag" />
-              </SelectAction>
-              <SelectContent className=" overflow-y-scroll">
-                <SelectGroup>
-                  <SelectLabel>Tags</SelectLabel>
-                  <button
-              onClick={() => {
-                setSortByPopularity(false);
-                setSearch("");
-                setTag("");
-              }}
-              className="  button text-sm md:text-neutral bg-white text-metal-700 capitalize "
-            >
-              All
-            </button>
-                  {tags.map((tag) => (
-                    <SelectItem
+            <div className="md:hidden w-full  ">
+              <Select>
+                <SelectAction className="w-full">
+                  <SelectValue placeholder="Select tag" />
+                </SelectAction>
+                <SelectContent className=" overflow-y-scroll">
+                  <SelectGroup>
+                    <SelectLabel>Tags</SelectLabel>
+                    <button
                       onClick={() => {
                         setSortByPopularity(false);
                         setSearch("");
-                        setTag(tag.tag);
+                        setTag("");
                       }}
-                      value={tag.tag}
+                      className="  button text-sm md:text-neutral bg-white text-metal-700 capitalize "
                     >
-                      {tag.tag}
-                    </SelectItem>
-                  ))}
-                </SelectGroup>
-              </SelectContent>
-            </Select>
-          </div>
-            
+                      All
+                    </button>
+                    {tags.map((tag) => (
+                      <SelectItem
+                        key={tag._id}
+                        onClick={() => {
+                          setSortByPopularity(false);
+                          setSearch("");
+                          setTag(tag.tag);
+                        }}
+                        value={tag.tag}
+                      >
+                        {tag.tag}
+                      </SelectItem>
+                    ))}
+                  </SelectGroup>
+                </SelectContent>
+              </Select>
+            </div>
 
-            <button 
+            <button
               onClick={() => setSortByPopularity(true)}
-              className="  button shadow text-sm md:text-neutral bg-white text-metal-700 capitalize "
+              className="  button shadow text-sm md:text-white bg-[#23a8fe] text-white capitalize "
             >
               Sort by Popularity
             </button>
-
           </div>
           {isLoading ? (
             <Loading />
           ) : (
             <>
               {AllPosts.length <= 0 ? (
-                <DataNotFound search={search} />
+                <DataNotFound title={"Post Not Found"} description={"No Post available right now"} />
               ) : (
                 <>
                   {AllPosts.map((item) => (
                     <div
-                      // onClick={() => handelDatail(item._id)}
                       key={item._id}
                       className=" w-full mx-auto border rounded-lg shadow-lg p-2 bg-white"
                     >
                       <div className="flex justify-between items-center mb-2">
                         <div className="flex items-center gap-2"></div>
                       </div>
-                      <div className="flex items-center mb-2">
-                        <div className="w-8 h-8 rounded-full bg-green-400  text-white flex justify-center items-start text-lg font-bold mr-2">
-                          <img
-                            className="rounded-full"
-                            src={item.Author_Image}
-                            alt=""
-                            srcset=""
-                          />
+                      <div className="flex items-start ">
+                        <div className="w-8 h-8 rounded-full    flex justify-center items-start text-lg font-bold mr-2">
+                          <Avatar>
+                            <AvatarImage src={item.Author_Image} />
+                            <AvatarFallback className=" uppercase font-semibold text-base">
+                              {item.Author_Name.substring(0, 2)}
+                            </AvatarFallback>
+                          </Avatar>
                         </div>
                         <div>
                           <p className="font-semibold">{item.Author_Name}</p>
@@ -177,12 +169,16 @@ console.log(tag)
                       </div>
                       <Link
                         to={`post/${item._id}`}
-                        className=" md:text-xl font-bold hover:underline hover:text-blue-500  mt-1"
+                        className=" text-2xl md:text-2xl font-bold hover:underline hover:text-blue-500  mt-1"
                       >
                         {item.Title}
                       </Link>
-
-                      <div className="flex justify-between items-center">
+                      <p>
+                        {item.Description.length > 250
+                          ? `${item.Description.substring(0, 250)}...`
+                          : item.Description}
+                      </p>
+                      <div className="flex mt-2 justify-between items-center">
                         <div className="flex space-x-3 text-gray-600">
                           <div className="flex items-center space-x-1 hover:text-blue-600">
                             <BiSolidUpvote />
@@ -195,8 +191,8 @@ console.log(tag)
                             <span>{item?.comments?.length}</span>
                           </div>
                         </div>
-                        <span className="text-sm text-gray-500">
-                          {new Date(item.createdAt).toLocaleTimeString()}
+                        <span className="text-sm text-center text-gray-500">
+                          {new Date(item.createdAt).toLocaleString()}
                         </span>
                       </div>
                     </div>

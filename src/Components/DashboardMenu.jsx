@@ -38,7 +38,10 @@ export default function DashboardMenu() {
   const role = useCheckAdmin()
   const {announcements} = useAnnouncementes()
   return (
-    <Disclosure as="nav" className="md:hidden bg-base-100  fixed top-0 w-full   z-50">
+    <Disclosure
+      as="nav"
+      className="md:hidden bg-base-100  fixed top-0 w-full   z-50"
+    >
       <div className="mx-auto  max-w-7xl px-2 sm:px-6 lg:px-8">
         <div className="relative  flex h-16 items-center justify-between">
           <div className="absolute inset-y-0 left-0 flex items-center sm:hidden">
@@ -57,10 +60,10 @@ export default function DashboardMenu() {
             </DisclosureButton>
           </div>
           <div className="flex flex-1 items-center justify-center sm:items-stretch sm:justify-start">
-            <Link to={'/'} className="flex shrink-0 items-center">
+            <Link to={"/"} className="flex shrink-0 items-center">
               <img
                 alt="edu forum"
-                src={"https://cdn-icons-png.flaticon.com/128/9482/9482897.png"}
+                src={'https://cdn-icons-png.flaticon.com/128/12112/12112232.png'}
                 className="h-12 w-auto"
               />
             </Link>
@@ -81,10 +84,12 @@ export default function DashboardMenu() {
             {/* Profile dropdown */}
             <Menu as="div" className="relative ml-3">
               <div>
-              <Avatar>
-        <AvatarImage  src={user.photoURL} />
-        <AvatarFallback className=" uppercase font-semibold text-base">{user.displayName.substring(0,2)}</AvatarFallback>
-      </Avatar>
+                <Avatar>
+                  <AvatarImage src={user.photoURL} />
+                  <AvatarFallback className=" uppercase font-semibold text-base">
+                    {user.displayName.substring(0, 2)}
+                  </AvatarFallback>
+                </Avatar>
               </div>
             </Menu>
           </div>
@@ -93,39 +98,43 @@ export default function DashboardMenu() {
 
       <DisclosurePanel className="sm:hidden">
         <div className="  space-y-1 px-2 pb-3 pt-2">
-        {role === "user"? <> 
-        {userNavigation.map((item,index) => (
-            <Link key={index}
-              to={`${item.href}`}
-              aria-current={item.current ? "page" : undefined}
-              className={classNames(
-                item.current
-                  ? "bg-gray-900 text-white"
-                  : "text-gray-500 hover:bg-gray-700 hover:text-white",
-                "block rounded-md px-3 py-2 text-base font-medium"
-              )}
-            >
-              {item.name}
-            </Link>
-          ))}
-
-        </>: <>
-        {adminNavigation.map((item, index) => (
-          <Link key={index}
-            to={`${item.href}`}
-            aria-current={item.current ? "page" : undefined}
-            className={classNames(
-              item.current
-                ? "bg-gray-900 text-white"
-                : "text-gray-500 hover:bg-gray-700 hover:text-white",
-              "block rounded-md px-3 py-2 text-base font-medium"
-            )}
-          >
-            {item.name}
-          </Link>
-        ))}
-        </>
-        }   
+          {role === "user" ? (
+            <>
+              {userNavigation.map((item, index) => (
+                <Link
+                  key={index}
+                  to={`${item.href}`}
+                  aria-current={item.current ? "page" : undefined}
+                  className={classNames(
+                    item.current
+                      ? "bg-gray-900 text-white"
+                      : "text-gray-500 hover:bg-gray-700 hover:text-white",
+                    "block rounded-md px-3 py-2 text-base font-medium"
+                  )}
+                >
+                  {item.name}
+                </Link>
+              ))}
+            </>
+          ) : (
+            <>
+              {adminNavigation.map((item, index) => (
+                <Link
+                  key={index}
+                  to={`${item.href}`}
+                  aria-current={item.current ? "page" : undefined}
+                  className={classNames(
+                    item.current
+                      ? "bg-gray-900 text-white"
+                      : "text-gray-500 hover:bg-gray-700 hover:text-white",
+                    "block rounded-md px-3 py-2 text-base font-medium"
+                  )}
+                >
+                  {item.name}
+                </Link>
+              ))}
+            </>
+          )}
         </div>
       </DisclosurePanel>
     </Disclosure>

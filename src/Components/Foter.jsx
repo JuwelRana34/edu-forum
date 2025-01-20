@@ -5,46 +5,46 @@ import { Link } from 'react-router'
 function Foter() {
   return (
     < >
-    <footer className="footer mt-10  text-base-content p-10">
+    <footer className="footer mt-1  text-base-content py-5 px-10">
     <nav>
-      <h6 className="footer-title">Services</h6>
-      <a className="link link-hover">Branding</a>
-      <a className="link link-hover">Design</a>
-      <a className="link link-hover">Marketing</a>
-      <a className="link link-hover">Advertisement</a>
+      <h6 className="footer-title">features</h6>
+      <p className="">Post</p>
+      <p className="">Comment</p>
+      <p className="">Premium Member</p>
+
     </nav>
     <nav>
-      <h6 className="footer-title">Company</h6>
-      <a className="link link-hover">About us</a>
-      <a className="link link-hover">Contact</a>
-      <a className="link link-hover">Jobs</a>
-      <a className="link link-hover">Press kit</a>
+      <h6 className="footer-title">Links</h6>
+      <Link to={'/'} className="hover:underline">Home</Link>
+      <Link to={'/Dashboard/MyProfile'} className="hover:underline">Profile</Link>
+      <Link to={'/MemberShip'} className="hover:underline">Member Ship</Link>
+     
     </nav>
     <nav>
-      <h6 className="footer-title">Legal</h6>
-      <a className="link link-hover">Terms of use</a>
-      <a className="link link-hover">Privacy policy</a>
-      <a className="link link-hover">Cookie policy</a>
+      <h6 className="footer-title">Contact</h6>
+      <p className="">01767632836</p>
+      <p className="">juwelrana3426@gmail.com</p>
+      <p className="">Dhaka, Bangladesh</p>
     </nav>
   </footer>
   <footer className="footer  text-base-content border-base-300 border-t px-10 py-4">
     <aside className="grid-flow-col items-center">
       <img className='w-14 mx-2' src='https://cdn-icons-png.flaticon.com/128/12112/12112232.png'/>
       <p>
-      <span>Edu Forum bd.</span> 
+      <Link to={'/'} className='Logo text-xl text-[#23a4f8] md:text-3xl'>Edu Forum bd.</Link> 
         <br />
         2021 - {new Date().getFullYear()}
       </p>
     </aside>
     <nav className="md:place-self-center md:justify-self-end">
       <div className="grid grid-flow-col gap-4">
-       <Link to={''}>
+       <Link to={'https://www.facebook.com/juwel34/'} target="_blank">
         <FaFacebook size={24}/>
        </Link>
-       <Link to={''}>
+       <Link target="_blank" to={'https://www.linkedin.com/in/md-juwel-rana/'}>
         <FaLinkedin size={24}/>
        </Link>
-       <Link to={''}>
+       <Link target="_blank" to={'https://wa.me/+8801761632836?text=MESSAGE'}>
         <FaWhatsapp size={24}/>
        </Link>
        

@@ -24,7 +24,7 @@ function Banner({ setSearch }) {
       <div className="hero-overlay bg-opacity-60"></div>
       <div className="hero-content text-neutral-content text-center rounded">
         <div className="max-w-md">
-          <h1 className="mb-5 text-5xl font-bold">Search post</h1>
+          <h1 className="mb-5 text-5xl font-bold">Welcome To Edu Forum</h1>
           <p className="mb-5">
             <label className="input bg-white/65  text-gray-900 input-bordered flex items-center gap-2">
               <input

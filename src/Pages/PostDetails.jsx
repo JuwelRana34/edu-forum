@@ -69,7 +69,7 @@ function PostDetails() {
     if(isLoading) return <Loading/>
   return (
     <>
-      <div className="h-screen">
+      <div className="min-h-screen">
         <div className=" w-[95%] md:w-10/12 mt-10  flex-col items-center justify-center mx-auto border rounded-lg shadow-lg p-4 bg-white">
           <div className="flex justify-between items-center mb-4">
             <div>
@@ -115,11 +115,11 @@ function PostDetails() {
               <button
               onClick={() => handleVotes("downvote")}
               className="flex items-center space-x-1 hover:text-blue-600">
-                <SlDislike />
+                <SlDislike size={20} />
                 <span>{postinfo.DownVote}</span>
               </button>
               <button className="flex items-center space-x-1 hover:text-blue-600">
-                <BiComment />
+                <BiComment size={20} />
                 <span>{postinfo.comments.length}</span>
               </button>
               {
@@ -139,8 +139,8 @@ function PostDetails() {
               }
               
             </div>
-            <span className="text-sm text-gray-500">
-              {new Date(postinfo.createdAt).toLocaleTimeString()}
+            <span className="text-sm text-center text-gray-500">
+              {new Date(postinfo.createdAt).toLocaleString()}
             </span>
           </div>
 

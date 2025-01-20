@@ -15,6 +15,7 @@ import {
 } from "keep-react";
 import { Select } from '@headlessui/react'
 import UserContext from "../Context/AuthContext";
+import DataNotFound from "../Components/DataNotFound";
 
 function Comments() {
 
@@ -77,7 +78,12 @@ function Comments() {
   return (
     <div>
    
-      <h2 className="text-3xl font-bold text-center my-5">Action Zone </h2>
+      <h2 className="text-3xl font-bold text-center my-5">Review comment </h2>
+       {
+        comments.length <= 0 ? <DataNotFound title={"No comments Available"} description={
+          "No comments available yet. Be the first to comment on this post."
+        } /> :
+       
       <Table className="w-11/12 mx-auto">
         <TableHeader>
           <TableRow>
@@ -147,6 +153,7 @@ function Comments() {
           ))}
         </TableBody>
       </Table>
+      }
       {/* modal  */}
       <dialog id="my_modal_2" className="modal modal-bottom sm:modal-middle">
         <div className="modal-box">

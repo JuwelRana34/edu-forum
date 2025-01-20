@@ -1,6 +1,7 @@
 import React from "react";
 import { FaComment } from "react-icons/fa";
 import { SlDislike, SlLike } from "react-icons/sl";
+import { Link } from "react-router";
 
 const PostCard = ({
     userInfo,
@@ -33,6 +34,9 @@ const PostCard = ({
             </span>
           </div>
         </div>
+        <h2 className="text-2xl font-bold">
+          {itme.Title}
+        </h2>
         <p className="text-gray-800  mb-6">
           {itme.Description.substring(0,180) }...
         </p>
