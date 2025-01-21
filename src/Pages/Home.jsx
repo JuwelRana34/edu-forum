@@ -2,7 +2,7 @@ import { Link, useNavigate } from "react-router";
 import SecureAxios from "../Hook/SecureAxios";
 import { useQuery } from "@tanstack/react-query";
 import Banner from "../Components/Banner";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { BiComment, BiSolidUpvote } from "react-icons/bi";
 import Loading from "../Components/Loading";
 import DataNotFound from "../Components/DataNotFound";

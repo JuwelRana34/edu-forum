@@ -8,7 +8,6 @@ function Banner({ setSearch }) {
     }
   };
 
- ;
   const handleSearch = () => {
     setSearch(inputValue); 
   }
@@ -28,9 +27,9 @@ function Banner({ setSearch }) {
           <p className="mb-5">
             <label className="input bg-white/65  text-gray-900 input-bordered flex items-center gap-2">
               <input
-              
-             value={inputValue}
-             onChange={(e) => setInputValue(e.target.value)}
+             onChange={(e) =>{ 
+              setInputValue(e.target.value)
+            }}
              onKeyDown={handleKeyDown}
                 type="text"
                 name="search"
