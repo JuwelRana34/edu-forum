@@ -32,6 +32,7 @@ function Home() {
 
   const { data: Posts = [], isLoading } = useQuery({
     queryKey: ["posts", tag, search, currentPage,sortByPopularity],
+    enabled: !sortByPopularity,
     queryFn: async () => {
       const result = await axios.get(
         `${
@@ -162,7 +163,12 @@ function Home() {
             </div>
 
             <button
-              onClick={() => setSortByPopularity(true)}
+              onClick={() =>{ 
+                setSortByPopularity(true)
+                setSearch("");
+                setTag("");
+                setCurrentPage(1)
+              }}
               className="  button shadow text-sm md:text-white bg-[#23a8fe] text-white capitalize "
             >
               Sort by Popularity
