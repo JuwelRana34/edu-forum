@@ -27,7 +27,7 @@ function ReportedActivities() {
   
   return (
     <div>
-      <h2 className='h2 md:text-3xl md:font-bold text-center'>Reported Activities</h2>
+      <h2 className='text-3xl py-5 font-bold text-center'>Reported Activities</h2>
       {isLoading ? <LoadingTable />: <>
      {
         reportDatas.length > 0 ?

@@ -37,13 +37,13 @@ function Banner({ setSearch }) {
                 className="grow placeholder:text-gray-800"
                 placeholder="Search"
               />
-              <button  onClick={handleSearch}  className="bg-white p-2 rounded-md hover:bg-blue-100">
+              <button  onClick={handleSearch}  className="bg-blue-50 p-2 rounded-md hover:bg-blue-100">
                 
               <CiSearch className="text-xl" />
               </button>
             </label>
           </p>
-          {/* <p className="btn btn-primary">Get Started</p> */}
+          
         </div>
       </div>
     </div>

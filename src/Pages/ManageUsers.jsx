@@ -53,7 +53,7 @@ function ManageUsers() {
   };
   return (
     <div className="min-h-screen">
-      <h1 className="text-3xl py-5 text-center font-bold">My Posts</h1>
+      <h1 className="text-3xl py-5 text-center font-bold">Manage Users</h1>
       {isLoading ? (
         <LoadingTable />
       ) : (

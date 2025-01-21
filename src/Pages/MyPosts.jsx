@@ -53,7 +53,7 @@ function MyPosts() {
       ) : (
         <>
           {items.length <= 0 ? (
-            <DataNotFound />
+            <DataNotFound  title={"Post Not Found"} description={" you have not post yet."} />
           ) : (
             <Table>
               <TableHeader>

@@ -52,11 +52,10 @@ This repository contains the frontend code for **Edu Forum BD**, a modern, featu
 
 - **Notifications**: Real-time notifications for Announcement and updates.
 - **Search and Filters**: Easily find posts using search and filtering options.
-- **Dynamic Animations**: Powered by **Motion** for enhanced user experience.
 
 ### **Performance Optimizations**
 
-- Optimized state management with **React Query**.
+- Optimized state management with **Tanstack Query**.
 - Smooth, fast, and scalable with **Vite**.
 
 ---
@@ -77,6 +76,7 @@ This repository contains the frontend code for **Edu Forum BD**, a modern, featu
 - **Axios**: HTTP client for API requests.
 - **React Icons**: Rich collection of SVG icons.
 - **React Share**: for post share on facebook.
+- **Tanstack Query**: for CRUD operation.
 
 
 ### **Development Tools**

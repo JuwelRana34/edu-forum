@@ -1,5 +1,5 @@
 import { useForm } from "react-hook-form";
-import { Input, Label, Textarea, toast } from "keep-react";
+import { Button, Input, Label, Textarea, toast } from "keep-react";
 import Select from "react-select";
 import { useQuery } from "@tanstack/react-query";
 import SecureAxios from "../Hook/SecureAxios";
@@ -8,6 +8,7 @@ import UserContext from "../Context/AuthContext";
 import {Link} from 'react-router'
 import Loading from "../Components/Loading";
 import { IoWarningOutline } from "react-icons/io5";
+import { FaArrowsSpin } from "react-icons/fa6";
 function AddPost() {
   const { register, handleSubmit, reset } = useForm();
   const [tagOptions, setTagOptions] = useState([]);
@@ -16,8 +17,9 @@ function AddPost() {
   const [totalpost, setTotalPost]= useState(0)
   const [membership, setMemberShip]= useState(null)
   const [isLoading , setIsLoading] = useState(true)
+  const [isPosting , setIsPosting] = useState(false)
 
-  console.log(totalpost, membership)
+
   // check post count
  useEffect(() => {
    const result = async () =>
@@ -48,6 +50,7 @@ function AddPost() {
   
   // form submit func
   const onSubmit = (data) => {
+    setIsPosting(true)
     if (!data.Title) {
       toast.error("Please enter Title");
       return;
@@ -75,7 +78,7 @@ function AddPost() {
         toast.success("Post added successfully");
         setSelectionOption(null);
         reset();
-        
+        setIsPosting(false)
       })
       .catch(({ response }) => {
         toast.error(response.data.message);
@@ -90,64 +93,76 @@ function AddPost() {
         {" "}
         add post{" "}
       </h1>
-      {isLoading ? <Loading/> :
-      <div className=" flex justify-center  w-full">
-        {totalpost >= 5 && membership !== "gold" ? (
-          <div className=" text-center">
-             <h2 className="text-red-500 h2 mb-2 ">
-             <IoWarningOutline className=" inline text-3xl" /> You have already added 5 posts. Please delete some old posts to add
-            more or become a gold member to add more posts.
-          </h2>
+      {isLoading ? (
+        <Loading />
+      ) : (
+        <div className=" flex justify-center  w-full">
+          {totalpost >= 5 && membership !== "gold" ? (
+            <div className=" text-center">
+              <h2 className="text-red-500 h2 mb-2 ">
+                <IoWarningOutline className=" inline text-3xl" /> You have
+                already added 5 posts. Please delete some old posts to add more
+                or become a gold member to add more posts.
+              </h2>
 
-          <Link to={'/MemberShip'} className="button ">become a gold member</Link>
-          </div>
-         
-        ) : (
-           <form
-          className=" w-10/12 gap-4 md:grid grid-cols-2   "
-          onSubmit={handleSubmit(onSubmit)}
-        >
-          <fieldset className="max-w-md space-y-1">
-            <Label htmlFor="name">Enter Title</Label>
-            <Input
-              id="name"
-              {...register("Title")}
-              placeholder="Enter Title"
-              type="text"
-            />
-          </fieldset>
-          <Select
-            className="basic-single w-full mt-7 my-2"
-            classNamePrefix="select"
-            onChange={(selectOption) => setSelectionOption(selectOption)}
-            name="tag"
-            value={selectOption}
-            options={tagOptions}
-          />
+              <Link to={"/MemberShip"} className="button ">
+                become a gold member
+              </Link>
+            </div>
+          ) : (
+            <form
+              className=" w-10/12 gap-4 md:grid grid-cols-2   "
+              onSubmit={handleSubmit(onSubmit)}
+            >
+              <fieldset className="max-w-md space-y-1">
+                <Label htmlFor="name">Enter Title</Label>
+                <Input
+                  id="name"
+                  {...register("Title")}
+                  placeholder="Enter Title"
+                  type="text"
+                />
+              </fieldset>
+              <Select
+                className="basic-single w-full mt-7 my-2"
+                classNamePrefix="select"
+                onChange={(selectOption) => setSelectionOption(selectOption)}
+                name="tag"
+                value={selectOption}
+                options={tagOptions}
+              />
 
-          <fieldset className="max-w-md  space-y-1">
-            <Label htmlFor="name">Post Description</Label>
-            <Textarea
-              className="col-span-2 "
-              id="name"
-              {...register("Description")}
-              placeholder="Enter description"
-              type="text"
-            />
-          </fieldset>
+              <fieldset className="max-w-md  space-y-1">
+                <Label htmlFor="name">Post Description</Label>
+                <Textarea
+                  className="col-span-2 "
+                  id="name"
+                  {...register("Description")}
+                  placeholder="Enter description"
+                  type="text"
+                />
+              </fieldset>
 
-          <br />
-          <input
-            className=" w-full  cursor-pointer md:col-span-2 rounded py-3 bg-blue-500 text-white"
-            type="submit"
-          />
-        </form>
-        )}
-       
-      </div>
-      
-      }
-      
+              <br />
+              <Button
+                className=" w-full   cursor-pointer md:col-span-2 rounded py-3 bg-blue-500 text-white"
+                type="submit"
+              >
+                {isPosting ? (
+                  <>
+                    <span className=" animate-pulse">Posting... </span>
+                    <span className="text-white animate-spin">
+                      <FaArrowsSpin className="text-xl" />
+                    </span>
+                  </>
+                ) : (
+                  "Post"
+                )}
+              </Button>
+            </form>
+          )}
+        </div>
+      )}
     </div>
   );
 }

@@ -1,5 +1,6 @@
 import React from "react";
 import PostCard from "./PostCard";
+import DataNotFound from "./DataNotFound";
 
 function Profile({ userInfo, photo, name, badge, role, createdAt, recentPost,email }) 
 {
@@ -53,8 +54,9 @@ function Profile({ userInfo, photo, name, badge, role, createdAt, recentPost,ema
             <h2 className="h2">recent posts: </h2>
             <hr />
             {/* recent posts  */}
-
+            { recentPost.length <= 0 ? <DataNotFound title={"No Recent Post Found"} description={"You have Not Post Yet."}/> : 
             <PostCard userInfo={userInfo} recentPost={recentPost}/>
+            }
           </div>
         )}
       </div>
