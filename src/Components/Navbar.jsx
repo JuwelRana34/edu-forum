@@ -28,7 +28,6 @@ function Navbar() {
       .then(() => {
         setIsloading(false);
         setUser(null);
-        navigate("/");
         toast.warning("Logged Out Successfully");
       })
       .catch((err) => {
