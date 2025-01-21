@@ -31,7 +31,7 @@ function JoinUs() {
   const handleGoogleLogin = () => {
     GoogleLogin()
       .then(({user}) => {
-        toast.success("Logged in successfully");
+       
       const userinfo={
           name: user.displayName,
           photo: user.photoURL,
@@ -40,7 +40,7 @@ function JoinUs() {
 
         AxiosPublic.post('/user', userinfo)
         .then(() =>{
-         
+          toast.success("Logged in successfully");
             navigate("/")
         }).catch((err) => {
             toast.error("An error occurred while creating user.")

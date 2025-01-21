@@ -54,7 +54,7 @@ function Comments() {
     try {
       // Send report data to the backend API
       const response = await SecureAxios.post(`/comments_report`, reportData)
-      console.log(response)
+
       if (response.status === 200) {
         toast.success("Report submitted successfully!");
         setReportedComments((prev) => ({

@@ -36,7 +36,6 @@ function MyPosts() {
   const handeldelete = async (id) => {
     await SecureAxios.delete(`/deleteMyPost/${id}?email=${user.email}`)
       .then((data) => {
-        console.log(data);
         refetch();
         toast.success("Successfully deleted");
       })

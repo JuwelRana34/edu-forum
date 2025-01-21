@@ -42,7 +42,6 @@ function ReportedActivities() {
     setModalContent(text);
     document.getElementById("my_modal_1").showModal();
   };
-  console.log(reportDatas);
   return (
     <div>
       <h2 className="text-3xl py-5 font-bold text-center">

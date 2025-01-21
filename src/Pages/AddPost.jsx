@@ -25,7 +25,7 @@ function AddPost() {
    const result = async () =>
      await SecureAxios.get(`/checkPostCount?email=${user?.email}
       `).then(({data}) =>{
-        console.log(data)
+
         setTotalPost(data.postCount)
         setMemberShip(data.membership)
         setIsLoading(false)
