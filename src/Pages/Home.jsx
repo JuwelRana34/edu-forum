@@ -134,16 +134,17 @@ function Home() {
                 <SelectContent className=" overflow-y-scroll">
                   <SelectGroup>
                     <SelectLabel>Tags</SelectLabel>
-                    <button
+                    <SelectItem
                       onClick={() => {
                         setSortByPopularity(false);
                         setSearch("");
                         setTag("");
                       }}
+                      value={"All"}
                       className="  button text-sm md:text-neutral bg-white text-metal-700 capitalize "
                     >
                       All
-                    </button>
+                    </SelectItem>
                     {tags.map((tag) => (
                       <SelectItem
                         key={tag._id}
