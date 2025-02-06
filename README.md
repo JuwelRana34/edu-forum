@@ -88,6 +88,35 @@ This repository contains the frontend code for **Edu Forum BD**, a modern, featu
 
 ---
 
+## Dependencies
+
+This project uses the following dependencies:
+
+```json
+ "dependencies": {
+    "@headlessui/react": "^2.2.0",
+    "@heroicons/react": "^2.2.0",
+    "@stripe/react-stripe-js": "^3.1.1",
+    "@stripe/stripe-js": "^5.5.0",
+    "@tanstack/react-query": "^5.64.0",
+    "axios": "^1.7.9",
+    "firebase": "^11.0.2",
+    "keep-react": "^1.6.1",
+    "motion": "^11.15.0",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "react-hook-form": "^7.54.2",
+    "react-icons": "^5.4.0",
+    "react-router": "^7.0.1",
+    "react-select": "^5.9.0",
+    "react-share": "^5.1.2",
+    "sonner": "^1.7.1"
+  },
+
+```
+---
+
+
 ## **Installation and Setup**
 
 1. **Clone the Repository**:
