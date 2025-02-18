@@ -14,8 +14,10 @@ import UserContext from "../Context/AuthContext";
 import { Link } from "react-router";
 import DataNotFound from "../Components/DataNotFound";
 import LoadingTable from "../Components/LoadingTable";
+import ThemeContext from "../Context/ThemeProvider";
 function MyPosts() {
   const { user } = useContext(UserContext);
+  const { theme } = useContext(ThemeContext);
   const [page, setPage] = useState(1);
   const {
     data: myPost = {},
@@ -54,19 +56,19 @@ function MyPosts() {
           {items.length <= 0 ? (
             <DataNotFound  title={"Post Not Found"} description={" you have not post yet."} />
           ) : (
-            <Table>
+            <Table className={`button ${theme === "dark"? "bg-metal-800 text-metal-300":""}`}>
               <TableHeader>
                 <TableRow>
-                  <TableHead>
+                  <TableHead className={`button ${theme === "dark"? "bg-metal-800 text-metal-300":""}`}>
                     <div className="max-w-[250px]">Post Title</div>
                   </TableHead>
-                  <TableHead>
+                  <TableHead className={`button ${theme === "dark"? "bg-metal-800 text-metal-300":""}`}>
                     <div className="w-[80px]">Number of votes</div>
                   </TableHead>
-                  <TableHead>
+                  <TableHead className={`button ${theme === "dark"? "bg-metal-800 text-metal-300":""}`}>
                     <div className="w-[85px]">Comment </div>
                   </TableHead>
-                  <TableHead>
+                  <TableHead className={`button ${theme === "dark"? "bg-metal-800 text-metal-300":""}`}>
                     <div className="w-[90px]">Delete </div>
                   </TableHead>
                 </TableRow>
@@ -75,18 +77,19 @@ function MyPosts() {
                 {items.map((item) => (
                   <TableRow key={item._id}>
                     <TableCell>
-                      <div className="max-w-[250px] truncate">{item.Title}</div>
+                      <div className={` ${theme === "dark"? " text-metal-300":""} max-w-[250px] truncate`}>{item.Title}</div>
                     </TableCell>
-                    <TableCell>{item.UpVote + item.DownVote}</TableCell>
+                    <TableCell className={`${theme === "dark"? " text-metal-300":""}`}>{item.UpVote + item.DownVote}</TableCell>
                     <TableCell>
-                      <Link className="button text-green-500 bg-green-100" to={`/comments/${item._id}`}>
+                      <Link className={`py-2 rounded-md px-3 ${theme === "dark"? " text-metal-800 bg-metal-400":"text-green-500 bg-green-100"}  `} to={`/comments/${item._id}`}>
                         Comment
                       </Link>
                     </TableCell>
                     <TableCell>
                       <button
                         onClick={() => handeldelete(item._id)}
-                        className="button bg-rose-100 text-rose-500"
+                        className={`py-2 rounded-md px-3 ${theme === "dark"? " text-white bg-rose-400":"bg-rose-100 text-rose-500"}  `}
+                       
                       >
                         Delete
                       </button>
@@ -102,7 +105,7 @@ function MyPosts() {
       {items.length > 0 &&
       <div className="flex justify-center gap-4 py-4">
         <button
-          className="button"
+          className={`button ${theme === "dark"? " text-metal-300 bg-metal-800":""}`}
           onClick={() => setPage((prev) => Math.max(prev - 1, 1))}
           disabled={page === 1}
         >
@@ -112,7 +115,7 @@ function MyPosts() {
           Page {page} of {totalPages}
         </span>
         <button
-          className="button"
+          className={`button ${theme === "dark"? " text-metal-300 bg-metal-800":""}`}
           onClick={() => setPage((prev) => Math.min(prev + 1, totalPages))}
           disabled={page === totalPages}
         >

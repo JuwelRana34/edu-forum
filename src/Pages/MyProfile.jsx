@@ -5,9 +5,11 @@ import SecureAxios from "../Hook/SecureAxios";
 import useCheckAdmin from "../Routers/useCheckAdmin";
 import Loading from "../Components/Loading";
 import Profile from "../Components/Profile";
+import ThemeContext from "../Context/ThemeProvider";
 
 function MyProfile() {
   const { user } = useContext(UserContext);
+  const { theme } = useContext(ThemeContext);
   const role = useCheckAdmin();
   const { data: userInfo = {}, isLoading } = useQuery({
     queryKey: ["userinfo"],
@@ -30,7 +32,7 @@ function MyProfile() {
     <div>
       
       <h2 className=" text-2xl md:text-4xl font-bold text-center my-5">
-        welcome back! <span className="text-green-500">{userInfo.name}</span>
+        welcome back! <span className={`${theme === "dark"? "text-metal-300": "text-green-500"}`}>{userInfo.name}</span>
       </h2>
       <Profile
       

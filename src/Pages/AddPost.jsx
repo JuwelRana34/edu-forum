@@ -9,6 +9,7 @@ import {Link} from 'react-router'
 import Loading from "../Components/Loading";
 import { IoWarningOutline } from "react-icons/io5";
 import { FaArrowsSpin } from "react-icons/fa6";
+import ThemeContext from "../Context/ThemeProvider";
 function AddPost() {
   const { register, handleSubmit, reset } = useForm();
   const [tagOptions, setTagOptions] = useState([]);
@@ -18,7 +19,7 @@ function AddPost() {
   const [membership, setMemberShip]= useState(null)
   const [isLoading , setIsLoading] = useState(true)
   const [isPosting , setIsPosting] = useState(false)
-
+  const {theme} =useContext(ThemeContext)
 
   // check post count
  useEffect(() => {
@@ -89,7 +90,7 @@ function AddPost() {
 
   return (
     <div className="min-h-screen">
-      <h1 className=" my-10 text-metal-800 text-center text-3xl font-bold capitalize">
+      <h1 className={`${theme === "dark" ? "text-metal-300":'text-metal-800'} my-10  text-center text-3xl font-bold capitalize`}>
         {" "}
         add post{" "}
       </h1>
@@ -117,25 +118,48 @@ function AddPost() {
               <fieldset className="max-w-md space-y-1">
                 <Label htmlFor="name">Enter Title</Label>
                 <Input
+                className={ `${theme === "dark" && "bg-metal-700 border-none"}`}
                   id="name"
                   {...register("Title")}
                   placeholder="Enter Title"
                   type="text"
                 />
               </fieldset>
-              <Select
-                className="basic-single w-full mt-7 my-2"
+              <Select className={ ` basic-single w-full mt-7 my-2`}
                 classNamePrefix="select"
                 onChange={(selectOption) => setSelectionOption(selectOption)}
                 name="tag"
                 value={selectOption}
                 options={tagOptions}
+
+                styles={{
+                  control: (baseStyles) => ({
+                    ...baseStyles,
+                    backgroundColor: theme === "dark" ? "#3d4a5c" : "#fff", 
+                    color: theme === "dark" ? "#d1d5db" : "#000", 
+                    borderColor: theme === "dark" ? "#374151" : "#d1d5db", 
+                  }),
+                  menu: (baseStyles) => ({
+                    ...baseStyles,
+                    backgroundColor: theme === "dark" ? "#1f2937" : "#fff", 
+                  }),
+                  option: (baseStyles, { isFocused }) => ({
+                    ...baseStyles,
+                    backgroundColor: isFocused
+                      ? theme === "dark"
+                        ? "#374151"
+                        : "#e5e7eb"
+                      : "transparent",
+                    color: theme === "dark" ? "#d1d5db" : "#000",
+                  }),
+                  
+                }}
               />
 
               <fieldset className="max-w-md  space-y-1">
                 <Label htmlFor="name">Post Description</Label>
-                <Textarea
-                  className="col-span-2 "
+                <Textarea className={ `${theme === "dark" && "bg-metal-700 border-none"} col-span-2 `}
+                 
                   id="name"
                   {...register("Description")}
                   placeholder="Enter description"
@@ -145,7 +169,7 @@ function AddPost() {
 
               <br />
               <Button
-                className=" w-full   cursor-pointer md:col-span-2 rounded py-3 bg-blue-500 text-white"
+                className={`${theme === "dark"? "bg-metal-800 text-metal-300":" bg-blue-500 text-white"} w-full   cursor-pointer md:col-span-2 rounded py-3 `}
                 type="submit"
               >
                 {isPosting ? (
