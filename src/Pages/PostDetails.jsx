@@ -70,7 +70,7 @@ function PostDetails() {
   return (
     <>
       <div className="min-h-screen">
-        <div className=" w-[98%] md:w-10/12 mt-10  flex-col items-center justify-center mx-auto border rounded-lg shadow-lg p-4 bg-white">
+        <div className=" w-[98%] md:w-10/12 mt-10  flex-col items-center justify-center mx-auto border rounded-lg shadow-lg p-4 bg-white dark:bg-metal-800 dark:border-metal-700">
           <div className="flex justify-between items-center mb-4">
             <div>
               <div className="flex items-start mb-4">
@@ -84,10 +84,10 @@ function PostDetails() {
                 </div>
                 <div>
                   <p className="font-bold">{postinfo.Author_Name}</p>
-                  <p className="text-sm text-gray-500">
+                  <p className="text-sm text-gray-500 dark:text-metal-300">
                     {postinfo.Author_Email}
                   </p>
-                  <span className="text-sm  capitalize text-blue-400 font-semibold">
+                  <span className="text-sm  capitalize text-blue-400 font-semibold dark:text-metal-300">
                     #{postinfo.tag}
                   </span>
                 </div>
@@ -97,14 +97,14 @@ function PostDetails() {
             </div>
           </div>
 
-          <p className="text-gray-800 text-justify mb-6">
+          <p className="text-gray-800 dark:text-metal-300 text-justify mb-6">
             {postinfo.Description}
           </p>
           <div className="flex justify-between items-center">
             <div className="flex space-x-3 text-gray-600">
               <button
                 onClick={() => handleVotes("upvote")}
-                className="flex items-center space-x-1 hover:text-blue-600"
+                className="flex items-center space-x-1 hover:text-blue-600 dark:text-metal-300"
               >
                 <SlLike />
 
@@ -113,17 +113,17 @@ function PostDetails() {
 
               <button
                 onClick={() => handleVotes("downvote")}
-                className="flex items-center space-x-1 hover:text-blue-600"
+                className="flex items-center space-x-1 hover:text-blue-600 dark:text-metal-300"
               >
                 <SlDislike size={20} />
                 <span>{postinfo.DownVote}</span>
               </button>
-              <button className="flex items-center space-x-1 hover:text-blue-600">
+              <button className="flex items-center space-x-1 hover:text-blue-600 dark:text-metal-300">
                 <BiComment size={20} />
                 <span>{postinfo.comments.length}</span>
               </button>
               {user ? (
-                <button className="px-1">
+                <button className="px-1 ">
                   {" "}
                   <FacebookShareButton
                     url={shareUrl}
@@ -143,7 +143,7 @@ function PostDetails() {
                 </Button>
               )}
             </div>
-            <span className="text-sm text-center p-2 text-gray-500">
+            <span className="text-sm text-center p-2 text-gray-500 dark:text-metal-300">
               {new Date(postinfo.createdAt).toLocaleString()}
             </span>
           </div>
@@ -162,11 +162,11 @@ function PostDetails() {
               <textarea
                 name="comment"
                 placeholder="type your comment..."
-                className="border p-2 rounded"
+                className="border dark:border-metal-700  p-2 rounded "
                 id=""
               ></textarea>{" "}
               <br />
-              <input className="button cursor-pointer" type="submit" />
+              <input className="button dark:text-metal-300 dark:bg-metal-900 cursor-pointer" type="submit" />
             </div>
           </form>
         </div>
