@@ -18,11 +18,13 @@ import {
 } from "@headlessui/react";
 import Loading from "../Components/Loading";
 import LoadingTable from "../Components/LoadingTable";
+import ThemeContext from "../Context/ThemeProvider";
 
 function ManageUsers() {
   let [isOpen, setIsOpen] = useState(false);
   let [name, setName] = useState(" ");
   const { user } = useContext(UserContext);
+  const {theme} =useContext(ThemeContext)
   const [page, setPage] = useState(1);
   const { data: users = {}, refetch, isLoading } = useQuery({
     queryKey: ["users", page],
@@ -57,44 +59,43 @@ function ManageUsers() {
       {isLoading ? (
         <LoadingTable />
       ) : (
-        <Table>
+        <Table className={`button ${theme === "dark"? "bg-metal-800 text-metal-300":""}`}>
           <TableHeader>
             <TableRow>
-              <TableHead>
+              <TableHead  className={`button ${theme === "dark"? "bg-metal-800 text-metal-300":""}`}>
                 <div className="max-w-[250px]">User Name</div>
               </TableHead>
-              <TableHead>
+              <TableHead  className={`button ${theme === "dark"? "bg-metal-800 text-metal-300":""}`}>
                 <div className="w-[80px]">User Email</div>
               </TableHead>
-              <TableHead>
+              <TableHead  className={`button ${theme === "dark"? "bg-metal-800 text-metal-300":""}`}>
                 <div className="w-[85px]">Make Admin </div>
               </TableHead>
-              <TableHead>
+              <TableHead  className={`button ${theme === "dark"? "bg-metal-800 text-metal-300":""}`}>
                 <div className="w-[90px]">Subscription Status </div>
               </TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
             {items.map((item) => (
-              <TableRow key={item._id}>
+              <TableRow key={item._id} >
                 <TableCell>
-                  <div className="max-w-[250px] truncate">{item.name}</div>
+                  <div className={`max-w-[250px] truncate ${theme === "dark"? " text-metal-300":""}`}>{item.name}</div>
                 </TableCell>
-                <TableCell>{item.email}</TableCell>
+                <TableCell  className={` ${theme === "dark"? " text-metal-300":""}`}>{item.email}</TableCell>
                 <TableCell className="">
                   {item.role === "admin" ? (
-                    <h1 className="text-green-500 pl-8 ">Admin</h1>
+                    <h1 className={`text-green-500 pl-8 ${theme === "dark"? " text-metal-300":""}`}>Admin</h1>
                   ) : (
                     <button
-                      className="py-2 px-3 text-xs md:text-sm rounded-full bg-orange-100 text-orange-500"
+                      className={`${theme === "dark"? "text-metal-300 bg-metal-700":"bg-orange-100 text-orange-500"} py-2 px-3 text-xs md:text-sm rounded-full `}
                       onClick={() => handelMakeAdmin(item.name)}
                     >
-                      {" "}
                       Make Admin
                     </button>
                   )}
                 </TableCell>
-                <TableCell>{item.badge}</TableCell>
+                <TableCell  className={` ${theme === "dark"? " text-metal-300":""}`}>{item.badge}</TableCell>
               </TableRow>
             ))}
           </TableBody>
@@ -104,7 +105,7 @@ function ManageUsers() {
       {/* Pagination */}
       <div className="flex justify-center gap-4 py-4">
         <button
-          className="button"
+          className={`button ${theme === "dark"? "bg-metal-800 text-metal-300":""}`}
           onClick={() => setPage((prev) => Math.max(prev - 1, 1))}
           disabled={page === 1}
         >
@@ -114,7 +115,7 @@ function ManageUsers() {
           Page {page} of {totalPages}
         </span>
         <button
-          className="button"
+          className={`button ${theme === "dark"? "bg-metal-800 text-metal-300":""}`}
           onClick={() => setPage((prev) => Math.min(prev + 1, totalPages))}
           disabled={page === totalPages}
         >

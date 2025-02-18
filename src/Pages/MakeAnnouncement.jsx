@@ -4,10 +4,11 @@ import { useContext } from "react"
 import UserContext from "../Context/AuthContext"
 import {toast} from "keep-react"
 import useAnnouncementes from "../Hook/useAnnouncementes"
+import ThemeContext from "../Context/ThemeProvider"
 function MakeAnnouncement() {
   const {user} = useContext(UserContext)
   const {refetch} = useAnnouncementes()
-
+  const {theme} =useContext(ThemeContext)
   const { register, handleSubmit, reset } = useForm()
   const onSubmit = ({Title,Description}) =>{
       SecureAxios.post('/make-announcement',{
@@ -34,7 +35,7 @@ function MakeAnnouncement() {
       <input required className="border rounded focus:outline-green-200 my-2 p-2 " placeholder="Title " {...register("Title")} />
       <textarea required className="border rounded focus:outline-green-200 my-2 p-2 " placeholder="Description " {...register("Description")} />
       {/* <input className="border rounded my-2 p-2 " placeholder="type your " type="number" {...register("age", { min: 18, max: 99 })} /> */}
-      <input className="button cursor-pointer" type="submit" />
+      <input className={`button cursor-pointer ${theme === "dark"?"bg-metal-800 text-metal-300":''}`} type="submit" />
     </form>
     </div>
     

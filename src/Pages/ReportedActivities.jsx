@@ -54,22 +54,22 @@ function ReportedActivities() {
       ) : (
         <>
           {reportDatas.length > 0 ? (
-            <Table>
-              <TableHeader >
+            <Table className={`button ${theme === "dark"? "bg-metal-800 text-metal-300":""}`}>
+              <TableHeader  className={`button ${theme === "dark"? "bg-metal-800 text-metal-300":""}`} >
                 <TableRow>
-                  <TableHead >
+                  <TableHead  className={`button ${theme === "dark"? "bg-metal-800 text-metal-300":""}`}>
                     <div className="max-w-[250px]">Reporter email</div>
                   </TableHead>
-                  <TableHead>
+                  <TableHead className={`button ${theme === "dark"? "bg-metal-800 text-metal-300":""}`}>
                     <div className="w-[80px]">Commenter</div>
                   </TableHead>
-                  <TableHead>
+                  <TableHead className={`button ${theme === "dark"? "bg-metal-800 text-metal-300":""}`}>
                     <div className="w-[80px]">comment</div>
                   </TableHead>
-                  <TableHead>
+                  <TableHead className={`button ${theme === "dark"? "bg-metal-800 text-metal-300":""}`}>
                     <div className="w-[85px]">Feedback</div>
                   </TableHead>
-                  <TableHead>
+                  <TableHead className={`button ${theme === "dark"? "bg-metal-800 text-metal-300":""}`}>
                     <div className="w-[90px]">Action</div>
                   </TableHead>
                 </TableRow>
@@ -79,12 +79,12 @@ function ReportedActivities() {
                 {reportDatas.map((item) => (
                   <TableRow key={item._id}>
                     <TableCell>
-                      <div className="max-w-[250px] truncate">
+                      <div className={`max-w-[250px] truncate ${theme === "dark"? " text-metal-300":""}`}>
                         {item.repoter}
                       </div>
                     </TableCell>
-                    <TableCell>{item.commenter}</TableCell>
-                    <TableCell>
+                    <TableCell className={` ${theme === "dark"? " text-metal-300":""}`}>{item.commenter}</TableCell>
+                    <TableCell className={` ${theme === "dark"? " text-metal-300":""}`}>
                       {item.comment.length > 20 ? (
                         <>
                           {item.comment.substring(0, 20)}...
@@ -99,10 +99,10 @@ function ReportedActivities() {
                         <>{item.comment}</>
                       )}
                     </TableCell>
-                    <TableCell>{item.feedback}</TableCell>
+                    <TableCell className={` ${theme === "dark"? " text-metal-300":""}`}>{item.feedback}</TableCell>
                     <TableCell>
                       <Button
-                        className="bg-red-100 text-rose-500"
+                        className={` ${theme !=="dark"?"bg-red-100 text-rose-500":"bg-metal-600 text-metal-300"}`}
                         onClick={() => handleDelete(item._id, item.commentId)}
                       >
                         Delete
