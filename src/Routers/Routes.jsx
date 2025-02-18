@@ -18,6 +18,9 @@ import useCheckAdmin from "./useCheckAdmin";
 import Adminprivet from "./Adminprivet";
 import Comments from "../Pages/Comments";
 import PostDetails from "../Pages/PostDetails";
+import Contact from "../Pages/Contact";
+import Aboutus from "../Pages/Aboutus";
+import Blog from "../Pages/Blog";
 
 const AppRoute = () => {
   const role = useCheckAdmin();
@@ -25,6 +28,9 @@ const AppRoute = () => {
     <Routes>
       <Route path="/" element={<App />}>
         <Route index element={<Home />} />
+        <Route path="/contact"  element={<Contact />} />
+        <Route path="/About"  element={<Aboutus />} />
+        <Route path="/blog"  element={<Blog />} />
         <Route path="JoinUs" element={<JoinUs />} />
         <Route
           path="MemberShip"

@@ -46,7 +46,7 @@ function Foter() {
             src="https://cdn-icons-png.flaticon.com/128/12112/12112232.png"
           />
           <p>
-            <Link to={"/"} className="Logo text-xl text-[#23a4f8] md:text-3xl">
+            <Link to={"/"} className="Logo dark:text-metal-300 text-xl text-[#23a4f8] md:text-3xl">
               Edu Forum bd.
             </Link>
             <br />
