@@ -12,9 +12,11 @@ import {
 } from "keep-react";
 import LoadingTable from "../Components/LoadingTable";
 import DataNotFound from "../Components/DataNotFound";
-import { useState } from "react";
+import { useContext, useState } from "react";
+import ThemeContext from "../Context/ThemeProvider";
 
 function ReportedActivities() {
+  const {theme}= useContext(ThemeContext)
   const [modalContent, setModalContent] = useState("");
   const {
     data: reportDatas = [],
@@ -53,9 +55,9 @@ function ReportedActivities() {
         <>
           {reportDatas.length > 0 ? (
             <Table>
-              <TableHeader>
+              <TableHeader >
                 <TableRow>
-                  <TableHead>
+                  <TableHead >
                     <div className="max-w-[250px]">Reporter email</div>
                   </TableHead>
                   <TableHead>

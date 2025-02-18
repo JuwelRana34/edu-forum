@@ -20,11 +20,13 @@ import {
 import { TfiAnnouncement } from "react-icons/tfi";
 import DashboardMenu from "../Components/DashboardMenu";
 import useCheckAdmin from "../Routers/useCheckAdmin";
-
+import ThemeContext from "../Context/ThemeProvider";
+import { SwitchComponent } from "../Components/ToogleSwtich";
 function Dashboard() {
   const { user } = useContext(UserContext);
   const role = useCheckAdmin();
   const { pathname } = useLocation();
+  const {theme}= useContext(ThemeContext)
   useEffect(() => {
     const DynamicTitle = {
       "/Dashboard": "Dashboard | Edu forum",
@@ -39,10 +41,10 @@ function Dashboard() {
     document.title = DynamicTitle[pathname] || "Edu forum";
   }, [pathname]);
   return (
-    <div className="md:flex w-full bg-slate-100  gap-3">
-      <div className="md:grow">
-        <Sidebar className="  hidden md:block shadow-none h-full bg-gradient-to-tr from-blue-50 to-white   rounded">
-          <SidebarBody>
+    <div className={`${theme ==="dark" ?"dark:bg-metal-900" : "bg-slate-100"} md:flex w-full   gap-3`}>
+      <div className={`md:grow`}>
+        <Sidebar className={` ${theme !== "dark"? "": 'bg-metal-700 border-none rounded-none'}  hidden md:block shadow-none h-full    rounded"`}>
+          <SidebarBody >
             {/* fornormar users routes  */}
 
             {role === "user" && (
@@ -117,6 +119,7 @@ function Dashboard() {
                 </NavLink>
               </SidebarList>
             )}
+             <SwitchComponent />
           </SidebarBody>
           <SidebarFooter className="grow">
             <Avatar>
@@ -132,9 +135,11 @@ function Dashboard() {
               </p>
             </div>
           </SidebarFooter>
+         
         </Sidebar>
 
         <DashboardMenu />
+        
       </div>
 
       <div className="md:w-[80%] pt-16 md:pt-5 h-screen overflow-hidden overflow-y-scroll ">

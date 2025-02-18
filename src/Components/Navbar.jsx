@@ -17,10 +17,12 @@ import { Button, toast } from "keep-react";
 import { SwitchComponent } from "./ToogleSwtich";
 import { FaBell } from "react-icons/fa";
 import useAnnouncementes from "../Hook/useAnnouncementes";
+import ThemeContext from "../Context/ThemeProvider";
 function Navbar() {
   const { pathname } = useLocation();
   const { user, LogOut, setUser, setIsloading,} = useContext(UserContext);
   const {announcements} = useAnnouncementes()
+  const {theme} = useContext(ThemeContext)
 
   const navigate = useNavigate();
   const handleLogout = () => {
@@ -137,8 +139,8 @@ function Navbar() {
       <div className="navbar-end ">
         {user && 
           <>
-            <div className="flex cursor-pointer items-center space-x-2">
-              <Dropdown>
+            <div className="flex  cursor-pointer items-center space-x-2">
+              <Dropdown >
                 <DropdownAction asChild>
                   <img
                     className=" rounded-full h-12 ring-2 ring-[#23a8fe]/35   shadow-lg w-12"
@@ -146,12 +148,12 @@ function Navbar() {
                     alt={user.displayName}
                   />
                 </DropdownAction>
-                <DropdownContent className="dropdown">               
-                  <h1 className="font-semibold text-metal-600">Hey! {user.displayName}</h1>
+                <DropdownContent className={`dropdown dark:text-metal-300 ${theme === "dark"?"bg-metal-800 " : " "}  `}>               
+                  <h1 className={`${theme === "dark"? "text-metal-300": ''} font-semibold `}>Hey! {user.displayName}</h1>
                   <DropdownDivider />
                   <DropdownGroup>
                     <Link to={'/Dashboard'}>
-                    <DropdownItem><MdOutlineAccountCircle className="text-xl font-semibold" />Dashboard</DropdownItem>
+                    <DropdownItem className={`${theme !== "dark"? "": 'text-metal-300'}`}><MdOutlineAccountCircle className="text-xl font-semibold dark:text-metal-300" />Dashboard</DropdownItem>
                     </Link>
                     
                     <DropdownItem className="text-rose-500" onClick={handleLogout}> <CiLogout className="text-xl font-semibold"/> Logout</DropdownItem>
