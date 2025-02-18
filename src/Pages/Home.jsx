@@ -92,10 +92,10 @@ function Home() {
 
       <Announcements />
 
-      <section className="  bg-metal-50">
+      <section className=" dark:text-metal-300 dark:bg-metal-800  bg-metal-50">
         {/* tags  */}
-        <div className=" hidden md:block p-5 ">
-          <div className="bg-white rounded p-5 flex flex-wrap justify-evenly gap-2">
+        <div className=" hidden md:block p-5 dark:bg-metal-700">
+          <div className="bg-white dark:bg-metal-800 rounded p-5 flex flex-wrap justify-evenly gap-2">
             <h2 className="h2">Tags:</h2>
             <button
               onClick={() => {
@@ -103,7 +103,7 @@ function Home() {
                 setSearch("");
                 setTag("");
               }}
-              className="bg-gray-200 flex-1 mx-auto rounded py-2 font-semibold focus:bg-emerald-100"
+              className="bg-gray-200 dark:bg-metal-700 flex-1 mx-auto rounded py-2 font-semibold focus:bg-emerald-100"
             >
               All
             </button>
@@ -115,7 +115,7 @@ function Home() {
                   setSearch("");
                   setTag(tag.tag);
                 }}
-                className="bg-gray-200 flex-1 mx-auto rounded p-2 font-semibold hover:bg-emerald-200  focus:bg-emerald-100"
+                className="bg-gray-200 dark:bg-metal-700 flex-1 mx-auto rounded p-2 font-semibold hover:bg-emerald-200  focus:bg-emerald-100"
               >
                 {tag.tag}
               </button>
@@ -124,8 +124,8 @@ function Home() {
         </div>
 
         {/* pots  */}
-        <div className=" space-y-5 px-5 pt-5 md:pt-0 pb-5 md:w-10/12 mx-auto">
-          <div className="text-end flex justify-evenly gap-2 md:justify-end">
+        <div className=" space-y-5 px-5 mt-2 md:pt-3 pb-5 md:w-10/12 mx-auto">
+          <div className="text-end pt-3 md:pt-0 flex justify-evenly gap-2 md:justify-end">
             <div className="md:hidden w-full  ">
               <Select>
                 <SelectAction className="w-full">
@@ -170,7 +170,7 @@ function Home() {
                 setTag("");
                 setCurrentPage(1)
               }}
-              className="  button shadow text-sm md:text-white bg-[#23a8fe] text-white capitalize "
+              className="  button shadow text-sm dark:bg-metal-700 dark:text-metal-300 md:text-white bg-[#23a8fe] text-white capitalize "
             >
               Sort by Popularity
             </button>
@@ -189,9 +189,9 @@ function Home() {
                   {AllPosts.map((item) => (
                     <div
                       key={item._id}
-                      className=" w-full mx-auto border rounded-lg shadow-lg p-2 px-4 bg-white"
+                      className=" w-full mx-auto border rounded-lg shadow-lg p-2 px-4 bg-white dark:bg-metal-700 dark:border-metal-500"
                     >
-                      <div className="flex justify-between items-center mb-2">
+                      <div className="flex justify-between items-center mb-1">
                         <div className="flex items-center gap-2"></div>
                       </div>
                       <div className="flex items-start ">
@@ -205,7 +205,7 @@ function Home() {
                         </div>
                         <div>
                           <p className="font-semibold">{item.Author_Name}</p>
-                          <span className="text-sm text-blue-400">
+                          <span className="text-sm dark:text-metal-300 text-blue-400">
                             # {item.tag}
                           </span>
                         </div>
@@ -223,18 +223,18 @@ function Home() {
                       </p>
                       <div className="flex mt-2 justify-between items-center">
                         <div className="flex space-x-3 text-gray-600">
-                          <div className="flex items-center space-x-1 hover:text-blue-600">
+                          <div className="flex  items-center space-x-1 dark:text-metal-300 hover:text-blue-600">
                             <BiSolidUpvote />
 
                             <span>{item.UpVote}</span>
                           </div>
 
-                          <div className="flex items-center space-x-1 hover:text-blue-600">
+                          <div className="flex items-center space-x-1 dark:text-metal-300 hover:text-blue-600">
                             <BiComment />
                             <span>{item?.comments?.length}</span>
                           </div>
                         </div>
-                        <span className="text-sm text-center text-gray-500">
+                        <span className="text-sm text-center text-gray-500 dark:text-metal-300">
                           {new Date(item.createdAt).toLocaleString()}
                         </span>
                       </div>
@@ -243,7 +243,7 @@ function Home() {
                   {/* pagination */}
                   <div className="text-center">
                     {" "}
-                    <button className="button"
+                    <button className="button dark:bg-metal-700"
                       id="prev-btn"
                       disabled={currentPage === 1}
                       onClick={handlePrev}
@@ -253,7 +253,7 @@ function Home() {
                     <span className="px-2">
                       Page {currentPage} of {totalPages}
                     </span>{" "}
-                    <button className="button" id="next-btn" onClick={handleNext}>
+                    <button className="button dark:bg-metal-700" id="next-btn" onClick={handleNext}>
                       Next
                     </button>{" "}
                   </div>

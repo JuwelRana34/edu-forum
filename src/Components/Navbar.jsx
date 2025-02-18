@@ -14,7 +14,7 @@ import {
 import { useContext, useEffect, useState } from "react";
 import UserContext from "../Context/AuthContext";
 import { Button, toast } from "keep-react";
-
+import { SwitchComponent } from "./ToogleSwtich";
 import { FaBell } from "react-icons/fa";
 import useAnnouncementes from "../Hook/useAnnouncementes";
 function Navbar() {
@@ -68,6 +68,7 @@ function Navbar() {
           <a>Member Ship</a>
         </li>
       </NavLink>
+      <SwitchComponent/>
 
       <li>
         <a className="relative w-fit "><FaBell className="text-xl">
@@ -81,7 +82,7 @@ function Navbar() {
   );
 
   return (
-    <nav className="backdrop-blur bg-white/35 z-[999] sticky top-0">
+    <nav className="backdrop-blur dark:bg-black/40 dark:text-white-600 bg-white/35 z-[999] sticky top-0">
       <div className="navbar  container mx-auto py-2  ">
       <div className="navbar-start">
         <div className="dropdown">
