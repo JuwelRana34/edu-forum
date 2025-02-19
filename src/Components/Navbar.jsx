@@ -83,7 +83,7 @@ function Navbar() {
       <SwitchComponent/>
 
       <li>
-        <a className="relative w-fit "><FaBell className="text-xl">
+        <a className="relative w-fit mt-2 lg:mt-0 "><FaBell className="text-xl">
           </FaBell> 
           <p className=" absolute -top-2 right-1 lg:-top-[5px] lg:right-2  h-5 w-5  text-center text-white rounded-full bg-green-500">{announcements?.length || 0}</p>
          

@@ -1,37 +1,47 @@
 import { BiCalendar, BiMapPin } from "react-icons/bi";
 import { CiLock } from "react-icons/ci";
 import Swal from "sweetalert2";
+import UserContext from "../Context/AuthContext";
+import { useContext } from "react";
+import { toast } from "sonner";
+import { BsCash } from "react-icons/bs";
 
 export default function EventsWebinars() {
-
+const {user} = useContext(UserContext)
   const events = [
     {
       title: "React Masterclass",
       date: "March 15, 2025",
       time: "10:00 AM - 12:00 PM",
       location: "Online Webinar",
+      price: 0,
     },
     {
       title: "AI & Machine Learning Summit",
       date: "April 5, 2025",
       time: "2:00 PM - 5:00 PM",
-      location: "Tech Hub, New York",
+      location: "Bonani, Dhaka,Bangladesh",
+      price: 0,
     },
     {
       title: "Cybersecurity Workshop",
       date: "April 20, 2025",
       time: "4:00 PM - 6:00 PM",
       location: "Virtual Event",
+      price: 0,
     },
     {
       title: "Startup & Innovation Conference",
       date: "May 10, 2025",
       time: "9:00 AM - 3:00 PM",
-      location: "Silicon Valley, CA",
+      location: "Uttora, Dhaka, Bangladesh",
+      price: 0,
     },
   ];
 
   const handelRegister = (title) => {
+    if(!user) return toast.warning("please login before registration!"); 
+
     Swal.fire({
         title: `are you sure to register "${title} ?"`,
         showDenyButton: false,
@@ -41,7 +51,7 @@ export default function EventsWebinars() {
       }).then((result) => {
       
         if (result.isConfirmed) {
-          Swal.fire("Registered! ", "", "success");
+          Swal.fire(`Congratulations! 🎉You have successfully registered for! ${title} `, "", "success");
         } else if (result.isDenied) {
           Swal.fire("Changes are not saved", "", "info");
         }
@@ -59,7 +69,7 @@ export default function EventsWebinars() {
         </p>
 
 
-        <div className="space-y-4">
+        <div className=" gap-5 items-center grid grid-cols-1 lg:grid-cols-2">
           {events.map((event, index) => (
             <div
               key={index}
@@ -78,8 +88,11 @@ export default function EventsWebinars() {
                 <div className="text-gray-600 dark:text-gray-300 flex items-center mt-1">
                   <BiMapPin className="w-5 h-5 mr-2" /> {event.location}
                 </div>
+                <div className="text-gray-600 dark:text-gray-300 flex items-center mt-1">
+                  <BsCash className="w-5 h-5 mr-2" /> {event.price}
+                </div>
               </div>
-              <button onClick={()=> handelRegister(event.title)} className="mt-3 sm:mt-0 px-4 py-2 bg-blue-500 dark:bg-blue-600 text-white rounded-lg hover:bg-blue-600 dark:hover:bg-blue-700 transition">
+              <button onClick={()=> handelRegister(event.title)} className="mt-3 sm:mt-0 px-4 py-2 bg-blue-500 dark:bg-metal-600 text-white rounded-lg  hover:bg-blue-600 dark:hover:bg-metal-900 transition">
                 Register
               </button>
             </div>
