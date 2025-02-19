@@ -21,6 +21,10 @@ import {
 
 import axios, { all } from "axios";
 import Announcements from "../Components/Announcements";
+import NewsLatter from "../Components/NewsLatter";
+import GamificationAward from "../Components/GamificationAward";
+import Learningpath from "../Components/Learningpath";
+import EventsWebinars from "../Components/EventsWebinars";
 function Home() {
   const [tag, setTag] = useState("");
   const [search, setSearch] = useState("");
@@ -29,7 +33,14 @@ function Home() {
   const [totalPages, setTotalPages] = useState(1);
   const limit = 5;
   const [sortByPopularity, setSortByPopularity] = useState(false);
-
+  const stepItems =[
+      "Sign up and create your profile.",
+      "Explore different discussion categories.",
+      "Ask questions and share knowledge with the community.",
+      "Engage in discussions, get expert answers, and earn badges.",
+      "Stay updated with the latest educational resources and events.",
+    ]
+  
   const { data: Posts = [], isLoading } = useQuery({
     queryKey: ["posts", tag, search, currentPage,sortByPopularity],
     enabled: !sortByPopularity,
@@ -263,6 +274,37 @@ function Home() {
           )}
         </div>
       </section>
+
+      {/* news later */}
+      <NewsLatter/>
+
+      <div className="max-w-3xl mx-auto my-5 border dark:border-none w-full bg-white dark:bg-gray-800 shadow-lg rounded-lg p-6">
+          <h2 className="text-3xl dark:text-metal-300 font-semibold text-center text-gray-800  mb-6">
+            How It Works
+          </h2>
+
+          <div className="space-y-6">
+            {stepItems.map((step, index) => (
+              <div
+                key={index}
+                className="flex items-center bg-blue-100 dark:bg-gray-700 p-4 rounded-lg shadow"
+              >
+                <div className="w-10 h-10 flex items-center justify-center text-blue-500 md:text-white font-bold  md:bg-blue-500 dark:bg-transparent rounded-full">
+                  {index + 1}
+                </div>
+                <p className="ml-4 text-lg text-gray-700 dark:text-gray-300">{step}</p>
+              </div>
+            ))}
+          </div>
+        
+    </div>
+ 
+ {/* award  */}
+ <GamificationAward/>
+
+ <Learningpath/>
+
+ <EventsWebinars/>
     </div>
   );
 }

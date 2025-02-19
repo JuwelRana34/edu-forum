@@ -1,14 +1,19 @@
 import { Button, Input, Label, toast } from "keep-react";
 import React, { useContext } from "react";
 import ThemeContext from "../Context/ThemeProvider";
-
+import Swal from "sweetalert2";
 function Contact() {
   const { theme } = useContext(ThemeContext);
 
   const contact = (e) => {
-    e.preventDefault(); 
+    e.preventDefault();
     const { name, email , message} = e.target
-    toast.success(`"${name.value}" your message has been sent successfully`)
+    Swal.fire({
+      title: `"${name.value}" your message has been sent successfully`,
+      icon: "success",
+      draggable: true
+    });
+    
     e.target.reset()
   };
 
