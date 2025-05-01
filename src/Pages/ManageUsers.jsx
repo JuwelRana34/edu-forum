@@ -19,7 +19,8 @@ import {
 import Loading from "../Components/Loading";
 import LoadingTable from "../Components/LoadingTable";
 import ThemeContext from "../Context/ThemeProvider";
-
+import {  FaTrash } from "react-icons/fa6";
+import Swal from "sweetalert2";
 function ManageUsers() {
   let [isOpen, setIsOpen] = useState(false);
   let [name, setName] = useState(" ");
@@ -42,6 +43,28 @@ function ManageUsers() {
     setName(name);
     setIsOpen(true);
   };
+
+  const handelUserDelete =  (id) => {
+    if(!id) return toast.error("User not found");
+    Swal.fire({
+      title: "Are You Sure?",
+      showDenyButton: false,
+      showCancelButton: true,
+      confirmButtonText: "Delete",
+    }).then(async (result) => {
+      if (result.isConfirmed) {
+        try {
+       await SecureAxios.delete(`/user/${id}/${user.email}`);
+       refetch();
+       Swal.fire("Deleted!", "", "success");
+    } catch (error) {
+      toast.error("Failed to delete user");
+    }
+      } 
+    });
+   
+  };
+
 
   const handelcnfirm = async () => {
     await SecureAxios.put(`/makeAdmin/?userName=${name}`)
@@ -72,7 +95,7 @@ function ManageUsers() {
                 <div className="w-[85px]">Make Admin </div>
               </TableHead>
               <TableHead  className={`button ${theme === "dark"? "bg-metal-800 text-metal-300":""}`}>
-                <div className="w-[90px]">Subscription Status </div>
+                <div className="w-[90px]">Delete user </div>
               </TableHead>
             </TableRow>
           </TableHeader>
@@ -95,7 +118,9 @@ function ManageUsers() {
                     </button>
                   )}
                 </TableCell>
-                <TableCell  className={` ${theme === "dark"? " text-metal-300":""}`}>{item.badge}</TableCell>
+                <TableCell  className={` ${theme === "dark"? " text-metal-300":""}`}>
+                  <button onClick={()=>handelUserDelete(item._id)}> <FaTrash className="text-rose-500" size={24}/> </button>
+                </TableCell>
               </TableRow>
             ))}
           </TableBody>
