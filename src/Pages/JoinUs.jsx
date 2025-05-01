@@ -1,14 +1,13 @@
-import { useContext } from "react";
+import { useContext,  useState} from "react";
 import UserContext from "../Context/AuthContext";
 import { Button, InputIcon, Input, Label, Divider, toast } from "keep-react";
 import { FaEnvelope, FaLock } from "react-icons/fa6";
 import { Link, useNavigate } from "react-router";
 import useAxiosPublic from "../Hook/useAxiosPublic";
-
+import {  Dialog, DialogPanel, DialogTitle } from '@headlessui/react'
 import { useForm } from "react-hook-form";
-
 function JoinUs() {
-  const { GoogleLogin, login } = useContext(UserContext);
+  const { GoogleLogin, login, PassReset } = useContext(UserContext);
   const navigate = useNavigate();
   const  AxiosPublic = useAxiosPublic()
   const {
@@ -17,7 +16,8 @@ function JoinUs() {
     formState: { errors },
     reset,
   } = useForm();
-
+  let [isOpen, setIsOpen] = useState(false)
+  const [email, setEmail] = useState(null)
   const onSubmit = ({ email, password }) => {
     login(email, password)
       .then(() => {
@@ -52,6 +52,22 @@ function JoinUs() {
       })
       .catch((err) => toast.error(`${err.message}`));
   };
+
+  const handlePasswordReset = async () => {
+    if (!email) {
+      toast.error("Please enter your email address");
+      return;
+    }
+    try {
+      await PassReset(email)
+        toast.success("Password reset email sent");
+        setIsOpen(false);
+    } catch (error) {
+      toast.error(`${err.message}`)
+    }
+   
+     
+  }
 
   return (
     <div>
@@ -108,9 +124,9 @@ function JoinUs() {
             </div>
           </fieldset>
 
-          <Link to={""} className="my-2 underline block text-blue-500">
+          <p  onClick={() => setIsOpen(true)} className="my-2 underline block cursor-pointer text-blue-500">
             Forgot password?
-          </Link>
+          </p>
 
           <Button
             size="sm"
@@ -139,6 +155,23 @@ function JoinUs() {
         you haven't account? <Link to={'/registration'} className="text-blue-500 cursor-pointer">registration </Link> 
         </p>
       </div>
+
+      {/* dialog box of password reset */}
+      <Dialog open={isOpen} onClose={() => setIsOpen(false)} className="relative z-50">
+        <div className="fixed backdrop-blur bg-white/15 inset-0 flex w-screen items-center justify-center md:p-4">
+          <DialogPanel className=" rounded shadow-lg max-w-lg  space-y-4 border bg-white p-5 md:p-12">
+            <DialogTitle className="font-bold">Enter Your Email</DialogTitle>
+           
+            <Input onChange={(e)=>setEmail(e.target.value)} placeholder="Enter name" type="text" />
+
+            <div className="flex justify-between items-center">
+              <Button className="bg-red-100 text-red-500 hover:bg-red-300 transition-all" onClick={() => setIsOpen(false)}>Cancel</Button>
+              <Button onClick={handlePasswordReset}className="bg-green-100 text-green-500 hover:bg-green-200 transition-all">Send</Button>
+            </div>
+           
+          </DialogPanel>
+        </div>
+      </Dialog>
     </div>
   );
 }

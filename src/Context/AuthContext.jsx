@@ -9,6 +9,7 @@ import {
   onAuthStateChanged,
   deleteUser,
   updateProfile,
+  sendPasswordResetEmail,
 } from "firebase/auth";
 const UserContext = createContext();
 import axios from "axios";
@@ -50,6 +51,9 @@ export const AuthProvider = ({ children }) => {
       photoURL: photo,
     });
   };
+  const PassReset = (email) => {
+    return sendPasswordResetEmail(auth, email);
+  }
 
   useEffect(() => {
     const Unsubscribe = onAuthStateChanged(auth, (user) => {
@@ -100,7 +104,8 @@ export const AuthProvider = ({ children }) => {
     DeleteUser,
     UpdateProfile,
     setAnnouncement,
-    announcement
+    announcement,
+    PassReset
   };
 
   return (
