@@ -2,19 +2,31 @@ import { Button, toast } from "keep-react";
 import useAnnouncementes from "../Hook/useAnnouncementes";
 import useCheckAdmin from "../Routers/useCheckAdmin";
 import SecureAxios from "../Hook/SecureAxios";
+import Swal from "sweetalert2";
 
 
 function Announcements() {
   const { announcements,refetch } = useAnnouncementes();
   const role = useCheckAdmin()
-  const handeldelete = async(id)=>{
-       await SecureAxios.delete(`/announcements/delete/${id}`)
-       .then(() => {
+  const handeldelete = (id)=>{
+    Swal.fire({
+      title: "Are You Sure?",
+      showDenyButton: false,
+      showCancelButton: true,
+      confirmButtonText: "Delete",
+    }).then(async(result) => {
+      /* Read more about isConfirmed, isDenied below */
+      if (result.isConfirmed) {
+        try {
+          await SecureAxios.delete(`/announcements/delete/${id}`)
         refetch()
-        toast.success(`announcements deleted successfully!`)
-        }).catch(err => { 
-          toast.error(`Error: ${err.message}`)
-        })
+        Swal.fire("Deleted!", "", "success");
+        } catch (error) {
+            toast.error(`Error: ${error.message}`)
+        }
+      } 
+    });
+       
   }
 
   return (
