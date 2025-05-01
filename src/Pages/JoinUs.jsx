@@ -72,6 +72,7 @@ function JoinUs() {
                 })}
                 placeholder="Enter email"
                 className="ps-11"
+                defaultValue={"admin@gmail.com"}
               />
               <InputIcon>
                 <FaEnvelope size={19} color="#AFBACA" />
@@ -96,6 +97,7 @@ function JoinUs() {
                 placeholder="Enter password"
                 type="password"
                 className="ps-11"
+                defaultValue={"Admin1234"}
               />
               <InputIcon>
                 <FaLock size={19} color="#AFBACA" />
