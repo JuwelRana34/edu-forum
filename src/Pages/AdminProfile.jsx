@@ -95,17 +95,17 @@ function AdminProfile() {
         />
         {/* detail about information */}
         <div className="grid grid-cols-1 w-5/6 justify-items-center md:w-full mx-auto md:grid-cols-3 gap-2 lg:gap-10 px-5">
-          <div className={`${theme === "dark"?"bg-metal-800 text-metal-300":'bg-gradient-to-tr bg-[#02AAB0] via-[#00CDAC] to-[#02AAB0 ] text-white'}  flex items-center  w-full p-5 rounded-md  mx-auto shadow-md `}>
+          <div className={`${theme === "dark"?"bg-metal-800 text-metal-300":' bg-cyan-100 text-cyan-500 '}  flex items-center  w-full p-5 rounded-md  mx-auto shadow-lg `}>
             <h2 className="text-xl lg:text-3xl capitalize font-semibold">
               total posts <br /> {allInfo.totalPosts}
             </h2>
           </div>
-          <div className={`${theme === "dark"?"bg-metal-800 text-metal-300":'bg-gradient-to-tr from-orange-500  to-red-500 text-white'} flex items-center  w-full p-5 rounded-md  mx-auto shadow-md `}>
+          <div className={`${theme === "dark"?"bg-metal-800 text-metal-300":'bg-orange-100 text-orange-500'} flex items-center  w-full p-5 rounded-md  mx-auto shadow-lg `}>
             <h2 className="text-xl lg:text-3xl capitalize font-semibold">
               total Users <br /> {allInfo.totalUser}
             </h2>
           </div>
-          <div className={` ${theme === "dark"?"bg-metal-800 text-metal-300":'bg-gradient-to-tr  from-pink-500  to-violet-500 text-white'}  flex items-center  w-full p-5 rounded-md  mx-auto shadow-md `}>
+          <div className={` ${theme === "dark"?"bg-metal-800 text-metal-300":'bg-violet-100 text-violet-500'}  flex items-center  w-full p-5 rounded-md  mx-auto shadow-md `}>
             <h2 className="text-xl lg:text-3xl capitalize font-semibold">
               total Comments <br /> {allInfo.totalComment}
             </h2>
