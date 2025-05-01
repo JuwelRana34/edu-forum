@@ -1,9 +1,37 @@
-import React from "react";
+import React, { useContext } from "react";
 import PostCard from "./PostCard";
 import DataNotFound from "./DataNotFound";
-
+import UserContext from "../Context/AuthContext";
+import Swal from "sweetalert2";
+import SecureAxios from "../Hook/SecureAxios";
 function Profile({ userInfo, photo, name, badge, role, createdAt, recentPost,email }) 
 {
+  const { LogOut, DeleteUser, user } = useContext(UserContext);
+
+  const handelDelete = () => {
+    Swal.fire({
+      title: "Are You Sure to delete Your AC?",
+      showDenyButton: false,
+      showCancelButton: true,
+      confirmButtonText: "Delete",
+    }).then(async(result) => {
+      /* Read more about isConfirmed, isDenied below */
+      if (result.isConfirmed) {
+       try {
+         await SecureAxios.delete(`/user/${userInfo._id}`);
+         await DeleteUser(user);
+          if (res.data.deletedCount > 0) {
+            Swal.fire("Deleted!", "", "success");
+            LogOut();
+          }
+        
+       } catch (error) {
+         console.log(error);
+        
+       }
+      } 
+    });
+  }
   return (
     <div className=" m-2 md:my-5">
       <h2 className=" text-xl md:text-3xl font-bold capitalize my-5">{ role === "user"? "user" : "admin"} Profile</h2>
@@ -49,6 +77,7 @@ function Profile({ userInfo, photo, name, badge, role, createdAt, recentPost,ema
         <h2 className="font-semibold text-lg">
           Member since - {new Date(createdAt).toDateString()}
         </h2>
+        <button onClick={handelDelete} className=" py-3 px-5 rounded-md bg-rose-100 text-rose-500 hover:bg-red-300 transition-all my-3 shadow-rose-200 shadow-lg hover:shadow-none"> Delete Account</button>
         {role === "user" && (
           <div>
             <h2 className="h2">recent posts: </h2>
