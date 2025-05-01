@@ -14,7 +14,7 @@ import LoadingTable from "../Components/LoadingTable";
 import DataNotFound from "../Components/DataNotFound";
 import { useContext, useState } from "react";
 import ThemeContext from "../Context/ThemeProvider";
-
+import Swal from "sweetalert2";
 function ReportedActivities() {
   const {theme}= useContext(ThemeContext)
   const [modalContent, setModalContent] = useState("");
@@ -30,8 +30,16 @@ function ReportedActivities() {
     },
   });
 
-  const handleDelete = async (reportId, commentId) => {
-    try {
+  const handleDelete = (reportId, commentId) => {
+    Swal.fire({
+      title: "Are You Sure?",
+      showDenyButton: false,
+      showCancelButton: true,
+      confirmButtonText: "Delete",
+    }).then(async(result) => {
+
+      if (result.isConfirmed) {
+       try {
       await SecureAxios.delete(`/delete-comment/${reportId}/${commentId}`);
       refetch();
       toast.success("Comment deleted successfully.");
@@ -39,6 +47,9 @@ function ReportedActivities() {
       console.error(error);
       toast.error("Failed to delete comment.");
     }
+      } 
+    });
+   
   };
   const handleReadMore = (text) => {
     setModalContent(text);
