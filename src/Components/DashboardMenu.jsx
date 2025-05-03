@@ -20,6 +20,7 @@ const userNavigation = [
   { name: "Add post", href: "AddPost", current: false },
   { name: "My Posts", href: "MyPosts", current: false },
   { name: "My Profile", href: "MyProfile", current: false },
+  { name: "Events", href: "Events", current: false },
 ];
 const adminNavigation = [
   { name: "Home", href: "/", current: false },
@@ -27,6 +28,7 @@ const adminNavigation = [
   { name: "Admin Profile", href: "AdminProfile", current: false },
   { name: "Make Announcement", href: "MakeAnnouncement", current: false },
   { name: "Reported Activities", href: "ReportedActivities", current: false },
+  { name: "Events & Webinars", href: "Events", current: false },
 ];
 
 function classNames(...classes) {

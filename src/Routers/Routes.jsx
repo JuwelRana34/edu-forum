@@ -21,6 +21,7 @@ import PostDetails from "../Pages/PostDetails";
 import Contact from "../Pages/Contact";
 import Aboutus from "../Pages/Aboutus";
 import Blog from "../Pages/Blog";
+import Events from "../Pages/Events";
 
 const AppRoute = () => {
   const role = useCheckAdmin();
@@ -68,7 +69,7 @@ const AppRoute = () => {
         )}
         {/* normar user routs  */}
         <Route path="MyPosts" element={<MyPosts />} />
-
+        <Route path="Events" element={<Events />} />
         <Route path="MyProfile" element={<MyProfile />} />
         <Route path="AddPost" element={<AddPost />} />
         

@@ -162,7 +162,7 @@ function JoinUs() {
           <DialogPanel className=" rounded shadow-lg max-w-lg  space-y-4 border bg-white p-5 md:p-12">
             <DialogTitle className="font-bold">Enter Your Email</DialogTitle>
            
-            <Input onChange={(e)=>setEmail(e.target.value)} placeholder="Enter name" type="text" />
+            <Input onChange={(e)=>setEmail(e.target.value)} placeholder="Enter Email" type="text" />
 
             <div className="flex justify-between items-center">
               <Button className="bg-red-100 text-red-500 hover:bg-red-300 transition-all" onClick={() => setIsOpen(false)}>Cancel</Button>

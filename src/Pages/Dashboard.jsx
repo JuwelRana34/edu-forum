@@ -22,11 +22,12 @@ import DashboardMenu from "../Components/DashboardMenu";
 import useCheckAdmin from "../Routers/useCheckAdmin";
 import ThemeContext from "../Context/ThemeProvider";
 import { SwitchComponent } from "../Components/ToogleSwtich";
+import { BiCalendar } from "react-icons/bi";
 function Dashboard() {
   const { user } = useContext(UserContext);
   const role = useCheckAdmin();
   const { pathname } = useLocation();
-  const {theme}= useContext(ThemeContext)
+  const { theme } = useContext(ThemeContext);
   useEffect(() => {
     const DynamicTitle = {
       "/Dashboard": "Dashboard | Edu forum",
@@ -41,23 +42,30 @@ function Dashboard() {
     document.title = DynamicTitle[pathname] || "Edu forum";
   }, [pathname]);
   return (
-    <div className={`${theme ==="dark" ?"dark:bg-metal-900" : "bg-slate-100"} md:flex w-full   gap-3`}>
+    <div
+      className={`${
+        theme === "dark" ? "dark:bg-metal-900" : "bg-slate-100"
+      } md:flex w-full   gap-3`}
+    >
       <div className={`md:grow`}>
-        <Sidebar className={` ${theme !== "dark"? "": 'bg-metal-700 border-none rounded-none'}  hidden md:block shadow-none h-full    rounded"`}>
-          <SidebarBody >
+        <Sidebar
+          className={` ${
+            theme !== "dark" ? "" : "bg-metal-700 border-none rounded-none"
+          }  hidden md:block shadow-none h-full    rounded"`}
+        >
+          <SidebarBody>
             {/* fornormar users routes  */}
 
             {role === "user" && (
               <SidebarList>
-                <NavLink to={"/"} >
+                <NavLink to={"/"}>
                   <SidebarItem className="flex items-center gap-2 text-lg">
                     <FaHome />
                     Home
                   </SidebarItem>
                 </NavLink>
 
-                <NavLink
-   to={"/Dashboard/AddPost"}>
+                <NavLink to={"/Dashboard/AddPost"}>
                   <SidebarItem className="flex items-center gap-2 text-lg">
                     <MdOutlinePostAdd />
                     AddPost
@@ -119,7 +127,14 @@ function Dashboard() {
                 </NavLink>
               </SidebarList>
             )}
-             <SwitchComponent />
+             <NavLink to={"/Dashboard/Events"}>
+                  <SidebarItem className="flex items-center gap-2 text-lg">
+                    <BiCalendar />
+                   { role === "admin" ? "Events & Webinars" : "My Events"}
+                    
+                  </SidebarItem>
+                </NavLink>
+            <SwitchComponent />
           </SidebarBody>
           <SidebarFooter className="grow">
             <Avatar>
@@ -135,11 +150,9 @@ function Dashboard() {
               </p>
             </div>
           </SidebarFooter>
-         
         </Sidebar>
 
         <DashboardMenu />
-        
       </div>
 
       <div className="md:w-[80%] pt-16 md:pt-5 h-screen overflow-hidden overflow-y-scroll ">

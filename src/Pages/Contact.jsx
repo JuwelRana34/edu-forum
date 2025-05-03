@@ -1,4 +1,4 @@
-import { Button, Input, Label, toast } from "keep-react";
+import { Button, Input, Label, Textarea, toast } from "keep-react";
 import React, { useContext } from "react";
 import ThemeContext from "../Context/ThemeProvider";
 import Swal from "sweetalert2";
@@ -34,27 +34,40 @@ function Contact() {
         >
           <fieldset className="w-full mx-5 px-5 space-y-1">
             <Label htmlFor="name">Enter Name</Label>
-            <Input id="name" name="name" required placeholder="Enter name" type="text" />
+            <Input
+              id="name"
+              name="name"
+              required
+              placeholder="Enter name"
+              type="text"
+            />
           </fieldset>
           <fieldset className="w-full mx-5 px-5 space-y-1">
             <Label htmlFor="email">Enter Email</Label>
-            <Input id="email" name="email" required placeholder="Enter email" type="email" />
+            <Input
+              id="email"
+              name="email"
+              required
+              placeholder="Enter email"
+              type="email"
+            />
           </fieldset>
           <fieldset className="w-full mx-5 px-5 space-y-1">
             <Label htmlFor="message">Message</Label>
-            <textarea
+           
+            <Textarea
               id="message"
               required
               name="message"
-              className="w-full border p-3 rounded-md"
-              placeholder="Enter message"
-            ></textarea>
+              placeholder="Enter your message here..."
+              rows={3}
+            />
           </fieldset>
 
           <Button
             type="submit"
-            className={`my-5 button ${theme === "dark" ? "bg-metal-800" : ""}`}
-          >   
+            className={`my-5 button ${theme === "dark" ? "bg-slate-700 hover:bg-slate-950 transition-all" : ""}`}
+          >
             Submit
           </Button>
         </form>

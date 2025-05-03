@@ -4,41 +4,42 @@ import UserContext from "../Context/AuthContext";
 import { useContext } from "react";
 import { toast } from "sonner";
 import { BsCash, BsClock } from "react-icons/bs";
+import SecureAxios from "../Hook/SecureAxios";
 
 export default function EventsWebinars() {
 const {user} = useContext(UserContext)
   const events = [
     {
       title: "React Masterclass",
-      date: "March 15, 2025",
+      date: "July 15, 2025",
       time: "10:00 AM - 12:00 PM",
       location: "Online Webinar",
       price: 0,
     },
     {
       title: "AI & Machine Learning Summit",
-      date: "April 5, 2025",
+      date: "April 25, 2025",
       time: "2:00 PM - 5:00 PM",
       location: "Bonani, Dhaka,Bangladesh",
       price: 0,
     },
     {
       title: "Cybersecurity Workshop",
-      date: "April 20, 2025",
+      date: "May 20, 2025",
       time: "4:00 PM - 6:00 PM",
       location: "Virtual Event",
       price: 0,
     },
     {
       title: "Startup & Innovation Conference",
-      date: "May 10, 2025",
+      date: "May 15, 2025",
       time: "9:00 AM - 3:00 PM",
       location: "Uttora, Dhaka, Bangladesh",
       price: 0,
     },
   ];
 
-  const handelRegister = (title) => {
+  const handelRegister = (title,date,time) => {
     if(!user) return toast.warning("please login before registration!"); 
 
     Swal.fire({
@@ -46,15 +47,32 @@ const {user} = useContext(UserContext)
         showDenyButton: false,
         showCancelButton: true,
         confirmButtonText: "register",
-        denyButtonText: `Don't register`
-      }).then((result) => {
+      }).then(async(result) => {
       
         if (result.isConfirmed) {
-          Swal.fire(`Congratulations! 🎉You have successfully registered for! ${title} `, "", "success");
-        } else if (result.isDenied) {
-          Swal.fire("Changes are not saved", "", "info");
+          try {
+            await SecureAxios.post("/registerEvents", {
+              user: user.email,
+              name: user.displayName,
+              title: title,
+              date,
+              time
+            });
+
+            Swal.fire(
+              `Congratulations! 🎉You have successfully registered for! ${title} `,
+              "",
+              "success"
+            );
+          } catch (error) {
+            if (error.response.status === 409) {
+              Swal.fire("Already registered!", "", "warning");
+            } else {
+              Swal.fire("Registration failed!", "", "error");
+            }
+          }
         }
-      });
+});
   }
 
   return (
@@ -91,7 +109,7 @@ const {user} = useContext(UserContext)
                   <BsCash className="w-5 h-5 mr-2" /> {event.price}
                 </div>
               </div>
-              <button onClick={()=> handelRegister(event.title)} className="mt-3 sm:mt-0 px-4 py-2 bg-blue-500 dark:bg-metal-600 text-white rounded-lg  hover:bg-blue-600 dark:hover:bg-metal-900 transition">
+              <button onClick={()=> handelRegister(event.title ,event.date ,event.time )} className="mt-3 sm:mt-0 px-4 py-2 bg-blue-500 dark:bg-metal-600 text-white rounded-lg  hover:bg-blue-600 dark:hover:bg-metal-900 transition">
                 Register
               </button>
             </div>
